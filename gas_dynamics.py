@@ -94,7 +94,7 @@ def rho_stgn(M,gamma = 1.4):
     return rho_t_ratio
 
 
-def plot_stgn_ratios(min=.1,max=10,increment=.01,gamma = 1.4):
+def plot_stgn_ratios(min=.1,max=10,increment=.01,gamma=[1.4]):
     """Plot all Mach number vs T/T, P/Pt, A/A*, rho/rho_t, for a given gamma
 
     :param min: min mach number
@@ -102,66 +102,75 @@ def plot_stgn_ratios(min=.1,max=10,increment=.01,gamma = 1.4):
     :param increment: increment between min and max
     :param gamma: default gamma
     """
-    mach_nums = [i for i in np.arange(min,max,increment)]
-    t_list = [T_stgn(i)for i in mach_nums]
-    p_list = [P_stgn(i) for i in mach_nums]
-    a_list = [Area_stgn(i) for i in mach_nums]
-    rho_list = [rho_stgn(i) for i in mach_nums]
-
     fig, axs = plt.subplots(2,2)
-    title = 'Isentropic Stagnation Relations for Gamma = ' + str(gamma)
+    title = "Isentropic Stagnation Relations"
     fig.suptitle(title)
+
+    for g in gamma:
+        mach_nums = [i for i in np.arange(min,max,increment)]
+        t_list = [T_stgn(i,g)for i in mach_nums]
+        p_list = [P_stgn(i,g) for i in mach_nums]
+        a_list = [Area_stgn(i,g) for i in mach_nums]
+        rho_list = [rho_stgn(i,g) for i in mach_nums]
+        labl = '\u03B3 = ' + str(g)
+
     #T/Tt
-    axs[0,0].plot(mach_nums,t_list)
-    axs[0,0].set_xlabel('Mach Number')
-    axs[0,0].set_ylabel('T / Tt')
-    axs[0,0].grid(b=True, which='major')
-    axs[0,0].grid(b=True, which='minor')
-    axs[0,0].minorticks_on()
+        axs[0,0].plot(mach_nums,t_list,label=labl)
+        axs[0,0].set_xlabel('Mach Number')
+        axs[0,0].set_ylabel('T / Tt')
+        axs[0,0].grid(b=True, which='major')
+        axs[0,0].grid(b=True, which='minor')
+        axs[0,0].minorticks_on()
+        axs[0,0].legend()
 
     #P/Pt
-    axs[0,1].plot(mach_nums,p_list)
-    axs[0,1].set_xlabel('Mach Number')
-    axs[0,1].set_ylabel('P / Pt')
-    axs[0,1].grid(b=True, which='major')
-    axs[0,1].grid(b=True, which='minor')
-    axs[0,1].minorticks_on()
-
+        axs[0,1].plot(mach_nums,p_list,label=labl)
+        axs[0,1].set_xlabel('Mach Number')
+        axs[0,1].set_ylabel('P / Pt')
+        axs[0,1].grid(b=True, which='major')
+        axs[0,1].grid(b=True, which='minor')
+        axs[0,1].minorticks_on()
+        axs[0,1].legend()
     #A/A*
-    axs[1,0].plot(mach_nums,a_list)
-    axs[1,0].set_xlabel('Mach Number')
-    axs[1,0].set_ylabel('A / A*')
-    axs[1,0].grid(b=True, which='major')
-    axs[1,0].grid(b=True, which='minor')
-    axs[1,0].minorticks_on()
+        axs[1,0].plot(mach_nums,a_list,label=labl)
+        axs[1,0].set_xlabel('Mach Number')
+        axs[1,0].set_ylabel('A / A*')
+        axs[1,0].grid(b=True, which='major')
+        axs[1,0].grid(b=True, which='minor')
+        axs[1,0].minorticks_on()
+        axs[1,0].legend()
 
     #rho/rho_t
-    axs[1,1].plot(mach_nums,rho_list)
-    axs[1,1].set_xlabel('Mach Number')
-    axs[1,1].set_ylabel('rho / rho_t')
-    axs[1,1].grid(b=True, which='major')
-    axs[1,1].grid(b=True, which='minor')
-    axs[1,1].minorticks_on()
+        axs[1,1].plot(mach_nums,rho_list,label=labl)
+        axs[1,1].set_xlabel('Mach Number')
+        axs[1,1].set_ylabel('rho / rho_t')
+        axs[1,1].grid(b=True, which='major')
+        axs[1,1].grid(b=True, which='minor')
+        axs[1,1].minorticks_on()
+        axs[1,1].legend()
     plt.show()
 
 
-def print_stgn_ratios(min=.1,max=10,increment=.1,gamma = 1.4):
-    """Print all Mach number vs T/T, P/Pt, A/A*, rho/rho_t, for a given gamma
+def print_stgn_ratios(min=.1,max=10,increment=.1,gamma = [1.4]):
+    """Print all Mach number vs T/T, P/Pt, A/A*, rho/rho_t, for a given gamma or list of gammas 
 
+    ex: to print several gammas,  
     :param min: min mach number
     :param max: max mach number
     :param increment: increment between min and max
     :param gamma: default gamma
     """
-    mach_nums = [i for i in np.arange(min,max,increment)]
-    t_list = [T_stgn(i)for i in mach_nums]
-    p_list = [P_stgn(i) for i in mach_nums]
-    a_list = [Area_stgn(i) for i in mach_nums]
-    rho_list = [rho_stgn(i) for i in mach_nums]
+    for g in gamma:
+        mach_nums = [i for i in np.arange(min,max,increment)]
+        t_list = [T_stgn(i,g)for i in mach_nums]
+        p_list = [P_stgn(i,g) for i in mach_nums]
+        a_list = [Area_stgn(i,g) for i in mach_nums]
+        rho_list = [rho_stgn(i,g) for i in mach_nums]
 
-    for index, num in enumerate(mach_nums):
-        print(" M: " + f"{num:.2f}" + "   |"+"   P/Pt: " + f"{p_list[index]:.3f}" + "   | " + "   T/Tt: " + f"{t_list[index]:.3f}" + "   | "+"   A/A*: " + f"{a_list[index]:.3f}" + "   |"+"   rho/rho_t: " + f"{rho_list[index]:.3f}")
+        for index, num in enumerate(mach_nums):
+            print(" M: " + f"{num:.2f}" + "   |"+"   P/Pt: " + f"{p_list[index]:.3f}" + "   | " + "   T/Tt: " + f"{t_list[index]:.3f}" + "   | "+"   A/A*: " + f"{a_list[index]:.3f}" + "   |"+"   rho/rho_t: " + f"{rho_list[index]:.3f}")
 
+        print("\n \n \n")
 
 def func(x,y):
     """func descrioption Energy Equation
@@ -172,8 +181,6 @@ def func(x,y):
     :param y: this is y
     ]"""
     #do lots of stuff and calculate stuff
-    x = x #bla
-    y = y #bla
-    z = x+y #bla
+    print(x,y)
 
     return z
