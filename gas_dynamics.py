@@ -65,17 +65,17 @@ def dv_from_Mach(V,M,dA,A):
 #TODO: * ref concept explainer
 
 
-def Temp_stgn_ratio(M,gamma = 1.4):
+def T_stgn(M,gamma = 1.4):
     """ Given Mach number and gamma, returns the relation of T / Tt
 
     :param M: Mach Number
     :param gamma: ratio of specific heats (default 1.4)
     """
     
-    Tt_ratio = 1 / (1+(gamma-1)/2*M**2)
+    Tt_ratio = 1 / (1+(gamma-1)/2 *M**2)
     return Tt_ratio
 
-def Pressure_stgn_ratio(M,gamma = 1.4):
+def P_stgn(M,gamma = 1.4):
     """ given Mach number and gamma, returns the relation of P / Pt
     
     :param M: Mach Number
@@ -85,8 +85,8 @@ def Pressure_stgn_ratio(M,gamma = 1.4):
     Pt_ratio = (1 / denom ) ** (gamma/(gamma-1))
     return Pt_ratio
 
-def Area_stgn_ratio(M,gamma = 1.4):
-    """given Mach number and gamma, returns the realtion of A / A*
+def Area_stgn(M,gamma = 1.4):
+    """given Mach number and gamma, returns the relation of A / A*
 
     :param M: Mach Number
     :param gamma: ratio of specific heats (default 1.4)
@@ -94,8 +94,8 @@ def Area_stgn_ratio(M,gamma = 1.4):
     A_star_ratio = 1/M * ((1 + (gamma-1)/2 * M**2) / ((gamma+1)/2)) ** ((gamma+1)/(2*(gamma-1)))
     return A_star_ratio
 
-def Density_stgn_ratio(M,gamma = 1.4):
-    """given Mach number and gamma, returns the realtion of rho / rho_t
+def rho_stgn(M,gamma = 1.4):
+    """given Mach number and gamma, returns the relation of rho / rho_t
 
     :param M: Mach Number
     :param gamma: ratio of specific heats (default 1.4)
