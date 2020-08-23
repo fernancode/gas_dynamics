@@ -1,23 +1,10 @@
 ###This script is a large list of functions from the oscar biblarz Gas Dynamics book
 # I wrote this to be able to import the following functions into a script and to further my understanding of gas dynamics
 # and how the equations are derived. Maybe also some layperson definitions of what is happening to help undersanding. Its also just for fun!
-
-#TODO: add equations for perfect gases in terms of mach number and how to get them
-#TODO: add stagnation equations and how to get them and what they mean ch3
-#TODO: add stagnation equations from mach ch4
+import numpy as np
+import matplotlib.pyplot as plt
 
 
-
-
-###The following three equations are for the general behavior of an ideal and arbitrary fluid with no losses
-###They are used to understand the relation of increasing mach number on pressure, density, Area, and Velocity
-# These equations can be derived from the following:
-# 1. Energy equation w/assumptions steady 1D flow, adiabatic (dq = 0), no losses (dsi = 0), neglect potential energy (dz = 0), no shaft work (dws = 0)
-# 2. Property relation Tds = dh - dp/rho
-# 3. Continuity (mdot = constant)
-# 4. Sonic velocity, a^2 = gc * dp/drho at constant entropy
-# 5. Mach number M^2 = V^2/a^2
- 
 def dp_from_Mach(rho,V,M,da,A,metric=True):
     """
     Takes density, velocity, mach number, change in area, area to calculate change in pressre for an arbitrary fluid
@@ -37,6 +24,7 @@ def dp_from_Mach(rho,V,M,da,A,metric=True):
         dp = (rho*V^2)/gc * (1/(1-M^2))*(dA/A)
         return dp
 
+
 def drho_from_Mach(rho,M,dA,A):
     """ 
     Takes density, mach number, change in area, and area to calculate change in density for an arbitrary fluid
@@ -50,6 +38,7 @@ def drho_from_Mach(rho,M,dA,A):
     drho = rho * M^2/(1-M^2) * dA/A
     return drho
 
+
 def dv_from_Mach(V,M,dA,A):
     """Takes velocity, mach number, change in area, and area to calculate dv for an arbitrary fluid
     
@@ -60,9 +49,7 @@ def dv_from_Mach(V,M,dA,A):
     """
 
     dV = -V * (1/(1-M^2)) * (dA/A)
-
-#TODO: perfect gas with losses
-#TODO: * ref concept explainer
+    return dV
 
 
 def T_stgn(M,gamma = 1.4):
@@ -75,6 +62,7 @@ def T_stgn(M,gamma = 1.4):
     Tt_ratio = 1 / (1+(gamma-1)/2 *M**2)
     return Tt_ratio
 
+
 def P_stgn(M,gamma = 1.4):
     """ given Mach number and gamma, returns the relation of P / Pt
     
@@ -85,6 +73,7 @@ def P_stgn(M,gamma = 1.4):
     Pt_ratio = (1 / denom ) ** (gamma/(gamma-1))
     return Pt_ratio
 
+
 def Area_stgn(M,gamma = 1.4):
     """given Mach number and gamma, returns the relation of A / A*
 
@@ -94,6 +83,7 @@ def Area_stgn(M,gamma = 1.4):
     A_star_ratio = 1/M * ((1 + (gamma-1)/2 * M**2) / ((gamma+1)/2)) ** ((gamma+1)/(2*(gamma-1)))
     return A_star_ratio
 
+
 def rho_stgn(M,gamma = 1.4):
     """given Mach number and gamma, returns the relation of rho / rho_t
 
@@ -102,6 +92,75 @@ def rho_stgn(M,gamma = 1.4):
     """
     rho_t_ratio = (1 / (1 + (gamma-1)/2 * M**2 )) ** (1 / (gamma-1))
     return rho_t_ratio
+
+
+def plot_stgn_ratios(min=.1,max=10,increment=.01,gamma = 1.4):
+    """Plot all Mach number vs T/T, P/Pt, A/A*, rho/rho_t, for a given gamma
+
+    :param min: min mach number
+    :param max: max mach number
+    :param increment: increment between min and max
+    :param gamma: default gamma
+    """
+    mach_nums = [i for i in np.arange(min,max,increment)]
+    t_list = [T_stgn(i)for i in mach_nums]
+    p_list = [P_stgn(i) for i in mach_nums]
+    a_list = [Area_stgn(i) for i in mach_nums]
+    rho_list = [rho_stgn(i) for i in mach_nums]
+
+    fig, axs = plt.subplots(2,2)
+    title = 'Isentropic Stagnation Relations for Gamma = ' + str(gamma)
+    fig.suptitle(title)
+    #T/Tt
+    axs[0,0].plot(mach_nums,t_list)
+    axs[0,0].set_xlabel('Mach Number')
+    axs[0,0].set_ylabel('T / Tt')
+    axs[0,0].grid(b=True, which='major')
+    axs[0,0].grid(b=True, which='minor')
+    axs[0,0].minorticks_on()
+
+    #P/Pt
+    axs[0,1].plot(mach_nums,p_list)
+    axs[0,1].set_xlabel('Mach Number')
+    axs[0,1].set_ylabel('P / Pt')
+    axs[0,1].grid(b=True, which='major')
+    axs[0,1].grid(b=True, which='minor')
+    axs[0,1].minorticks_on()
+
+    #A/A*
+    axs[1,0].plot(mach_nums,a_list)
+    axs[1,0].set_xlabel('Mach Number')
+    axs[1,0].set_ylabel('A / A*')
+    axs[1,0].grid(b=True, which='major')
+    axs[1,0].grid(b=True, which='minor')
+    axs[1,0].minorticks_on()
+
+    #rho/rho_t
+    axs[1,1].plot(mach_nums,rho_list)
+    axs[1,1].set_xlabel('Mach Number')
+    axs[1,1].set_ylabel('rho / rho_t')
+    axs[1,1].grid(b=True, which='major')
+    axs[1,1].grid(b=True, which='minor')
+    axs[1,1].minorticks_on()
+    plt.show()
+
+
+def print_stgn_ratios(min=.1,max=10,increment=.1,gamma = 1.4):
+    """Print all Mach number vs T/T, P/Pt, A/A*, rho/rho_t, for a given gamma
+
+    :param min: min mach number
+    :param max: max mach number
+    :param increment: increment between min and max
+    :param gamma: default gamma
+    """
+    mach_nums = [i for i in np.arange(min,max,increment)]
+    t_list = [T_stgn(i)for i in mach_nums]
+    p_list = [P_stgn(i) for i in mach_nums]
+    a_list = [Area_stgn(i) for i in mach_nums]
+    rho_list = [rho_stgn(i) for i in mach_nums]
+
+    for index, num in enumerate(mach_nums):
+        print(" M: " + f"{num:.2f}" + "   |"+"   P/Pt: " + f"{p_list[index]:.3f}" + "   | " + "   T/Tt: " + f"{t_list[index]:.3f}" + "   | "+"   A/A*: " + f"{a_list[index]:.3f}" + "   |"+"   rho/rho_t: " + f"{rho_list[index]:.3f}")
 
 
 def func(x,y):
