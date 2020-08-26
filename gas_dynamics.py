@@ -52,7 +52,7 @@ def dv_from_Mach(V,M,dA,A):
     return dV
 
 
-def T_stgn(M,gamma = 1.4):
+def T_stgn_ratio(M,gamma = 1.4):
     """ Given Mach number and gamma, returns the relation of T / Tt
 
     :param M: Mach Number
@@ -63,7 +63,7 @@ def T_stgn(M,gamma = 1.4):
     return Tt_ratio
 
 
-def P_stgn(M,gamma = 1.4):
+def P_stgn_ratio(M,gamma = 1.4):
     """ given Mach number and gamma, returns the relation of P / Pt
     
     :param M: Mach Number
@@ -74,7 +74,7 @@ def P_stgn(M,gamma = 1.4):
     return Pt_ratio
 
 
-def Area_stgn(M,gamma = 1.4):
+def Area_stgn_ratio(M,gamma = 1.4):
     """given Mach number and gamma, returns the relation of A / A*
 
     :param M: Mach Number
@@ -84,7 +84,7 @@ def Area_stgn(M,gamma = 1.4):
     return A_star_ratio
 
 
-def rho_stgn(M,gamma = 1.4):
+def rho_stgn_ratio(M,gamma = 1.4):
     """given Mach number and gamma, returns the relation of rho / rho_t
 
     :param M: Mach Number
@@ -94,7 +94,7 @@ def rho_stgn(M,gamma = 1.4):
     return rho_t_ratio
 
 
-def plot_stgn_ratios(min=.1,max=10,increment=.01,gamma=[1.4]):
+def plot_stgn_ratios(Mach_min=.1,Mach_max=10,increment=.01,gamma=[1.4]):
     """Plot all Mach number vs T/T, P/Pt, A/A*, rho/rho_t, for a given gamma
 
     :param min: min mach number
@@ -107,11 +107,11 @@ def plot_stgn_ratios(min=.1,max=10,increment=.01,gamma=[1.4]):
     fig.suptitle(title)
 
     for g in gamma:
-        mach_nums = [i for i in np.arange(min,max,increment)]
-        t_list = [T_stgn(i,g)for i in mach_nums]
-        p_list = [P_stgn(i,g) for i in mach_nums]
-        a_list = [Area_stgn(i,g) for i in mach_nums]
-        rho_list = [rho_stgn(i,g) for i in mach_nums]
+        mach_nums = [i for i in np.arange(Mach_min,Mach_max+increment,increment)]
+        t_list = [T_stgn_ratio(i,g)for i in mach_nums]
+        p_list = [P_stgn_ratio(i,g) for i in mach_nums]
+        a_list = [Area_stgn_ratio(i,g) for i in mach_nums]
+        rho_list = [rho_stgn_ratio(i,g) for i in mach_nums]
         labl = '\u03B3 = ' + str(g)
 
     #T/Tt
@@ -151,7 +151,7 @@ def plot_stgn_ratios(min=.1,max=10,increment=.01,gamma=[1.4]):
     plt.show()
 
 
-def print_stgn_ratios(min=.1,max=10,increment=.1,gamma = [1.4]):
+def print_stgn_ratios(Mach_min=.1,Mach_max=10,increment=.1,gamma = [1.4]):
     """Print all Mach number vs T/T, P/Pt, A/A*, rho/rho_t, for a given gamma or list of gammas 
 
     ex: to print several gammas,  
@@ -161,16 +161,21 @@ def print_stgn_ratios(min=.1,max=10,increment=.1,gamma = [1.4]):
     :param gamma: default gamma
     """
     for g in gamma:
-        mach_nums = [i for i in np.arange(min,max,increment)]
-        t_list = [T_stgn(i,g)for i in mach_nums]
-        p_list = [P_stgn(i,g) for i in mach_nums]
-        a_list = [Area_stgn(i,g) for i in mach_nums]
-        rho_list = [rho_stgn(i,g) for i in mach_nums]
+        mach_nums = [i for i in np.arange(Mach_min,Mach_max+increment,increment)]
+        t_list = [T_stgn_ratio(i,g)for i in mach_nums]
+        p_list = [P_stgn_ratio(i,g) for i in mach_nums]
+        a_list = [Area_stgn_ratio(i,g) for i in mach_nums]
+        rho_list = [rho_stgn_ratio(i,g) for i in mach_nums]
 
+        labl = '\u03B3 = ' + str(g)
+        print("Isentropic Flow Parameters for " + labl)
         for index, num in enumerate(mach_nums):
-            print(" M: " + f"{num:.2f}" + "   |"+"   P/Pt: " + f"{p_list[index]:.3f}" + "   | " + "   T/Tt: " + f"{t_list[index]:.3f}" + "   | "+"   A/A*: " + f"{a_list[index]:.3f}" + "   |"+"   rho/rho_t: " + f"{rho_list[index]:.3f}")
-
+            print("M: " + f"{num:.2f}" + "   |"+"   P/Pt: " + f"{p_list[index]:.3f}" + "   | " + "   T/Tt: " + f"{t_list[index]:.3f}" + "   | "+"   A/A*: " + f"{a_list[index]:.3f}" + "   |"+"   rho/rho_t: " + f"{rho_list[index]:.3f}")
         print("\n \n \n")
+
+
+
+
 
 def func(x,y):
     """func descrioption Energy Equation
