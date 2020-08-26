@@ -2,7 +2,7 @@
 Equations from the Oscar Biblarz Gas Dynamics book turned into python funcs with some explanations for solidifying my understanding. just for fun.
 
 Getting Isentropic flow tables for a given gamma:
-Arguments are min and max mach numbers, increment, and a list of gammas. Default valules are .01, 5, .1, and 1.4.
+Arguments are min and max mach numbers, increment, and a list of gammas. Default valules are Mach_min =.01, Mach_max = 5, increment = .1, and gamma = [1.4].
 
 ```
 >>> import gas_dynamics as gd
@@ -37,7 +37,8 @@ M: 5.00   |   P/Pt: 0.001   |    T/Tt: 0.286   |    A/A*: 116.344   |   rho/rho_
 ```
 
 
-Plotting Stagnation relations versus mach number for different gammas. Arguments are min and max mach numbers, increment, and a list of gammas. Default valules are .01, 5, .1, and 1.4.
+
+Plotting Stagnation relations versus mach number for different gammas. Arguments are min and max mach numbers, increment, and a list of gammas. Default valules are Mach_min =.01, Mach_max = 5, increment = .1, and gamma = [1.4]
 
 ```
 plot_stgn_ratios(gamma = [1.2,1.4,1.6,1.8])
