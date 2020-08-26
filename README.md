@@ -35,7 +35,7 @@ M: 4.60   |   P/Pt: 0.001   |    T/Tt: 0.321   |    A/A*: 66.737   |   rho/rho_t
 M: 4.80   |   P/Pt: 0.001   |    T/Tt: 0.303   |    A/A*: 88.271   |   rho/rho_t: 0.003
 M: 5.00   |   P/Pt: 0.001   |    T/Tt: 0.286   |    A/A*: 116.344   |   rho/rho_t: 0.002
 ```
-![Stagnation_relations](https://github.com/fernancode/gas_dynamics/blob/master/print_ratios.png)
+
 
 Plotting Stagnation relations versus mach number for different gammas. Arguments are min and max mach numbers, increment, and a list of gammas. Default valules are .01, 5, .1, and 1.4.
 
