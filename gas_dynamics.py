@@ -94,7 +94,7 @@ def rho_stgn_ratio(M,gamma = 1.4):
     return rho_t_ratio
 
 
-def plot_stgn_ratios(Mach_min=.1,Mach_max=10,increment=.01,gamma=[1.4]):
+def plot_stgn_ratios(Mach_min=.01,Mach_max=5,increment=.01,gamma=[1.4]):
     """Plot all Mach number vs T/T, P/Pt, A/A*, rho/rho_t, for a given gamma
 
     :param min: min mach number
@@ -151,7 +151,7 @@ def plot_stgn_ratios(Mach_min=.1,Mach_max=10,increment=.01,gamma=[1.4]):
     plt.show()
 
 
-def print_stgn_ratios(Mach_min=.1,Mach_max=10,increment=.1,gamma = [1.4]):
+def print_stgn_ratios(Mach_min=0,Mach_max=5,increment=.1,gamma = [1.4]):
     """Print all Mach number vs T/T, P/Pt, A/A*, rho/rho_t, for a given gamma or list of gammas 
 
     ex: to print several gammas,  
