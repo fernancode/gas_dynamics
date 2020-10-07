@@ -61,3 +61,11 @@ are used so often to either solve for temperature, pressure, or Mach number, the
 >>> M2
 0.8000
 ```
+
+area_mach_ratio(M1,M2,A1) is the formula 
+
+<img src="https://render.githubusercontent.com/render/math?math=$\frac{A_{2}}{A_{1}} = \frac{M_{1}}{M_{2}}  \left(\frac{1 + \frac{\gamma -1}{2} M_{2}^2} {1 + \frac{\gamma -1}{2} M_{1}^2}\right)^\frac{\gamma + 1}{2 (\gamma-1)}e^\frac{\triangle s}{R}$">
+
+and returns the area ratio, while astar_ratio(M) returns the ratio A/A*
+
+<img src="https://render.githubusercontent.com/render/math?math=$\frac{A}{A^*} = \frac{1}{M}  \left(\frac{1 + \frac{\gamma -1}{2} M_{1}^2} {\frac{\gamma +1}{2}}\right)^\frac{\gamma + 1}{2 (\gamma-1)}$">
