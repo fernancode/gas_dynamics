@@ -61,3 +61,27 @@ print(ds)
 #problem 3c
 a_ratio = gd.area_mach_ratio(M1,M2,gamma=gamma,R=R)
 print('3c) Area ratio is ', a_ratio)
+
+
+#problem 4a,b
+M1 = 0.3
+T1 = 450
+p1 = 10
+A1 = 0.1
+
+a_ratio = gd.a_star_ratio(M=M1)
+a_star = A1/a_ratio
+
+p_t = gd.stgn_pressure(p=p1,M=M1)
+T_t = gd.stgn_temperature(T=T1, M=M1)
+
+m_dot = a_star * gd.mdot_a_star(p_t=p_t, T_t=T_t)
+print('4a) Flow rate is ',m_dot,' kg/s')
+print('4b) The throat area is ',a_star,'m^2')
+
+#problem 4c
+p_rec = 1.5
+M2 = gd.pressure_mach_ratio(p1=p_t, p2=p_rec, M1=0, get='M2')
+print(M2)
+a2 = a_star * gd.a_star_ratio(M2)
+print('4c) The exit area is ',a2,'m^2')

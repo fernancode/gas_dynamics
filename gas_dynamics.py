@@ -74,7 +74,7 @@ def P_stgn_ratio(M,gamma = 1.4):
     return Pt_ratio
 
 
-def astar_ratio(M,gamma = 1.4):
+def a_star_ratio(M,gamma = 1.4):
     """given Mach number and gamma, returns the relation of A / A*
 
     :param M: Mach Number
@@ -164,7 +164,7 @@ def print_stgn_ratios(Mach_min=0,Mach_max=5,increment=.1,gamma = [1.4]):
         mach_nums = [i for i in np.arange(Mach_min,Mach_max+increment,increment)]
         t_list = [T_stgn_ratio(i,g)for i in mach_nums]
         p_list = [P_stgn_ratio(i,g) for i in mach_nums]
-        a_list = [astar_ratio(i,g) for i in mach_nums]
+        a_list = [a_star_ratio(i,g) for i in mach_nums]
         rho_list = [rho_stgn_ratio(i,g) for i in mach_nums]
 
         labl = '\u03B3 = ' + str(g)
@@ -192,6 +192,7 @@ def pressure_mach_ratio(p1=[],p2=[],M1=[],M2=[],get='p2',gamma=1.4,R=286.9,ds=0)
     else:
         print('Incorrect argument')
 
+
 def temperature_mach_ratio(T1=[],T2=[],M1=[],M2=[],get='T2',gamma=1.4):
     """Specify whether you need Mach number or Temperature, and provide the three knowns ex. get = 'T2', M1, M2, T1 will return the missing temperature. Default arguments are gamma = 1.4
 
@@ -207,6 +208,7 @@ def temperature_mach_ratio(T1=[],T2=[],M1=[],M2=[],get='T2',gamma=1.4):
     else:
         print('Incorrect argument')
 
+
 def area_mach_ratio(M1,M2,gamma=1.4,R=286.9,ds=0):
     """Specify whether you need Mach number or Area, and provide the three knowns ex. get = 'A2', M1, M2, A1 will return the missing Area. Default arguments are gamma = 1.4, R = 286.9, ds = 0. 
 
@@ -214,21 +216,51 @@ def area_mach_ratio(M1,M2,gamma=1.4,R=286.9,ds=0):
     A2 = M1/M2 * ((1 + (gamma-1)/2 * M2**2 )/(1 + (gamma-1)/2 * M1**2 ))**((gamma+1)/(2*(gamma-1))) * np.exp(ds/R)
     return A2
 
-def stgn_pressure(p=[], M=[], p_t=[], gamma=1.4, get='P'):
-    if get == 'P':
+
+def stgn_pressure(p=[], M=[], p_t=[], gamma=1.4, get='p_t'):
+    if get == 'p_t':
         p_t = p* ( 1 + (gamma-1)/2 * M**2)** (gamma/(gamma-1))
         return p_t
-    if get == 'M':
+   
+    elif get == 'M':
         M = (((p_t/p)**((gamma-1)/gamma) -1 ) * 2/(gamma-1) ) ** .5
         return M
+
+    elif get == 'p':
+        p = p_t / ( 1 + (gamma-1)/2 * M**2)** (gamma/(gamma-1))
+        return p
+
+    else:
+        print('Incorrect argument')
+
 
 def sonic_velocity(gamma=1.4,R=286.9,T=273.15):
     a = (gamma*R*T)**.5
     return a
 
-#def stgn_temperature(T,M,gamma = 1.4)
 
+def stgn_temperature(T_ =[], T=[] , M=[], get = 'T_t', gamma = 1.4):
+    if get == 'T_t':
+        T_t = T * ( 1 + (gamma-1)/2 * M**2)
+        return T_t
 
+    elif get == 'M':
+        M = ((T_t /T - 1) * 2/(gamma-1))**.5
+        return M
+        
+    elif get =='T':
+        T = T_t/( 1 + (gamma-1)/2 * M**2)
+        return T
+
+    else:
+        print('Incorrect argument')
+
+def mdot_a_star(p_t=[], T_t=[], R=286.9, gamma=1.4):
+    """ Returns the maximum flow rate over a_star (m_dot/a_star)
+
+    """
+    mdot_a_star = ((gamma/R)*(2/(gamma+1))**((gamma+1)/(gamma-1)))**.5 * p_t/(T_t**.5)
+    return mdot_a_star
 
 
 def func(x,y):

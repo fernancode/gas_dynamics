@@ -71,7 +71,7 @@ Default values for the ratio of specific heats and the ideal gas constant are th
 gd.temperature_mach_ratio(T1=T1, T2=T2, M1=M2, get='M2', R=R, gamma=gamma)
 ```
 
-area_mach_ratio(M1,M2,A1) is the formula 
+For area ratios, area_mach_ratio(M1,M2,A1) is the formula 
 
 <img src="https://render.githubusercontent.com/render/math?math=$\frac{A_{2}}{A_{1}} = \frac{M_{1}}{M_{2}}  \left(\frac{1 + \frac{\gamma -1}{2} M_{2}^2} {1 + \frac{\gamma -1}{2} M_{1}^2}\right)^\frac{\gamma + 1}{2 (\gamma-1)}e^\frac{\triangle s}{R}$">
 
