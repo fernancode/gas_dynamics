@@ -66,6 +66,10 @@ Solving for losses is also possible, using
 ```
 >>> ds = gd.pressure_mach_ratio(p1=p1, p2=p2, M1=M1, M2=M2, get='ds')
 ```
+Default values for the ratio of specific heats and the ideal gas constant are that for air, but can be changed by specifying
+```
+gd.temperature_mach_ratio(T1=T1, T2=T2, M1=M2, get='M2', R=R, gamma=gamma)
+```
 
 area_mach_ratio(M1,M2,A1) is the formula 
 
