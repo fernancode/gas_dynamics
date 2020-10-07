@@ -74,7 +74,7 @@ def P_stgn_ratio(M,gamma = 1.4):
     return Pt_ratio
 
 
-def Area_stgn_ratio(M,gamma = 1.4):
+def Astar_ratio(M,gamma = 1.4):
     """given Mach number and gamma, returns the relation of A / A*
 
     :param M: Mach Number
@@ -110,7 +110,7 @@ def plot_stgn_ratios(Mach_min=.01,Mach_max=5,increment=.01,gamma=[1.4]):
         mach_nums = [i for i in np.arange(Mach_min,Mach_max+increment,increment)]
         t_list = [T_stgn_ratio(i,g)for i in mach_nums]
         p_list = [P_stgn_ratio(i,g) for i in mach_nums]
-        a_list = [Area_stgn_ratio(i,g) for i in mach_nums]
+        a_list = [Astar_ratio(i,g) for i in mach_nums]
         rho_list = [rho_stgn_ratio(i,g) for i in mach_nums]
         labl = '\u03B3 = ' + str(g)
 
@@ -164,7 +164,7 @@ def print_stgn_ratios(Mach_min=0,Mach_max=5,increment=.1,gamma = [1.4]):
         mach_nums = [i for i in np.arange(Mach_min,Mach_max+increment,increment)]
         t_list = [T_stgn_ratio(i,g)for i in mach_nums]
         p_list = [P_stgn_ratio(i,g) for i in mach_nums]
-        a_list = [Area_stgn_ratio(i,g) for i in mach_nums]
+        a_list = [Astar_ratio(i,g) for i in mach_nums]
         rho_list = [rho_stgn_ratio(i,g) for i in mach_nums]
 
         labl = '\u03B3 = ' + str(g)
@@ -174,8 +174,55 @@ def print_stgn_ratios(Mach_min=0,Mach_max=5,increment=.1,gamma = [1.4]):
         print("\n \n \n")
 
 
+def pressure_mach_ratio(A1,A2,B1,get='P2',gamma=1.4,R=286.9,ds=0):
+    """ Specify whether you need Mach number or Pressure, and provide the three knowns ex. get = 'P2', M1, M2, P1 will return the missing pressure. default arguments are gamma = 1.4, R = 286 , ds = 0
+
+    """
+    if get == 'P2':
+        M1 = A1
+        M2 = A2
+        P1 = B1
+        
+        P2 = P1 * ((1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2))**(gamma/(gamma-1)) * np.exp(-ds/R)
+        return P2
+    elif get =='M2':
+        P1 = A1
+        P2 = A2
+        M1 = B1
+
+        M2 = (((P1/P2 * np.exp(ds/R))**((gamma-1)/gamma) * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
+        return M2
+    else:
+        print('Incorrect argument')
 
 
+def temperature_mach_ratio(A1,A2,B1,get='T2',gamma=1.4):
+    """Specify whether you need Mach number or Temperature, and provide the three knowns ex. get = 'T2', M1, M2, T1 will return the missing temperature. Default arguments are gamma = 1.4
+
+    """
+    if get == 'T2':
+        M1 = A1
+        M2 = A2
+        T1 = B1
+
+        T2 = T1 * (1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2)
+        return T2
+    elif get == 'M2':
+        T1 = A1
+        T2 = A2
+        M1 = B1
+
+        M2 = (( T1/T2 * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
+        return M2
+    else:
+        print('Incorrect argument')
+
+def area_mach_ratio(M1,M2,A1,gamma=1.4,R=286.9,ds=0):
+    """Specify whether you need Mach number or Area, and provide the three knowns ex. get = 'A2', M1, M2, A1 will return the missing Area. Default arguments are gamma = 1.4, R = 286.9, ds = 0. 
+
+    """
+    A2 = M1/M2 * ((1 + (gamma-1)/2 * M2**2 )/(1 + (gamma-1)/2 * M1**2 ))**((gamma+1)/2*(gamma-1)) * np.exp(ds/R)
+    return A2
 
 def func(x,y):
     """func descrioption Energy Equation
@@ -184,7 +231,8 @@ def func(x,y):
     -
     :param x: this is x
     :param y: this is y
-    ]"""
+    ]
+    """
     #do lots of stuff and calculate stuff
     print(x,y)
 
