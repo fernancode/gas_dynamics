@@ -74,7 +74,7 @@ def P_stgn_ratio(M,gamma = 1.4):
     return Pt_ratio
 
 
-def Astar_ratio(M,gamma = 1.4):
+def astar_ratio(M,gamma = 1.4):
     """given Mach number and gamma, returns the relation of A / A*
 
     :param M: Mach Number
@@ -110,7 +110,7 @@ def plot_stgn_ratios(Mach_min=.01,Mach_max=5,increment=.01,gamma=[1.4]):
         mach_nums = [i for i in np.arange(Mach_min,Mach_max+increment,increment)]
         t_list = [T_stgn_ratio(i,g)for i in mach_nums]
         p_list = [P_stgn_ratio(i,g) for i in mach_nums]
-        a_list = [Astar_ratio(i,g) for i in mach_nums]
+        a_list = [astar_ratio(i,g) for i in mach_nums]
         rho_list = [rho_stgn_ratio(i,g) for i in mach_nums]
         labl = '\u03B3 = ' + str(g)
 
@@ -164,7 +164,7 @@ def print_stgn_ratios(Mach_min=0,Mach_max=5,increment=.1,gamma = [1.4]):
         mach_nums = [i for i in np.arange(Mach_min,Mach_max+increment,increment)]
         t_list = [T_stgn_ratio(i,g)for i in mach_nums]
         p_list = [P_stgn_ratio(i,g) for i in mach_nums]
-        a_list = [Astar_ratio(i,g) for i in mach_nums]
+        a_list = [astar_ratio(i,g) for i in mach_nums]
         rho_list = [rho_stgn_ratio(i,g) for i in mach_nums]
 
         labl = '\u03B3 = ' + str(g)
