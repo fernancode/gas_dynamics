@@ -54,10 +54,10 @@ are used so often to either solve for temperature, pressure, or Mach number, the
 
 ```
 >>> M1, M2, T1 = 0.2, 0.8, 500    
->>> T2 = gd.temperature_mach_ratio(M1,M2,T1,get='T2')               
+>>> T2 = gd.temperature_mach_ratio(M1, M2, T1, get='T2')               
 >>> T2
 446.8085
->>> M2 = gd.temperature_mach_ratio(T1,T2,M1,get='M2')
+>>> M2 = gd.temperature_mach_ratio(T1, T2, M1, get='M2')
 >>> M2
 0.8000
 ```
