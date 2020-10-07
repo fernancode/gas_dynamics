@@ -4,6 +4,7 @@ Equations from Oscar & Biblarz "Gas Dynamics" turned into python funcs with some
 Getting Isentropic flow tables for a given gamma:
 Arguments are min and max mach numbers, increment, and a list of gammas. Default valules are Mach_min =.01, Mach_max = 5, increment = .1, and gamma = [1.4].
 
+
 ```
 >>> import gas_dynamics as gd
 >>> gd.print_stgn_ratios(increment = .2, gamma = [1.2]);
@@ -37,10 +38,26 @@ M: 5.00   |   P/Pt: 0.001   |    T/Tt: 0.286   |    A/A*: 116.344   |   rho/rho_
 ```
 
 
-
 Plotting Stagnation relations versus mach number for different gammas. Arguments are min and max mach numbers, increment, and a list of gammas. Default valules are Mach_min =.01, Mach_max = 5, increment = .1, and gamma = [1.4]
 
 ```
 plot_stgn_ratios(gamma = [1.2,1.4,1.6,1.8])
 ```
 ![Stagnation_plots](https://github.com/fernancode/gas_dynamics/blob/master/plot_ratios.png)
+
+Because the following formulas 
+
+<img src="https://render.githubusercontent.com/render/math?math=$\frac{T_{2}}{T_{1}} = \frac{1 + \frac{\gamma -1}{2} M_{1}^2} {1 + \frac{\gamma -1}{2} M_{2}^2}$">
+<img src="https://render.githubusercontent.com/render/math?math=$\frac{P_{2}}{P_{1}} = \left(\frac{1 + \frac{\gamma -1}{2} M_{1}^2} {1 + \frac{\gamma -1}{2} M_{2}^2}\right)^\frac{\gamma}{\gamma-1} e^\frac{\triangle s}{R}$">
+
+are used so often to either solve for temperature, pressure, or Mach number, the user is given the option to specify what they are looking for; be it temperature or pressure, or Mach number.
+
+```
+>>> M1, M2, T1 = 0.2, 0.8, 500    
+>>> T2 = gd.temperature_mach_ratio(M1,M2,T1,get='T2')               
+>>> T2
+446.8085
+>>> M2 = gd.temperature_mach_ratio(T1,T2,M1,get='M2')
+>>> M2
+0.8000
+```
