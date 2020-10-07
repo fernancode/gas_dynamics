@@ -40,6 +40,7 @@ print('2c) The area ratio is ', a_ratio)
 
 
 
+
 #problem 3a
 p1 = 7
 T1 = 600

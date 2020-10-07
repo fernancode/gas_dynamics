@@ -1,5 +1,5 @@
 # Gas_Dynamics
-Equations from Oscar & Biblarz "Gas Dynamics" turned into python funcs with some explanations for solidifying my understanding. Just for fun.
+Equations from Oscar & Biblarz "Gas Dynamics" turned into python functions with some explanations for solidifying my understanding. Just for fun.
 
 Getting Isentropic flow tables for a given gamma:
 Arguments are min and max mach numbers, increment, and a list of gammas. Default valules are Mach_min =.01, Mach_max = 5, increment = .1, and gamma = [1.4].
