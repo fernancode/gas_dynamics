@@ -174,18 +174,21 @@ def print_stgn_ratios(Mach_min=0,Mach_max=5,increment=.1,gamma = [1.4]):
         print("\n \n \n")
 
 
-def pressure_mach_ratio(P1=[],P2=[],M1=[],M2=[],get='P2',gamma=1.4,R=286.9,ds=0):
+def pressure_mach_ratio(p1=[],p2=[],M1=[],M2=[],get='p2',gamma=1.4,R=286.9,ds=0):
     """ Specify whether you need Mach number or Pressure, and provide the three knowns ex. get = 'P2', M1, M2, P1 will return the missing pressure. default arguments are gamma = 1.4, R = 286 , ds = 0
 
     """
-    if get == 'P2':
-        P2 = P1 * ((1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2))**(gamma/(gamma-1)) * np.exp(-ds/R)
-        return P2
+    if get == 'p2':
+        p2 = p1 * ((1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2))**(gamma/(gamma-1)) * np.exp(-ds/R)
+        return p2
 
     elif get =='M2':
-        M2 = (((P1/P2 * np.exp(ds/R))**((gamma-1)/gamma) * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
+        M2 = (((p1/p2 * np.exp(ds/R))**((gamma-1)/gamma) * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
         return M2
 
+    elif get == 'ds':
+        ds = R * np.log( p1/p2 * ((1 + (gamma-1)/2 * M2**2 )/(1 + (gamma-1)/2 * M1**2))**((gamma-1)/gamma))
+        return ds
     else:
         print('Incorrect argument')
 
@@ -204,11 +207,11 @@ def temperature_mach_ratio(T1=[],T2=[],M1=[],M2=[],get='T2',gamma=1.4):
     else:
         print('Incorrect argument')
 
-def area_mach_ratio(M1,M2,A1,gamma=1.4,R=286.9,ds=0):
+def area_mach_ratio(M1,M2,gamma=1.4,R=286.9,ds=0):
     """Specify whether you need Mach number or Area, and provide the three knowns ex. get = 'A2', M1, M2, A1 will return the missing Area. Default arguments are gamma = 1.4, R = 286.9, ds = 0. 
 
     """
-    A2 = M1/M2 * ((1 + (gamma-1)/2 * M2**2 )/(1 + (gamma-1)/2 * M1**2 ))**((gamma+1)/2*(gamma-1)) * np.exp(ds/R)
+    A2 = M1/M2 * ((1 + (gamma-1)/2 * M2**2 )/(1 + (gamma-1)/2 * M1**2 ))**((gamma+1)/(2*(gamma-1))) * np.exp(ds/R)
     return A2
 
 def stgn_pressure(p=[], M=[], p_t=[], gamma=1.4, get='P'):

@@ -50,7 +50,7 @@ Because the following formulas
 <img src="https://render.githubusercontent.com/render/math?math=$\frac{T_{2}}{T_{1}} = \frac{1 + \frac{\gamma -1}{2} M_{1}^2} {1 + \frac{\gamma -1}{2} M_{2}^2}$">
 <img src="https://render.githubusercontent.com/render/math?math=$\frac{P_{2}}{P_{1}} = \left(\frac{1 + \frac{\gamma -1}{2} M_{1}^2} {1 + \frac{\gamma -1}{2} M_{2}^2}\right)^\frac{\gamma}{\gamma-1} e^\frac{\triangle s}{R}$">
 
-are used so often to either solve for temperature, pressure, or Mach number, the user is given the option to specify what they are looking for; be it temperature or pressure, or Mach number.
+are used so often to either solve for temperature, pressure, or Mach number, the user is given the option to specify what they are looking for, be it temperature or pressure, or Mach number.
 
 ```
 >>> M1, M2, T1 = 0.2, 0.8, 500    
