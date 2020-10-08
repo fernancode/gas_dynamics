@@ -4,6 +4,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+#TODO: add error handling, automatic switching for get='T1' to get='T2'
+#TODO: add shock tables generator and shock functions
+#TODO: add docstrings for functions 
 
 def dp_from_Mach(rho,V,M,da,A,metric=True):
     """
@@ -63,7 +66,7 @@ def T_stgn_ratio(M,gamma = 1.4):
     return Tt_ratio
 
 
-def P_stgn_ratio(M,gamma = 1.4):
+def p_stgn_ratio(M,gamma = 1.4):
     """ given Mach number and gamma, returns the relation of P / Pt
     
     :param M: Mach Number
@@ -109,7 +112,7 @@ def plot_stgn_ratios(Mach_min=.01,Mach_max=5,increment=.01,gamma=[1.4]):
     for g in gamma:
         mach_nums = [i for i in np.arange(Mach_min,Mach_max+increment,increment)]
         t_list = [T_stgn_ratio(i,g)for i in mach_nums]
-        p_list = [P_stgn_ratio(i,g) for i in mach_nums]
+        p_list = [p_stgn_ratio(i,g) for i in mach_nums]
         a_list = [astar_ratio(i,g) for i in mach_nums]
         rho_list = [rho_stgn_ratio(i,g) for i in mach_nums]
         labl = '\u03B3 = ' + str(g)
@@ -163,7 +166,7 @@ def print_stgn_ratios(Mach_min=0,Mach_max=5,increment=.1,gamma = [1.4]):
     for g in gamma:
         mach_nums = [i for i in np.arange(Mach_min,Mach_max+increment,increment)]
         t_list = [T_stgn_ratio(i,g)for i in mach_nums]
-        p_list = [P_stgn_ratio(i,g) for i in mach_nums]
+        p_list = [p_stgn_ratio(i,g) for i in mach_nums]
         a_list = [a_star_ratio(i,g) for i in mach_nums]
         rho_list = [rho_stgn_ratio(i,g) for i in mach_nums]
 
@@ -239,7 +242,7 @@ def sonic_velocity(gamma=1.4,R=286.9,T=273.15):
     return a
 
 
-def stgn_temperature(T_ =[], T=[] , M=[], get = 'T_t', gamma = 1.4):
+def stgn_temperature(T_t =[], T=[] , M=[], get = 'T_t', gamma = 1.4):
     if get == 'T_t':
         T_t = T * ( 1 + (gamma-1)/2 * M**2)
         return T_t
@@ -254,6 +257,7 @@ def stgn_temperature(T_ =[], T=[] , M=[], get = 'T_t', gamma = 1.4):
 
     else:
         print('Incorrect argument')
+
 
 def mdot_a_star(p_t=[], T_t=[], R=286.9, gamma=1.4):
     """ Returns the maximum flow rate over a_star (m_dot/a_star)

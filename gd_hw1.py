@@ -56,7 +56,7 @@ print('3a) The velocity is ', V1)
 
 #problem 3b
 ds = gd.pressure_mach_ratio(p1=p1, p2=p2, M1=M1, M2=M2, gamma=gamma, R=R, get='ds')
-print(ds)
+print('3b) The change in entropy is ',ds)
 
 #problem 3c
 a_ratio = gd.area_mach_ratio(M1,M2,gamma=gamma,R=R)
@@ -82,6 +82,55 @@ print('4b) The throat area is ',a_star,'m^2')
 #problem 4c
 p_rec = 1.5
 M2 = gd.pressure_mach_ratio(p1=p_t, p2=p_rec, M1=0, get='M2')
-print(M2)
 a2 = a_star * gd.a_star_ratio(M2)
 print('4c) The exit area is ',a2,'m^2')
+
+
+#problem 5a
+T1 = 573.15
+p1 = 300
+p2 = 100
+mdot = 0.1
+R = 461
+gamma = 1.33
+
+M2 = gd.pressure_mach_ratio(p1=p1, p2=p2, M1=0, get='M2', gamma=gamma, R=R)
+print('5a) Converging-Diverging, exit mach is ',M2)
+
+#problem 5b
+a_star = mdot / gd.mdot_a_star(p_t=p1, T_t=T1, R=R, gamma=gamma) 
+a_exit = a_star * gd.a_star_ratio(M2, gamma=gamma)
+
+print('3b) Throat area is ',a_star)
+print('3b) Exit area is ',a_exit)
+
+
+#problem 6
+m_dot = 100
+eta = 0.95
+p1 = 300
+T1 = 673
+gamma = 1.35
+cp = 1100
+p2 = 100
+#exhaust gases, so assume air
+#get mdot_astar, divide a_star by mdot_a_starm
+a_star = mdot / gd.mdot_a_star(p_t=p1, T_t=T1)
+
+M2s = gd.pressure_mach_ratio(p1=p1, p2=p2, M1=1, get='M2',gamma=gamma)
+A2 = a_star * gd.a_star_ratio(M2s,gamma=gamma)
+
+print('5a) Throat area is ', a_star)
+print('5a) Exit area is ', A2)
+
+T2s = gd.stgn_temperature(T_t=T1, M=M2s, get='T',gamma=gamma)
+V2s = M2s * gd.sonic_velocity(gamma=gamma,T=T2s)
+print('5a) Exit mach number and velocity are ', M2s,' and', V2s)
+
+T2 = (eta*(cp*T1 - cp*T2s) - cp*T1)/(-cp)
+#T2 is higher as expected due to lower efficiency
+M2 = gd.stgn_temperature(T_t=T1, T=T2, get='M')
+V2 = M2 * gd.sonic_velocity(gamma=gamma, T=T2)
+print('5a) Exit mach number and velocity are ', M2,' and', V2)
+
+
