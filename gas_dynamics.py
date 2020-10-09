@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 
 #TODO: add error handling, automatic switching for get='T1' to get='T2'
 #TODO: add shock tables generator and shock functions
-#TODO: add docstrings for functions 
+#TODO: add docstrings for functions
+#TODO: add a bunch of values for R and gamma
 
 def dp_from_Mach(rho,V,M,da,A,metric=True):
     """
@@ -237,7 +238,7 @@ def stgn_pressure(p=[], M=[], p_t=[], gamma=1.4, get='p_t'):
         print('Incorrect argument')
 
 
-def sonic_velocity(gamma=1.4,R=286.9,T=273.15):
+def sonic_velocity(gamma=1.4,R=287,T=273.15):
     a = (gamma*R*T)**.5
     return a
 
@@ -261,11 +262,11 @@ def stgn_temperature(T_t =[], T=[] , M=[], get = 'T_t', gamma = 1.4):
 
 def mdot_a_star(p_t=[], T_t=[], R=286.9, gamma=1.4):
     """ Returns the maximum flow rate over a_star (m_dot/a_star)
-
+    Check your units for pressure! Need to be in Pa!
+    
     """
-    mdot_a_star = ((gamma/R)*(2/(gamma+1))**((gamma+1)/(gamma-1)))**.5 * p_t/(T_t**.5)
+    mdot_a_star = (((gamma/(R))*(2/(gamma+1))**((gamma+1)/(gamma-1)))**.5 * p_t/(T_t**.5))
     return mdot_a_star
-
 
 def func(x,y):
     """func descrioption Energy Equation
