@@ -1,6 +1,3 @@
-###This script is a large list of functions from the oscar biblarz Gas Dynamics book
-# I wrote this to be able to import the following functions into a script and to further my understanding of gas dynamics
-# and how the equations are derived. Maybe also some layperson definitions of what is happening to help undersanding. Its also just for fun!
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -191,10 +188,15 @@ def pressure_mach_ratio(p1=[],p2=[],M1=[],M2=[],get='p2',gamma=1.4,R=286.9,ds=0)
         return M2
 
     elif get == 'ds':
-        ds = R * np.log( p1/p2 * ((1 + (gamma-1)/2 * M2**2 )/(1 + (gamma-1)/2 * M1**2))**((gamma-1)/gamma))
+        ds = R * np.log( p1/p2 * ((1 + (gamma-1)/2 * M1**2 )/(1 + (gamma-1)/2 * M2**2))**(gamma/(gamma-1)))
         return ds
     else:
         print('Incorrect argument')
+
+
+def entropy_produced(pt1=[], pt2=[], R=[]):
+    ds = -R*np.log(pt2/pt1)
+    return ds
 
 
 def temperature_mach_ratio(T1=[],T2=[],M1=[],M2=[],get='T2',gamma=1.4):
@@ -267,6 +269,71 @@ def mdot_a_star(p_t=[], T_t=[], R=286.9, gamma=1.4):
     """
     mdot_a_star = (((gamma/(R))*(2/(gamma+1))**((gamma+1)/(gamma-1)))**.5 * p_t/(T_t**.5))
     return mdot_a_star
+
+
+def shock_tables(Mach_min=1, Mach_max=5, increment=.05, gamma=1.4):
+    '''
+    Generate shock tables for a range of Mach numbers for a given gamma
+    '''
+    mach_nums = [i for i in np.arange(Mach_min,Mach_max+increment,increment)]
+    M2 = [shock_mach(i,gamma)for i in mach_nums]
+    p2_p1 = [shock_pressure_ratio(i,gamma)for i in mach_nums]
+    T2_T1 = [shock_temperature_ratio(i,gamma) for i in mach_nums]
+    dv_a = [shock_dv_a(i,gamma) for i in mach_nums]
+    pt2_pt1 = [shock_stagnation_ratio(i,gamma) for i in mach_nums]
+    
+    labl = '\u03B3 = ' + str(gamma)
+    print("Normal Shock Parameters for " + labl)
+    for index, num in enumerate(mach_nums):
+        print("M: " + f"{num:.2f}" + "   |"+"   M2: " + f"{M2[index]:.4f}" + "   | " + "   p2/p1: " + f"{p2_p1[index]:.4f}" + "   | "+"   T2/T1: " + f"{T2_T1[index]:.4f}" + "   |"+"   dV/a: " + f"{dv_a[index]:.4f}"+ "   |"+"   pt2/pt1: " + f"{pt2_pt1[index]:.6f}" )
+    print("\n \n \n")
+
+
+
+
+
+def shock_mach(M1=[], gamma=1.4):
+    M2 = ((M1**2 + 2/(gamma-1)) / ((2*gamma / (gamma-1)) * M1**2 - 1))**.5
+    return M2
+
+
+def shock_pressure_ratio(M1=[], gamma=1.4):
+    '''
+    Gives p2/p1 after a standing normal shock for a given Mach number
+    '''
+    p2_p1 = 2*gamma / (gamma+1) * M1**2 - (gamma-1)/(gamma+1)
+    return p2_p1
+
+
+def shock_temperature_ratio(M1=[], gamma=1.4):
+    '''
+    Gives T2/T1 after a standing normal shock for a given Mach number
+    '''
+    term1 = (1 + (gamma-1)/2 * M1**2)
+    term2 = (2*gamma)/(gamma-1) * M1**2 -1
+    term3 = (gamma+1)**2 / (2*(gamma-1)) * M1**2
+    t2_t1 = (term1 * term2) / term3
+    return t2_t1
+
+def shock_dv_a(M1=[], gamma=1.4):
+    '''
+    Gives velocity change across a standing normal shock for a given Mach number
+    '''
+    dv_a = 2/(gamma+1) * (M1**2 -1)/ M1
+    return dv_a
+
+
+def shock_stagnation_ratio(M1=[], gamma=1.4):
+    '''
+    Gives pt2/pt1 across a standing normal shock for a given Mach number
+    '''
+    term1 = (gamma+1)/2*M1**2
+    term2 = 1 + (gamma-1)/2 * M1**2
+    term3 = (term1/term2) ** (gamma/(gamma-1))
+    term4 = (2*gamma / (gamma+1) * M1**2 - ((gamma-1)/(gamma+1)))**(1/(1-gamma))
+    return term3 * term4
+
+
 
 def func(x,y):
     """func descrioption Energy Equation
