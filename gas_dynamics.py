@@ -6,6 +6,14 @@ import matplotlib.pyplot as plt
 #TODO: add docstrings for functions
 #TODO: add a bunch of values for R and gamma
 
+
+
+
+#R values for various gases
+R_air = 287
+
+
+
 def dp_from_Mach(rho,V,M,da,A,metric=True):
     """
     Takes density, velocity, mach number, change in area, area to calculate change in pressre for an arbitrary fluid
@@ -75,14 +83,21 @@ def p_stgn_ratio(M,gamma = 1.4):
     return Pt_ratio
 
 
-def a_star_ratio(M,gamma = 1.4):
+def a_star_ratio(M=[], A_ratio=[], gamma = 1.4):
     """given Mach number and gamma, returns the relation of A / A*
 
     :param M: Mach Number
     :param gamma: ratio of specific heats (default 1.4)
     """
-    A_star_ratio = 1/M * ((1 + (gamma-1)/2 * M**2) / ((gamma+1)/2)) ** ((gamma+1)/(2*(gamma-1)))
-    return A_star_ratio
+    if A_ratio==[]:
+        A_star_ratio = 1/M * ((1 + (gamma-1)/2 * M**2) / ((gamma+1)/2)) ** ((gamma+1)/(2*(gamma-1)))
+        return A_star_ratio
+    
+    if M==[]:
+        t1 = (gamma+1) / (2*(gamma-1))
+        t2 = -1*(gamma+1)/(2*(gamma-1))
+        M = ( t1 * A_ratio**t2) ** ((gamma-1)/(gamma+1))
+        return M
 
 
 def rho_stgn_ratio(M,gamma = 1.4):
@@ -111,7 +126,7 @@ def plot_stgn_ratios(Mach_min=.01,Mach_max=5,increment=.01,gamma=[1.4]):
         mach_nums = [i for i in np.arange(Mach_min,Mach_max+increment,increment)]
         t_list = [T_stgn_ratio(i,g)for i in mach_nums]
         p_list = [p_stgn_ratio(i,g) for i in mach_nums]
-        a_list = [astar_ratio(i,g) for i in mach_nums]
+        a_list = [a_star_ratio(M=i, gamma=g) for i in mach_nums]
         rho_list = [rho_stgn_ratio(i,g) for i in mach_nums]
         labl = '\u03B3 = ' + str(g)
 
@@ -165,7 +180,7 @@ def print_stgn_ratios(Mach_min=0,Mach_max=5,increment=.1,gamma = [1.4]):
         mach_nums = [i for i in np.arange(Mach_min,Mach_max+increment,increment)]
         t_list = [T_stgn_ratio(i,g)for i in mach_nums]
         p_list = [p_stgn_ratio(i,g) for i in mach_nums]
-        a_list = [a_star_ratio(i,g) for i in mach_nums]
+        a_list = [a_star_ratio(M=i,gamma=g) for i in mach_nums]
         rho_list = [rho_stgn_ratio(i,g) for i in mach_nums]
 
         labl = '\u03B3 = ' + str(g)
@@ -219,8 +234,8 @@ def area_mach_ratio(M1,M2,gamma=1.4,R=286.9,ds=0):
     """Specify whether you need Mach number or Area, and provide the three knowns ex. get = 'A2', M1, M2, A1 will return the missing Area. Default arguments are gamma = 1.4, R = 286.9, ds = 0. 
 
     """
-    A2 = M1/M2 * ((1 + (gamma-1)/2 * M2**2 )/(1 + (gamma-1)/2 * M1**2 ))**((gamma+1)/(2*(gamma-1))) * np.exp(ds/R)
-    return A2
+    A2_A1 = M1/M2 * ((1 + (gamma-1)/2 * M2**2 )/(1 + (gamma-1)/2 * M1**2 ))**((gamma+1)/(2*(gamma-1))) * np.exp(ds/R)
+    return A2_A1
 
 
 def stgn_pressure(p=[], M=[], p_t=[], gamma=1.4, get='p_t'):
@@ -290,19 +305,26 @@ def shock_tables(Mach_min=1, Mach_max=5, increment=.05, gamma=1.4):
 
 
 
+def shock_mach(M1=[], M2=[], gamma=1.4):
+    if M2==[]:
+        M2 = ((M1**2 + 2/(gamma-1)) / ((2*gamma / (gamma-1)) * M1**2 - 1))**.5
+        return M2
 
+    if M1==[]:
+        M1 = ((-2/(gamma-1) -M2**2 ) / (1- ((2*gamma)/(gamma-1))*M2**2))**.5
+        return M1
 
-def shock_mach(M1=[], gamma=1.4):
-    M2 = ((M1**2 + 2/(gamma-1)) / ((2*gamma / (gamma-1)) * M1**2 - 1))**.5
-    return M2
-
-
-def shock_pressure_ratio(M1=[], gamma=1.4):
+def shock_pressure_ratio(M=[], p2_p1=[], gamma=1.4):
     '''
     Gives p2/p1 after a standing normal shock for a given Mach number
     '''
-    p2_p1 = 2*gamma / (gamma+1) * M1**2 - (gamma-1)/(gamma+1)
-    return p2_p1
+    if p2_p1 == []:
+        p2_p1 = 2*gamma / (gamma+1) * M**2 - (gamma-1)/(gamma+1)
+        return p2_p1
+
+    if M == []:
+        M = ((gamma+1)/(2*gamma) * (p2_p1 + (gamma-1)/(gamma+1)) )**.5
+        return M
 
 
 def shock_temperature_ratio(M1=[], gamma=1.4):
@@ -333,6 +355,17 @@ def shock_stagnation_ratio(M1=[], gamma=1.4):
     term4 = (2*gamma / (gamma+1) * M1**2 - ((gamma-1)/(gamma+1)))**(1/(1-gamma))
     return term3 * term4
 
+
+def shock_oblique_charts(gamma=1.4):
+    
+    #generate values and plot them
+    theta = np.linspace(0,np.pi/2, 100)
+    mach = np.linspace(1,6,100)
+    MACH,THETA = np.meshgrid(mach,theta) 
+    dirac = np.arctan( 2 * 1/np.tan(THETA) * (MACH**2 * np.sin(THETA)**2 - 1 ) / (MACH**2 * (gamma + np.cos(2*THETA)) + 2 ))
+    
+    h = plt.contourf(mach,theta,dirac)
+    plt.show()
 
 
 def func(x,y):

@@ -15,8 +15,8 @@ Vc = a*M
 Vi = ((p_t-p)*(2/(p/(287 * 323.15))))**.5
 
 print('1a) Compressible velocity is %.2f ''m/s' % V1)
-print('1b Incompressible velocity is %.2f ''m/s' % V2)
-print('1c) Compressible velocity is %.2f m/s' % Vc,' incompressible velocity is %.2f ''m/s''' % Vi)
+print('1b) Incompressible velocity is %.2f ''m/s' % V2)
+#print('1c) Compressible velocity is %.2f m/s' % Vc,' incompressible velocity is %.2f ''m/s''' % Vi)
 
 
 ################################problem 2a################################
@@ -97,28 +97,28 @@ print('5b) Throat area is %.6f m^2' % a_star, 'and the exit area is %.6f m^2' % 
 
 ###########################problem 6 #################################
 
-m_dot = 100
-eta = 0.95
-p1 = 300000
-T1 = 673.15
-gamma = 1.35
-cp = 1100
-p2 = 100000
+#m_dot = 100
+#eta = 0.95
+#p1 = 300000
+#T1 = 673.15
+#gamma = 1.35
+#cp = 1100
+#p2 = 100000
 #exhaust gases, so assume air
 #get mdot_astar, divide a_star by mdot_a_starm
-a_star = m_dot / gd.mdot_a_star(p_t=p1, T_t=T1)
-M2s = gd.pressure_mach_ratio(p1=p1, p2=p2, M1=0, get='M2',gamma=gamma)
-A2 = a_star * gd.a_star_ratio(M2s,gamma=gamma)
+#a_star = m_dot / gd.mdot_a_star(p_t=p1, T_t=T1)
+#M2s = gd.pressure_mach_ratio(p1=p1, p2=p2, M1=0, get='M2',gamma=gamma)
+#A2 = a_star * gd.a_star_ratio(M2s,gamma=gamma)
 
-T2s = gd.stgn_temperature(T_t=T1, M=M2s, get='T',gamma=gamma)
-V2s = M2s * gd.sonic_velocity(gamma=gamma,T=T2s)
+#T2s = gd.stgn_temperature(T_t=T1, M=M2s, get='T',gamma=gamma)
+#V2s = M2s * gd.sonic_velocity(gamma=gamma,T=T2s)
 
-T2 = (eta*(cp*T1 - cp*T2s) - cp*T1)/(-cp)
-M2 = gd.stgn_temperature(T_t=T1, T=T2, get='M')
-V2 = M2 * gd.sonic_velocity(gamma=gamma, T=T2)
+#T2 = (eta*(cp*T1 - cp*T2s) - cp*T1)/(-cp)
+#M2 = gd.stgn_temperature(T_t=T1, T=T2, get='M')
+#V2 = M2 * gd.sonic_velocity(gamma=gamma, T=T2)
 
-print('\n')
-print('6a) Throat area is %.2f' % a_star)
-print('6a) Exit area is %.2f' % A2)
-print('6a) Ideal exit mach number and velocity are %.3f' % M2s,' and %.2f m/s' % V2s)
-print('6a) Actual exit mach number and velocity are %.3f' % M2,' and %.2f m/s' % V2)
+#print('\n')
+#print('6a) Throat area is %.2f' % a_star)
+#print('6a) Exit area is %.2f' % A2)
+#print('6a) Ideal exit mach number and velocity are %.3f' % M2s,' and %.2f m/s' % V2s)
+#print('6a) Actual exit mach number and velocity are %.3f' % M2,' and %.2f m/s' % V2)
