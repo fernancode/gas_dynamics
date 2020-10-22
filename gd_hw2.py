@@ -71,12 +71,16 @@ theta = gd.np.arcsin(M1normal/M1)
 #from the oblique shock chart grab dirac for theta and M1 of 2.5
 dirac =  5 * gd.np.pi / 180
 M2 = M2normal/gd.np.sin(theta-dirac)
-T2 = T1 * gd.shock_temperature_ratio(M1)
+T2 = T1 * gd.shock_temperature_ratio(M1normal)
 dirac_degrees = dirac * 180 / gd.np.pi
 
 
 print('3a) Resulting Mach number is %0.2f, ' %M2, 'Temperature is %0.2f K,' % T2 ,'and deflection angle is %0.0f degrees' %dirac_degrees)
-print('3b) This shock wave angle is approximately 53 degrees to divert the flow back to the normal')
+print('3b) The flow deflection is 5 degrees to divert the flow back to the normal')
+
+#TODO: this is wrong, fix
 print('3c) By consulting the isentropc flow tables and seeing that a turn angle of 32.25 degrees could have resulted in a mach number pf 2.22 in region 2, we see that that for a turn of 32.25 + 5 degrees (to return the flow normal to the exit plane) this would result in a mach number of 2.43 for region 3. The resulting pressure is 0.04 bar and the resulting temperature is 68.7 Kelvin')
 print('\n')
 
+
+#problem 4
