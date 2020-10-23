@@ -267,7 +267,7 @@ def stagnation_density_ratio(M, gamma = 1.4):
     return rho_t_ratio
 
 
-def mach_choked_mdot(pt=[], Tt=[], R=286.9, gamma=1.4, metric=True):
+def choked_mdot(pt=[], Tt=[], R=286.9, gamma=1.4, metric=True):
     """Returns the maximum flow rate over A* (m_dot/a_star)
 
     Given stagnation pressure, stagnation temperature, the gas constant, and ratio of specific heats, return the given flow rate per unit A*, or flow rate for a given choked flow area. Default gas constant and ratio of specific heats are for air. 

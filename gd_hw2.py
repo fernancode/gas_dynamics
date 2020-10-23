@@ -7,8 +7,8 @@ a_throat = 10 * .0001   #cm^2 to meters
 #we want 200kPa (p3) to equal p3/pt3 * pt3/pt1 * pt1
 #from rearranging and getting pt3 we can get M2, knowing M2 we can get the area ratio for the third critical
 
-M2 = gd.stgn_pressure(p_t=p_t, p=p_rec, get='M')
-A2_A1 = gd.area_mach_ratio(M1=1, M2=M2)
+M2 = gd.stagnation_pressure(pt=p_t, p=p_rec)
+A2_A1 = gd.mach_area_ratio(M1=1, M2=M2)
 A2 = a_throat * A2_A1
 
 #for a shock to exist at the exit plane, the pressure just after the plane needs to be high enough such that a compression process occurs and causes a normal shock
@@ -19,7 +19,7 @@ p_for_shock = p2_p1_shock * p_rec
 
 #receiver pressure for shock at throat would be such that we are at the first critical
 #p2/p1 = 1, therefore p2 = p2/pt2 * pt2/pt1 * pt1/p1 * p2/p1
-p2_p1 = gd.p_stgn_ratio(M=1)
+p2_p1 = gd.stagnation_pressure_ratio(M=1)
 p2 = p2_p1 * p_t
 
 
@@ -33,16 +33,17 @@ T_t = 300       #kelvin
 p2 = 280       #kpa prior to shock
 M4 = .5
 mdot = 5
-a_star = mdot / gd.mdot_a_star(p_t=p_t*1000, T_t=T_t)
+
+a_star = mdot / gd.choked_mdot(pt=p_t*1000, Tt=T_t)
 #use the pressure ratio to get the mach number and the area reqiured for that accelerated flow
-M2 = gd.stgn_pressure(p=p2, p_t=p_t, get='M')
-A2 = a_star * gd.area_mach_ratio(M1=1, M2=M2)
+M2 = gd.stagnation_pressure(p=p2, pt=p_t)
+A2 = a_star * gd.mach_area_ratio(M1=1, M2=M2)
 #get the pressure ratio required for the shock and get p_rec
 prec_p3 = gd.shock_pressure_ratio(M=M2)
 prec = prec_p3 * p2/p_t * p_t / 1000
 #the mach number after the shock is a function of Mach only, use this to get A2/A1 for M2=.5
 M3 = gd.shock_mach(M1=M2)
-A4 = A2 * gd.area_mach_ratio(M1=M3, M2=M4)
+A4 = A2 * gd.mach_area_ratio(M1=M3, M2=M4)
 M4 = 1.795
 #method 1, assume mach of .5 immediately following shock 
 #M1 = gd.shock_mach(M2=M2)

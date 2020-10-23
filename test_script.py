@@ -48,7 +48,7 @@ print(gd.stagnation_density_ratio(1, gamma=1.5))
 print('\n')
 
 #passed
-print(gd.mach_choked_mdot(pt=100000, Tt=273))
+print(gd.choked_mdot(pt=100000, Tt=273))
 
 #passed
 gd.shock_tables()
