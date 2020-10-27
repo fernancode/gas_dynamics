@@ -466,6 +466,23 @@ def shock_mach_given_angles(theta=[], dirac=[], gamma=1.4):
     return sol[0]
 
 
+def prandtl_meyer_turn(M=[], gamma=1.4):
+    '''Returns the angle through which a flow has turned to reach a Mach #
+
+    Given a Mach # and ratio of specific heats, calculate angle through which a flow has turned to reach the Mach # given. Also known as the Prandtl-Meyer function.
+
+    Parameters:
+    :param M: The Mach #
+    param gamma: The ratio of specific heats
+    '''
+    nu = ((gamma+1)/(gamma-1))**.5 * np.arctan(((M**2-1)*(gamma-1)/(gamma+1))**.5) - np.arctan((M**2-1)**.5)
+    return nu
+
+def prandtl_meyer_mach():
+    '''Returns the Mach number given an angle through which the flow has turned
+    #TODO: make this
+    '''
+
 
 def shock_oblique_charts(Mach_max=6,gamma=1.4):
     '''Generate 2-D Oblique Shock Charts

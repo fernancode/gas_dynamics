@@ -98,7 +98,6 @@ M1 = gd.shock_mach_given_angles(theta=theta1, dirac=dirac)
 M1n = M1 * gd.np.sin(theta1)
 M2n = gd.shock_mach(M1n)
 M2 = M2n / gd.np.sin(theta1-dirac)
-
 #knowing mach 2 and flow deflection, get M3 and beta
 shock_angles = gd.shock_angle(M=M2, dirac=dirac) 
 theta2 = shock_angles[0]
@@ -107,8 +106,40 @@ M2n_p = M2 * gd.np.sin(theta2)
 M3n = gd.shock_mach(M2n_p)
 #flow gets deflected back the other way so add dirac
 M3 = M3n / gd.np.sin(theta2+dirac)
-
+#i believe these answers are more precise than the book way because of the equation solver i used
 p3_p1 = gd.shock_pressure_ratio(M=M1n) * gd.shock_pressure_ratio(M=M2n_p)
 pt3_pt1 = gd.shock_stagnation_ratio(M=M1n) * gd.shock_stagnation_ratio(M=M2n_p)
-print('3a) Mach 3 is %0.2f' %M3,'and beta is %0.2f' %theta2_deg)
-print('3b) The ratio p3/p1 is %0.3f' %p3_p1, 'and pt3/pt1 is %0.3f' %pt3_pt1)
+print('4a) Mach 3 is %0.2f' %M3,'and beta is %0.2f' %theta2_deg)
+print('4b) The ratio p3/p1 is %0.3f' %p3_p1, 'and pt3/pt1 is %0.3f' %pt3_pt1)
+print('\n')
+
+#problem 5
+mu1 = (180 - 142.7) * gd.np.pi/180
+mu2 = 19.2 * gd.np.pi / 180
+M2 = ((1/gd.np.tan(mu2))**2 + 1)**.5
+M1 = ((1/gd.np.tan(mu1))**2 + 1)**.5
+nu1 = gd.prandtl_meyer_turn(M=M1)
+nu2 = gd.prandtl_meyer_turn(M=M2)
+nu = (nu2 - nu1) * 180/gd.np.pi
+theta3 = 180 + nu - 142.7 - 19.2
+print('5a) Mach before: %0.2f' %M1, 'Mach after: %0.2f' %M2)
+print('5b) The flow has been turned %0.2f degrees,' %nu, 'and theta 3 is %0.2f degrees.' %theta3)
+print('\n')
+
+#problem 6
+M1 = 2.28
+theta = gd.np.arctan(1.678/2.000)
+dirac = gd.shock_flow_deflection(M=M1, theta=theta)
+dirac_deg = dirac * 180/gd.np.pi
+M1n = M1 * gd.np.sin(theta)
+M2n = gd.shock_mach(M1n)
+M2 = M2n / gd.np.sin(theta-dirac)
+p2_p1 = gd.shock_pressure_ratio(M1n)
+p2_p_amb = 1.77*p2_p1
+M3 = gd.mach_pressure_ratio(p1=4.14, p2=1, M1=M2,get='M2')
+t3_t1 = gd.shock_temperature_ratio(M1n) * gd.mach_temperature_ratio(T1=1, M1=M2, M2=M3, get='T2')
+
+print('6a) Flow deflection is %0.2f degrees' %dirac_deg)
+print('6b) Mach 2 is %0.2f,' %M2, 'Pressure 2 is %0.2f p_amb' %p2_p_amb)
+print('6c) Because the pressure in region 2 is so much greater, the wave form has to be a mach wave to accelerate the flow and drop the pressure')
+print('6d) Mach 3 is %0.2f' %M3, 'pressure is ambient pressure, and Temperature is %0.2f T1' %t3_t1)
