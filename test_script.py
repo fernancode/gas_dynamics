@@ -58,3 +58,4 @@ gd.shock_tables(range=[1,2], inc=.1, gamma=1.5)
 gd.shock_oblique_charts()
 
 gd.plot_stagnation_ratios()
+

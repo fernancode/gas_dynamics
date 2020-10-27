@@ -1,14 +1,29 @@
 import numpy as np
+
+from scipy.optimize import fsolve
+
 import matplotlib.pyplot as plt
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,AutoMinorLocator)
 
-#TODO: add error handling, automatic switching for get='T1' to get='T2'
 #TODO: add a bunch of values (in a class? object?) for R and gamma
-
 
 #R values for various gases
 R_air = 287
+
+
+def area_dia(dia=[], area=[]):
+    
+    
+    if area == []:
+        area = np.pi *dia**2 / 4
+        return area
+    if dia == []:
+        dia = (area * 4 / np.pi )**.5
+        return dia
+
+
 #TODO: function where i gave any function gas='air' (metric=true) default, and that function in the other functions grabs the R and gamma values from an object that has all of the values for both metric and std.
+
 
 
 def plot_stagnation_ratios(range=[.1,5],inc=.01,gamma=[1.2, 1.3, 1.4]):
@@ -399,6 +414,59 @@ def shock_stagnation_ratio(M=[], gamma=1.4):
     return term3 * term4
 
 
+def shock_flow_deflection(M=[], theta=[], gamma=1.4):
+    '''Returns flow deflection angle from Mach number and Oblique shock angle
+
+    Given the Mach # prior to the oblique shock, the angle of the oblique shock, and the ratio of specific heats, this function returns the angle that the flow is turned. Default ratio of specific heats is for air.
+
+    Parameters:
+    :param M: The Mach # before the shock
+    :param theta: The shock angle
+    :param gamma: The ratio of specific heats
+    '''
+    dirac = np.arctan( 2 * 1/np.tan(theta) * (M**2 * np.sin(theta)**2 - 1 ) / (M**2 * (gamma + np.cos(2*theta)) + 2 ))
+    return dirac
+
+
+def shock_angle(M=[], dirac=[], gamma=1.4):
+    '''Return the shock angle given the Mach # prior to the shock and the deflection angle
+
+    Given the Mach # prior to the oblique shock, the angle of the flow deflection, and the ratio of specific heats, this functions returns the angle that is formed by the shock. Default ratio of specific heats is for air
+
+    Parameters:
+    :param M: The Mach # before the shock
+    :param dirac: The flow deflection angle
+    :param gamma: The ratio of specific heats
+    '''
+
+    def func(theta, M=M, dirac=dirac, gamma=gamma):
+        zero = 2 * 1/np.tan(theta) * (M**2 * np.sin(theta)**2 - 1 ) / (M**2 * (gamma + np.cos(2*theta)) + 2 ) - np.tan(dirac)
+        return zero
+
+    weak = fsolve(func, x0=0.001, args=(M, dirac, gamma))
+    strong = fsolve(func, x0=np.pi/2, args=(M, dirac, gamma))
+    shock_angles = [weak[0],strong[0]]
+    return shock_angles
+
+
+def shock_mach_given_angles(theta=[], dirac=[], gamma=1.4):
+    '''Return the Mach # given the shock angle and flow deflection
+
+    #TODO: function doc string.
+
+    '''
+    def func(M, theta=theta, dirac=dirac, gamma=gamma):
+        '''
+        Zero function for solving for the mach #
+        '''
+        zero = 2 * 1/np.tan(theta) * (M**2 * np.sin(theta)**2 - 1 ) / (M**2 * (gamma + np.cos(2*theta)) + 2 ) - np.tan(dirac)
+        return zero
+
+    sol = fsolve(func, x0=0.001, args=(theta, dirac, gamma))
+    return sol[0]
+
+
+
 def shock_oblique_charts(Mach_max=6,gamma=1.4):
     '''Generate 2-D Oblique Shock Charts
 
@@ -415,8 +483,8 @@ def shock_oblique_charts(Mach_max=6,gamma=1.4):
     #generate values and plot them
     theta = np.linspace(.001,np.pi/2, 1000)
     mach = np.linspace(1,Mach_max,1000)
-    MACH,THETA = np.meshgrid(mach,theta) 
-    dirac = np.arctan( 2 * 1/np.tan(THETA) * (MACH**2 * np.sin(THETA)**2 - 1 ) / (MACH**2 * (gamma + np.cos(2*THETA)) + 2 ))
+    MACH,THETA = np.meshgrid(mach,theta)
+    dirac = shock_flow_deflection(M=MACH, theta=THETA, gamma=gamma) 
     
     theta_deg = []
     [theta_deg.append(n * 180/np.pi) for n in theta]
