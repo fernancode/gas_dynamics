@@ -143,3 +143,4 @@ print('6a) Flow deflection is %0.2f degrees' %dirac_deg)
 print('6b) Mach 2 is %0.2f,' %M2, 'Pressure 2 is %0.2f p_amb' %p2_p_amb)
 print('6c) Because the pressure in region 2 is so much greater, the wave form has to be a mach wave to accelerate the flow and drop the pressure')
 print('6d) Mach 3 is %0.2f' %M3, 'pressure is ambient pressure, and Temperature is %0.2f T1' %t3_t1)
+

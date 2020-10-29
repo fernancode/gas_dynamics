@@ -5,14 +5,35 @@ from scipy.optimize import fsolve
 import matplotlib.pyplot as plt
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,AutoMinorLocator)
 
+
 #TODO: add a bunch of values (in a class? object?) for R and gamma
+
 
 #R values for various gases
 R_air = 287
 
 
 def area_dia(dia=[], area=[]):
+    '''
+    Description
+    -----------
+    Given area or diameter, return the unknown
+
+    Parameters
+    ----------
+    dia: Diameter \n
+    area: Area \n
+
+    Examples
+    --------
+    >>> dia, area = 1, 0.785
+    >>> area_dia(dia=dia)
+    0.7853981633974483
+    >>> dia = area_dia(area=area)
     
+    >>> 
+
+    '''    
     
     if area == []:
         area = np.pi *dia**2 / 4
@@ -29,10 +50,11 @@ def area_dia(dia=[], area=[]):
 def plot_stagnation_ratios(range=[.1,5],inc=.01,gamma=[1.2, 1.3, 1.4]):
     '''Plots Mach # vs T/T, P/Pt, A/A*, rho/rho_t, for a list of specific heat ratios.
 
-    Parameters:
-    :param range: The starting and ending Mach # in a list, ex: [.01,5]
-    :param inc: The increment between min and max
-    :param gamma: A list of the ratio of specific heats to be plotted, ex [1.2, 1.3, 1.4]
+    Parameters
+    ----------
+    range: The starting and ending Mach # in a list, ex: [.01,5] \n
+    inc: The increment between min and max \n
+    gamma: A list of the ratio of specific heats to be plotted, ex [1.2, 1.3, 1.4] \n
     '''
     fig, axs = plt.subplots(2,2)
     title = "Isentropic Stagnation Relations"
@@ -89,12 +111,15 @@ def plot_stagnation_ratios(range=[.1,5],inc=.01,gamma=[1.2, 1.3, 1.4]):
 def stagnation_ratios(range=[0,5], inc=.1, gamma=1.4):
     '''Returns the isentropic flow relation tables for all Mach #'s in the given range.
     
+    Description
+    -----------
     Given a ratio of specific heats, print out the stagnation temperature ratio, stagnation pressure ratio, the area to choked area ratio, and the stagnation density ratio for every incremental Mach #.
 
-    Parameters:
-    :param range: The starting and ending Mach # in a list, ex: [.01,5]
-    :param inc: The increment between min and max
-    :param gamma: The ratio of specific heats
+    Parameters
+    ----------
+    range: The starting and ending Mach # in a list, ex: [.01,5] \n
+    inc: The increment between min and max \n
+    gamma: The ratio of specific heats \n
     '''
     Mach_min = range[0]
     Mach_max = range[1]
@@ -116,11 +141,15 @@ def stagnation_ratios(range=[0,5], inc=.1, gamma=1.4):
 def sonic_velocity(gamma=1.4,R=287,T=273.15):
     '''Returns the local speed of sound.
 
+    Description
+    -----------
     Given a ratio of specific heats, gas constant, and temperature, this function returns the locoal speed of sound.
     
-    :param gamma: The ratio of specific heats.
-    :param R: The gas constant.
-    :param T: The temperature
+    Parameters
+    ----------
+    gamma: The ratio of specific heats. \n
+    R: The gas constant. \n
+    T: The temperature \n
     '''
     a = (gamma*R*T)**.5
     return a
@@ -184,9 +213,10 @@ def mach_area_choked_ratio(M=[], a_ratio=[], gamma = 1.4):
     
     Given the Mach # and the ratio of specific heats, return the ratio of the area at the current Mach # to the area at which Mach # = 1. Default ratio of specific heats is for air.
 
-    Parameters:
-    :param M: Mach Number
-    :param gamma: ratio of specific heats (default 1.4)
+    Parameters
+    ----------
+    M: Mach Number \n
+    gamma: Ratio of specific heats \n
     '''
     a_star_ratio = 1/M * ((1 + (gamma-1)/2 * M**2) / ((gamma+1)/2)) ** ((gamma+1)/(2*(gamma-1)))
     return a_star_ratio
@@ -195,13 +225,16 @@ def mach_area_choked_ratio(M=[], a_ratio=[], gamma = 1.4):
 def stagnation_pressure(p=[], M=[], pt=[], gamma=1.4):
     '''Returns the stagnation pressure given pressure and Mach #.
 
+    Description
+    -----------
     Given a pressure, Mach #, and a ratio of specific heats, return the stagnation pressure. Alternatively, provided two arguments the function will return the missing one. Default ratio of specific heats is for air.
 
-    Parameters:
-    :param pt: The stagnation pressure.
-    :param p: The pressure.
-    :param M: The Mach #
-    :param gamma: The ideal gas constant 
+    Parameters
+    ----------
+    pt: The stagnation pressure. \n
+    p: The pressure. \n
+    M: The Mach # \n
+    gamma: The ideal gas constant \n
     '''
     if pt == []:
         pt = p* ( 1 + (gamma-1)/2 * M**2)** (gamma/(gamma-1))
@@ -217,14 +250,17 @@ def stagnation_pressure(p=[], M=[], pt=[], gamma=1.4):
 
 
 def stagnation_pressure_ratio(M, gamma = 1.4):
-    """Returns the pressure ratio of p / p_t
+    '''Returns the pressure ratio of p / p_t
 
+    Description
+    -----------
     Given a Mach # and ratio of specific heats, return the relation of p / p_t. Default ratio of specific heats is for air.
 
-    Parameters:
-    :param M: The Mach #
-    :param gamma: The ratio of specific heats
-    """
+    Parameters
+    ----------
+    M: The Mach # \n
+    gamma: The ratio of specific heats \n
+    '''
     denom = 1 + (gamma-1)/2 * M**2
     Pt_ratio = (1 / denom ) ** (gamma/(gamma-1))
     return Pt_ratio
@@ -233,13 +269,16 @@ def stagnation_pressure_ratio(M, gamma = 1.4):
 def stagnation_temperature(Tt =[], T=[] , M=[], gamma = 1.4):
     '''Returns the stagnation temperature given temperature and Mach #.
 
+    Description
+    -----------
     Given a temperature, Mach #, and a ratio of specific heats, this function returns the stagnation temperature. Alternatively, provided two arguments the function will return the missing one. Default ratio of specific heats is for air.
 
-    Parameters:
-    :param Tt: The stagnation temperature.
-    :param T: The temperature.
-    :param M: The Mach #
-    :param gamma: The ratio of specific heats
+    Parameters
+    ----------
+    Tt: The stagnation temperature. \n
+    T: The temperature. \n
+    M: The Mach # \n
+    gamma: The ratio of specific heats \n
     '''
 
     if Tt == []:
@@ -256,46 +295,68 @@ def stagnation_temperature(Tt =[], T=[] , M=[], gamma = 1.4):
 
 
 def stagnation_temperature_ratio(M, gamma = 1.4):
-    """Returns the temperature ratio of T / T_t
+    '''Returns the temperature ratio of T / T_t
 
+    Description
+    -----------
     Given a Mach # and ratio of specific heats, return the relation of T / T_t.  Default ratio of specific heats is for air.
 
-    Parameters:
-    :param M: The Mach #
-    :param gamma: The ratio of specific heats
-    """
+    Parameters
+    ----------
+    M: The Mach # \n
+    gamma: The ratio of specific heats \n
+    '''
     
     Tt_ratio = 1 / (1+(gamma-1)/2 *M**2)
     return Tt_ratio
 
 
 def stagnation_density_ratio(M, gamma = 1.4):
-    """Returns the density ratio of rho/ rho_t
+    '''Returns the density ratio of rho/ rho_t
 
+    Description
+    -----------
     Given a Mach # and ratio of specific heats, return the relation of rho / rho_t. Default ratio of specific heats is for air.
 
-    Parameters:
-    :param M: The Mach #
-    :param gamma: The ratio of specific heats
-    """
+    Parameters
+    ----------
+    M: The Mach # \n
+    gamma: The ratio of specific heats \n
+    
+    Examples
+    --------
+
+
+    '''
     rho_t_ratio = (1 / (1 + (gamma-1)/2 * M**2 )) ** (1 / (gamma-1))
     return rho_t_ratio
 
 
 def choked_mdot(pt=[], Tt=[], R=286.9, gamma=1.4, metric=True):
-    """Returns the maximum flow rate over A* (m_dot/a_star)
+    '''Returns the maximum flow rate per unit choked area
+
+    Description
+    -----------
 
     Given stagnation pressure, stagnation temperature, the gas constant, and ratio of specific heats, return the given flow rate per unit A*, or flow rate for a given choked flow area. Default gas constant and ratio of specific heats are for air. 
     
-    Check your units! metric units need to be in Pa
+    Check your units! metric units need to be in Pa \n
     #TODO: figure out what the std units output are
     
-    Parameters:
-    :param pt: The stagnation pressure.
-    :param Tt: The stagnation temperature.
-    :param R: The gas constant J / kg K
-    :param gamma: The ratio of specific heats
-    """
+    Parameters
+    ----------
+    pt: The stagnation pressure. \n
+    Tt: The stagnation temperature. \n
+    R: The gas constant J / kg K \n
+    gamma: The ratio of specific heats \n
+
+    Examples
+    --------
+    >>> mdot = 5 #kg/s
+    >>> mdot_per_area = choked_mdot(1000000, 300)
+    >>> throat_area = mdot / mdot_per_area
+    >>> 
+    '''
     if metric == True:
         mdot_a_star = (((gamma/(R))*(2/(gamma+1))**((gamma+1)/(gamma-1)))**.5 * pt/(Tt**.5))
         return mdot_a_star
@@ -309,12 +370,15 @@ def choked_mdot(pt=[], Tt=[], R=286.9, gamma=1.4, metric=True):
 def shock_tables(range=[1,5], inc=.01, gamma=1.4):
     '''Returns shock tables for a range of Mach #'s.
 
+    Description
+    -----------
     Given a range of Mach #'s and a ratio of specific heats, generate the standing normal shock tables for every incremental Mach # in-between.
 
-    Parameters:
-    :param range: The starting and ending Mach # in a list, ie: [1,5].
-    :param inc: The step size for the tables.
-    :param gamma: The ratio of specific heats
+    Parameters
+    ----------
+    :param range: The starting and ending Mach # in a list, ie: [1,5]. \n
+    :param inc: The step size for the tables. \n
+    :param gamma: The ratio of specific heats \n
     '''
     Mach_min = range[0]
     Mach_max = range[1]
@@ -336,12 +400,15 @@ def shock_tables(range=[1,5], inc=.01, gamma=1.4):
 def shock_mach(M1=[], M2=[], gamma=1.4):
     '''Returns the Mach # after a standing normal shock.
 
+    Description
+    -----------
     Given a starting Mach # M1 and the ratio of specific heats, return the Mach # M2 that immediately follows the shock. If M1 is not specified and M2 is, returns the Mach # prior to the shock. Default ratio of specific heats is for air.
 
-    Parameters:
-    :param M1: The Mach # before the shock
-    :param M2: The Mach # after the shock
-    :param gamma: The ratio of specific heats
+    Parameters
+    ----------
+    M1: The Mach # before the shock \n
+    M2: The Mach # after the shock \n
+    gamma: The ratio of specific heats \n
     '''
     if M2 == []:
         M2 = ((M1**2 + 2/(gamma-1)) / ((2*gamma / (gamma-1)) * M1**2 - 1))**.5
@@ -354,11 +421,14 @@ def shock_mach(M1=[], M2=[], gamma=1.4):
 def shock_pressure_ratio(M=[], p2_p1=[], gamma=1.4):
     '''Returns the pressure ratio after a standing normal shock for a given Mach #
     
+    Description
+    -----------
     Given a starting Mach # and a ratio of specific heats, this function returns the ratio of p2 / p1 across a standing normal shock. If Mach # is not specified and p2_p1 is, function returns Mach #. Default ratio of specific heats is for air.
     
-    Parameters:
-    :param M: The starting Mach #
-    :param gamma: The ratio of specific heats
+    Parameters
+    ----------
+    M: The starting Mach # \n
+    gamma: The ratio of specific heats \n
     '''
     if p2_p1 == []:
         p2_p1 = 2*gamma / (gamma+1) * M**2 - (gamma-1)/(gamma+1)
@@ -372,11 +442,14 @@ def shock_pressure_ratio(M=[], p2_p1=[], gamma=1.4):
 def shock_temperature_ratio(M=[], gamma=1.4):
     '''Returns the temperature ratio after a standing normal shock for a given Mach number
     
+    Description
+    -----------
     Given a starting Mach # and a ratio of specific heats, this function returns the ratio of T2 / T1 across a standing normal shock. Default ratio of specific heats is for air.
     
-    Parameters:
-    :param M: The starting Mach #
-    :param gamma: The ratio of specific heats
+    Parameters
+    ----------
+    M: The starting Mach # \n
+    gamma: The ratio of specific heats \n
     '''
     term1 = (1 + (gamma-1)/2 * M**2)
     term2 = (2*gamma)/(gamma-1) * M**2 -1
@@ -387,11 +460,14 @@ def shock_temperature_ratio(M=[], gamma=1.4):
 def shock_dv_a(M=[], gamma=1.4):
     '''Returns change in velocity over the local speed of sound after a normal shock.
     
+    Description
+    ----------
     Given a starting Mach # and a ratio of specific heats, this function returns the velocity change across a standing normal shock divided by the local speed of sound. Default ratio of specific heats is for air.
     
-    Parameters:
-    :param M: The starting Mach #
-    :param gamma: The ratio of specific heats
+    Parameters
+    ----------
+    M: The starting Mach # \n
+    gamma: The ratio of specific heats \n
     '''
     dv_a = 2/(gamma+1) * (M**2 -1)/ M
     return dv_a
@@ -400,12 +476,15 @@ def shock_dv_a(M=[], gamma=1.4):
 def shock_stagnation_ratio(M=[], gamma=1.4):
     '''Returns stagnation pressure ratio after a normal shock.
     
+    Description
+    -----------
     Given a starting Mach # and a ratio of specific heats, this function returns the ratio of pt2/pt1 across a standing normal shock. Default ratio of specific heats is for air.
     
     
-    Parameters:
-    :param M: The starting Mach #
-    :param gamma: The ratio of specific heats
+    Parameters
+    ----------
+    M: The starting Mach # \n
+    gamma: The ratio of specific heats \n
     '''
     term1 = (gamma+1)/2*M**2
     term2 = 1 + (gamma-1)/2 * M**2
@@ -417,12 +496,15 @@ def shock_stagnation_ratio(M=[], gamma=1.4):
 def shock_flow_deflection(M=[], theta=[], gamma=1.4):
     '''Returns flow deflection angle from Mach number and Oblique shock angle
 
+    Description
+    -----------
     Given the Mach # prior to the oblique shock, the angle of the oblique shock, and the ratio of specific heats, this function returns the angle that the flow is turned. Default ratio of specific heats is for air.
 
-    Parameters:
-    :param M: The Mach # before the shock
-    :param theta: The shock angle
-    :param gamma: The ratio of specific heats
+    Parameters
+    ----------
+    M: The Mach # before the shock \n
+    theta: The shock angle \n
+    gamma: The ratio of specific heats \n
     '''
     dirac = np.arctan( 2 * 1/np.tan(theta) * (M**2 * np.sin(theta)**2 - 1 ) / (M**2 * (gamma + np.cos(2*theta)) + 2 ))
     return dirac
@@ -431,12 +513,15 @@ def shock_flow_deflection(M=[], theta=[], gamma=1.4):
 def shock_angle(M=[], dirac=[], gamma=1.4):
     '''Return the shock angle given the Mach # prior to the shock and the deflection angle
 
+    Description
+    -----------
     Given the Mach # prior to the oblique shock, the angle of the flow deflection, and the ratio of specific heats, this functions returns the angle that is formed by the shock. Default ratio of specific heats is for air
 
-    Parameters:
-    :param M: The Mach # before the shock
-    :param dirac: The flow deflection angle
-    :param gamma: The ratio of specific heats
+    Parameters
+    ----------
+    M: The Mach # before the shock \n
+    dirac: The flow deflection angle \n
+    gamma: The ratio of specific heats \n
     '''
 
     def func(theta, M=M, dirac=dirac, gamma=gamma):
@@ -469,11 +554,14 @@ def shock_mach_given_angles(theta=[], dirac=[], gamma=1.4):
 def prandtl_meyer_turn(M=[], gamma=1.4):
     '''Returns the angle through which a flow has turned to reach a Mach #
 
+    Description
+    -----------
     Given a Mach # and ratio of specific heats, calculate angle through which a flow has turned to reach the Mach # given. Also known as the Prandtl-Meyer function.
 
-    Parameters:
-    :param M: The Mach #
-    param gamma: The ratio of specific heats
+    Parameters
+    ----------
+    M: The Mach # \n
+    gamma: The ratio of specific heats \n
     '''
     nu = ((gamma+1)/(gamma-1))**.5 * np.arctan(((M**2-1)*(gamma-1)/(gamma+1))**.5) - np.arctan((M**2-1)**.5)
     return nu
@@ -483,18 +571,23 @@ def prandtl_meyer_mach():
     #TODO: make this
     '''
 
+    
+
 
 def shock_oblique_charts(Mach_max=6,gamma=1.4):
     '''Generate 2-D Oblique Shock Charts
 
+    Description
+    -----------
     Displays two plots,
     1) Mach # versus oblique shock wave angle and the corresponding deflection angles for each case.
     2) Mach # versus resulting Mach # after an oblique shock and the corresponding deflection angles for each case. 
     Default ratio of specific heats is for air.
     
-    Parameters:
-    :param Mach_max: The upper limit Mach # for the chart
-    :param gamma: The ratio of specific heats
+    Parameters
+    ----------
+    Mach_max: The upper limit Mach # for the chart \n
+    gamma: The ratio of specific heats \n
     '''
 
     #generate values and plot them

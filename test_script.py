@@ -55,7 +55,7 @@ gd.shock_tables()
 gd.shock_tables(range=[1,2], inc=.1, gamma=1.5)
 
 #passed
-gd.shock_oblique_charts()
+gd.shock_oblique_charts(gamma=1.5)
 
 gd.plot_stagnation_ratios()
 
