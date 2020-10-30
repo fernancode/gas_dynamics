@@ -54,6 +54,9 @@ def fluid(fluid=[], metric=True, R=[], gamma=[]):
             gamma, R = 1.4, 260
         elif fluid == 'water' or fluid == 'steam':
             gamma, R = 1.33, 461
+        elif fluid == 'custom':
+            gamma = float(input('gamma: '))
+            R = float(input('R (J/kg K): '))
         else:
             gamma, R = 1.4, 287
         return gamma, R
@@ -288,7 +291,7 @@ def pressure_from_mach_ratio(M1=[], M2=[], p1=[], ds=0, gas='air', metric=True):
 
     Description
     -----------
-    Given the Mach #'s in the two regions and the pressure in one, return the missing pressure. Default arguments are for air and isentropic.
+    Given the Mach #s in two regions and the pressure in one, return the missing pressure from the second region. Default arguments are for air and isentropic flow.
 
     Parameters:
     M1: Mach # in region 1 \n
@@ -315,7 +318,7 @@ def mach_from_pressure_ratio(p1=[], p2=[], M1=[], ds=0, gas='air', metric=True):
 
     Description
     -----------
-    Given the local pressure in two regions and the mach number in one, return the Mach # in the missing region. Default arguments are for air and isentropic.
+    Given the local pressure in two regions and the Mach # in one, return the missing Mach # in the second region. Default arguments are for air and isentropic flow.
 
     Parameters:
     p1: Pressure in region 1 \n
@@ -342,6 +345,7 @@ def temperature_from_mach_ratio(M1=[], M2=[], T1=[], gas='air', metric=True):
 
     Description
     -----------
+    Given the local mach # in two regions and the temperature number in one, return the missing temperature from the second region. Default arguments are for air.
 
     Parameters
     ----------
@@ -368,6 +372,7 @@ def mach_from_temperature_ratio(T1=[], T2=[], M1=[], gas='air', metric=True):
 
     Description
     -----------
+    Given the local temperatures in two regions and the mach # in one, return the missing mach # from the second region. Default arguments are for air..
 
     Parameters
     ----------
@@ -418,12 +423,22 @@ def mach_area_ratio(M1=[], M2=[], gas='air', ds=0, metric=True):
 def mach_area_choked_ratio(M=[], a_ratio=[], gas='air', metric=True):
     '''Returns the ratio of A / A* given the Mach #.
     
-    Given the Mach # and the ratio of specific heats, return the ratio of the area at the current Mach # to the area at which Mach # = 1. Default ratio of specific heats is for air.
+    Description
+    -----------
+    Given the Mach # and the ratio of specific heats, return the area ratio of the Mach # given to M = 1.
 
     Parameters
     ----------
     M: Mach Number \n
     gamma: Ratio of specific heats \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> A_Astar =gd.mach_area_choked_ratio(M=3)
+    >>> A_Astar
+    4.23456790123457
+    >>>
     '''
     gamma, R = fluid(gas, metric)
     a_star_ratio = 1/M * ((1 + (gamma-1)/2 * M**2) / ((gamma+1)/2)) ** ((gamma+1)/(2*(gamma-1)))
@@ -443,6 +458,17 @@ def stagnation_pressure(p=[], M=[], pt=[], gas='air', metric=True):
     p: The pressure. \n
     M: The Mach # \n
     gamma: The ideal gas constant \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> pt = gd.stagnation_pressure(p=10, M=1)
+    >>> pt
+    18.92929158737854
+    >>> M = gd.stagnation_pressure(p=10, pt=pt)
+    >>> M
+    1.0
+    >>>
     '''
     gamma, R = fluid(gas, metric)
     if pt == []:
@@ -469,6 +495,14 @@ def stagnation_pressure_ratio(M, gas='air', metric=True):
     ----------
     M: The Mach # \n
     gamma: The ratio of specific heats \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> p_pt = gd.stagnation_pressure_ratio(M=3)
+    >>> p_pt
+    0.027223683703862817
+    >>>
     '''
     gamma, R = fluid(gas, metric)
     denom = 1 + (gamma-1)/2 * M**2
@@ -489,6 +523,16 @@ def stagnation_temperature(Tt =[], T=[] , M=[], gas='air', metric=True):
     T: The temperature. \n
     M: The Mach # \n
     gamma: The ratio of specific heats \n
+
+    Examples
+    --------
+    >>> Tt = gd.stagnation_temperature(T=300, M=1)
+    >>> Tt
+    360.0
+    >>> M = gd.stagnation_temperature(T=300, Tt=Tt)
+    >>> M 
+    1.0
+    >>>
     '''
     gamma, R = fluid(gas, metric)
     if Tt == []:
@@ -548,8 +592,7 @@ def choked_mdot(pt=[], Tt=[], gas='air', metric=True):
 
     Description
     -----------
-
-    Given stagnation pressure, stagnation temperature, the gas constant, and ratio of specific heats, return the given flow rate per unit A*, or flow rate for a given choked flow area. Default gas constant and ratio of specific heats are for air. 
+    Given stagnation pressure, stagnation temperature, and the fluid, return the flow rate per unit choked area. Default fluid is air. 
     
     Check your units! metric units need to be in Pa \n
     #TODO: figure out what the std units output are
@@ -564,9 +607,13 @@ def choked_mdot(pt=[], Tt=[], gas='air', metric=True):
     Examples
     --------
     >>> mdot = 5 #kg/s
-    >>> mdot_per_area = choked_mdot(1000000, 300)
+    >>> mdot_per_area = gd.choked_mdot(1000000, 300) #units are in Pascals
+    >>> mdot_per_area
+    2333.558560606226
     >>> throat_area = mdot / mdot_per_area
-    >>> 
+    >>> throat_area             #units are in meters squared
+    0.0021426503214477164
+    >>>
     '''
     gamma, R = fluid(gas, metric)
     if metric == True:
@@ -591,6 +638,24 @@ def shock_tables(range=[1,5], inc=.01, gas='air', metric=True):
     :param range: The starting and ending Mach # in a list, ie: [1,5]. \n
     :param inc: The step size for the tables. \n
     :param gamma: The ratio of specific heats \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> gd.shock_tables(range=[1,2], inc=.1)
+    Normal Shock Parameters for γ = 1.4
+    M: 1.00   |   M2: 1.0000   |    p2/p1: 1.0000   |    T2/T1: 1.0000   |   dV/a: 0.0000   |   pt2/pt1: 1.000000
+    M: 1.10   |   M2: 0.9118   |    p2/p1: 1.2450   |    T2/T1: 1.0649   |   dV/a: 0.1591   |   pt2/pt1: 0.998928
+    M: 1.20   |   M2: 0.8422   |    p2/p1: 1.5133   |    T2/T1: 1.1280   |   dV/a: 0.3056   |   pt2/pt1: 0.992798
+    M: 1.30   |   M2: 0.7860   |    p2/p1: 1.8050   |    T2/T1: 1.1909   |   dV/a: 0.4423   |   pt2/pt1: 0.979374
+    M: 1.40   |   M2: 0.7397   |    p2/p1: 2.1200   |    T2/T1: 1.2547   |   dV/a: 0.5714   |   pt2/pt1: 0.958194
+    M: 1.50   |   M2: 0.7011   |    p2/p1: 2.4583   |    T2/T1: 1.3202   |   dV/a: 0.6944   |   pt2/pt1: 0.929787
+    M: 1.60   |   M2: 0.6684   |    p2/p1: 2.8200   |    T2/T1: 1.3880   |   dV/a: 0.8125   |   pt2/pt1: 0.895200
+    M: 1.70   |   M2: 0.6405   |    p2/p1: 3.2050   |    T2/T1: 1.4583   |   dV/a: 0.9265   |   pt2/pt1: 0.855721   
+    M: 1.80   |   M2: 0.6165   |    p2/p1: 3.6133   |    T2/T1: 1.5316   |   dV/a: 1.0370   |   pt2/pt1: 0.812684
+    M: 1.90   |   M2: 0.5956   |    p2/p1: 4.0450   |    T2/T1: 1.6079   |   dV/a: 1.1447   |   pt2/pt1: 0.767357
+    M: 2.00   |   M2: 0.5774   |    p2/p1: 4.5000   |    T2/T1: 1.6875   |   dV/a: 1.2500   |   pt2/pt1: 0.720874
+    >>> 
     '''
     Mach_min = range[0]
     Mach_max = range[1]
@@ -623,6 +688,16 @@ def shock_mach(M1=[], M2=[], gas='air', metric=True):
     M1: The Mach # before the shock \n
     M2: The Mach # after the shock \n
     gamma: The ratio of specific heats \n
+
+    Examples
+    --------
+    >>> M2 = gd.shock_mach(M1=1.5) 
+    >>> M2
+    0.7010887416930995
+    >>> M1 = gd.shock_mach(M2)
+    >>> M1
+    1.4999999999999998
+    >>>
     '''
     gamma, R = fluid(gas, metric)
     if M2 == []:
@@ -644,6 +719,12 @@ def shock_pressure_ratio(M=[], p2_p1=[], gas='air', metric=True):
     ----------
     M: The starting Mach # \n
     gamma: The ratio of specific heats \n
+
+    Examples
+    --------
+    
+
+
     '''
     gamma, R = fluid(gas, metric)
     if p2_p1 == []:
