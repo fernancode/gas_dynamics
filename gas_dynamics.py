@@ -1,7 +1,5 @@
 import numpy as np
-
 from scipy.optimize import fsolve
-
 import matplotlib.pyplot as plt
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,AutoMinorLocator)
 
@@ -20,10 +18,11 @@ def fluid(fluid=[], metric=True, R=[], gamma=[]):
 
     Examples
     --------
-    >>> R,gamma = fluid('gas')
-    >>> print(gamma, R)
-    1.4 287
-    >>>
+    >>> import gas_dynamics as gd
+    >>> R, gamma = gd.fluid(fluid='Nitrogen') 
+    >>> R, gamma
+    (1.4, 296)
+    >>>       
     '''
     if R or gamma != []:
         return gamma, R
@@ -99,13 +98,15 @@ def area_dia(dia=[], area=[]):
 
     Examples
     --------
-    >>> dia, area = 1, 0.785
-    >>> area_dia(dia=dia)
+    >>> import gas_dynamics as gd
+    >>> area = gd.area_dia(dia=1)    
+    >>> area
     0.7853981633974483
-    >>> dia = area_dia(area=area)
+    >>> dia = gd.area_dia(area=area)
+    >>> dia 
     1.0
     >>>
-    '''    
+    '''
     if area == []:
         area = np.pi *dia**2 / 4
         return area
@@ -125,6 +126,11 @@ def plot_stagnation_ratios(range=[.1,5],inc=.01, gasses=['air','methane','argon'
     range: The starting and ending Mach # in a list, ex: [.01,5] \n
     inc: The increment between min and max \n
     gamma: A list of the gasses to be plotted, ex ['air','methane','argon'] \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> gd.plot_stagnation_ratios()
     '''
     fig, axs = plt.subplots(2,2)
     title = "Isentropic Stagnation Relations"
@@ -190,6 +196,23 @@ def stagnation_ratios(range=[0,5], inc=.1, gas='air'):
     range: The starting and ending Mach # in a list, ex: [.01,5] \n
     inc: The increment between min and max \n
     gas: The gas in question \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> gd.stagnation_ratios(range=[0,2], inc=.2, gas='nitrogen')  
+    M: 0.000   |   P/Pt: 1.000    |    T/Tt: 1.000    |    A/A*: inf    |   rho/rho_t: 1.000
+    M: 0.200   |   P/Pt: 0.972    |    T/Tt: 0.992    |    A/A*: 2.964    |   rho/rho_t: 0.980
+    M: 0.400   |   P/Pt: 0.896    |    T/Tt: 0.969    |    A/A*: 1.590    |   rho/rho_t: 0.924
+    M: 0.600   |   P/Pt: 0.784    |    T/Tt: 0.933    |    A/A*: 1.188    |   rho/rho_t: 0.840
+    M: 0.800   |   P/Pt: 0.656    |    T/Tt: 0.887    |    A/A*: 1.038    |   rho/rho_t: 0.740
+    M: 1.000   |   P/Pt: 0.528    |    T/Tt: 0.833    |    A/A*: 1.000    |   rho/rho_t: 0.634
+    M: 1.200   |   P/Pt: 0.412    |    T/Tt: 0.776    |    A/A*: 1.030    |   rho/rho_t: 0.531
+    M: 1.400   |   P/Pt: 0.314    |    T/Tt: 0.718    |    A/A*: 1.115    |   rho/rho_t: 0.437
+    M: 1.600   |   P/Pt: 0.235    |    T/Tt: 0.661    |    A/A*: 1.250    |   rho/rho_t: 0.356
+    M: 1.800   |   P/Pt: 0.174    |    T/Tt: 0.607    |    A/A*: 1.439    |   rho/rho_t: 0.287
+    M: 2.000   |   P/Pt: 0.128    |    T/Tt: 0.556    |    A/A*: 1.688    |   rho/rho_t: 0.230
+    >>>
     '''
     gamma, R = fluid(gas)
 
@@ -224,69 +247,168 @@ def sonic_velocity(gas='air' ,metric=True, T=273.15):
 
     Examples
     --------
+    >>> import gas_dynamics as gd
     >>> gd.sonic_velocity('air',T=500)
     448.2186966202994
-    >>> 
+    >>> gd.sonic_velocity(gas='argon', T=300)
     '''
     gamma, R = fluid(gas, metric)
     a = (gamma*R*T)**.5
     return a
 
 
-#TODO: edit meee
-def entropy_produced(pt1=[], pt2=[], R=[], metric=True):
+def entropy_produced(pt1=[], pt2=[], gas='air', metric=True):
+    '''Return the change in specific entropy from the stagnation pressure ratio
+
+    Description
+    -----------
+    Given two stagnation pressures and the fluid, determine the entropy produced per unit mass
+
+    Parameters
+    ----------
+    pt1: Stagnation pressure in region 1 \n
+    pt2: Stagnation pressure in region 2 \n
+    gas: The fluid \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> gd.entropy_produced(pt1=10, pt2=9, gas='air')
+    30.238467993796142 #J / kg K
+    >>> 
+    '''
+    
     gamma, R = fluid(gas, metric)   
     ds = -R*np.log(pt2/pt1)
     return ds
 
 
-def mach_pressure_ratio(p1=[],p2=[],M1=[],M2=[],get='p2',gas='air',ds=0, metric=True):
-    '''
-    #TODO: edit this docstring
-     Specify whether you need Mach number or Pressure, and provide the three knowns ex. get = 'P2', M1, M2, P1 will return the missing pressure. default arguments are gamma = 1.4, R = 286 , ds = 0
+def pressure_from_mach_ratio(M1=[], M2=[], p1=[], ds=0, gas='air', metric=True):
+    '''Return the pressure given a starting pressure and the two Mach #s
 
-    '''
-    gamma, R = fluid(gas, metric)
+    Description
+    -----------
+    Given the Mach #'s in the two regions and the pressure in one, return the missing pressure. Default arguments are for air and isentropic.
 
-    if get == 'p2':
-        p2 = p1 * ((1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2))**(gamma/(gamma-1)) * np.exp(-ds/R)
-        return p2
+    Parameters:
+    M1: Mach # in region 1 \n
+    M2: Mach # in region 2 \n
+    p1: Pressure in region 1 \n
+    ds: Change in entropy, if any \n
+    gas: The fluid \n
 
-    elif get =='M2':
-        M2 = (((p1/p2 * np.exp(ds/R))**((gamma-1)/gamma) * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
-        return M2
-
-    elif get == 'ds':
-        ds = R * np.log( p1/p2 * ((1 + (gamma-1)/2 * M1**2 )/(1 + (gamma-1)/2 * M2**2))**(gamma/(gamma-1)))
-        return ds
-    else:
-        print('Incorrect argument')
-
-
-def mach_temperature_ratio(T1=[], T2=[], M1=[], M2=[], get='T2', gas='air', metric=True):
-    '''
-    #TODO:edit this docstring
-    Specify whether you need Mach number or Temperature, and provide the three knowns ex. get = 'T2', M1, M2, T1 will return the missing temperature. Default arguments are gamma = 1.4
-
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> p2 = gd.pressure_from_mach_ratio(M1=1, M2=2, p1=10)  
+    >>> p2
+    2.4192491286747444
+    >>>
     '''
     gamma, R = fluid(gas, metric)
-
-    if get == 'T2':
-        T2 = T1 * (1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2)
-        return T2
-
-    elif get == 'M2':
-        M2 = (( T1/T2 * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
-        return M2
-
-    else:
-        print('Incorrect argument')
+    p2 = p1 * ((1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2))**(gamma/(gamma-1)) * np.exp(-ds/R)
+    return p2
 
 
-def mach_area_ratio(M1, M2, gas='air', ds=0, metric=True):
+def mach_from_pressure_ratio(p1=[], p2=[], M1=[], ds=0, gas='air', metric=True):
+    '''Return the Mach # given a starting Mach # and the two local pressures
+
+    Description
+    -----------
+    Given the local pressure in two regions and the mach number in one, return the Mach # in the missing region. Default arguments are for air and isentropic.
+
+    Parameters:
+    p1: Pressure in region 1 \n
+    p2: Pressure in region 2 \n
+    M1: Mach # in region 1 \n
+    ds: Change in entropy, if any \n
+    gas: The fluid \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> M2 = gd.mach_from_pressure_ratio(p1=10, p2=2, M1=1) 
+    >>> M2
+    2.1220079294384067
+    >>>
     '''
-    #TODO:edit this docstring
+    gamma, R = fluid(gas, metric)
+    M2 = (((p1/p2 * np.exp(ds/R))**((gamma-1)/gamma) * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
+    return M2
 
+
+def temperature_from_mach_ratio(M1=[], M2=[], T1=[], gas='air', metric=True):
+    '''Return the temperature given a starting temperature and the two Mach #s
+
+    Description
+    -----------
+
+    Parameters
+    ----------
+    M1: Mach # in region 1 \n
+    M2: Mach # in region 2 \n
+    T1: Temperature in region 1 \n
+    gas: The fluid \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> T2 = gd.temperature_from_mach_ratio(M1=1, M2=2, T1=297.15) 
+    >>> T2
+    198.10000000000002
+    >>>
+    '''
+    gamma, R = fluid(gas, metric)
+    T2 = T1 * (1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2)
+    return T2
+
+
+def mach_from_temperature_ratio(T1=[], T2=[], M1=[], gas='air', metric=True):
+    '''Return the Mach # given a starting Mach # and the two local temperatures
+
+    Description
+    -----------
+
+    Parameters
+    ----------
+    T1: Temperature in region 1 \n
+    T2: Temperature in region 2 \n
+    M1: Mach # in region 1 \n
+    gas: The fluid \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> M2 = gd.mach_from_temperature_ratio(T1=300, T2=150, M1=1)
+    >>> M2
+    2.6457513110645907
+    >>>
+    '''
+    gamma, R = fluid(gas, metric)
+    M2 = (( T1/T2 * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
+    return M2
+
+
+def mach_area_ratio(M1=[], M2=[], gas='air', ds=0, metric=True):
+    '''Return the area ratio given the two Mach #s
+
+    Description
+    -----------
+
+    Parameters
+    ----------
+    M1: Mach # in region 1 \n
+    M2: Mach # in region 2 \n
+    gas: The fluid \n
+    ds: Entropy produced, if any \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> A2_A1 = gd.mach_area_ratio(M1=1.5, M2=2.5)
+    >>> A2_A1
+    2.241789331255894   #area ratio
+    >>>
     '''
     gamma, R = fluid(gas, metric)
     A2_A1 = M1/M2 * ((1 + (gamma-1)/2 * M2**2 )/(1 + (gamma-1)/2 * M1**2 ))**((gamma+1)/(2*(gamma-1))) * np.exp(ds/R)
