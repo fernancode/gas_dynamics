@@ -722,8 +722,11 @@ def shock_pressure_ratio(M=[], p2_p1=[], gas='air', metric=True):
 
     Examples
     --------
-    
-
+    >>> import gas_dynamics as gd
+    >>> p2_p1 = gd.shock_pressure_ratio(M=1.5) 
+    >>> p2_p1   
+    2.4583333333333335
+    >>>
 
     '''
     gamma, R = fluid(gas, metric)
@@ -747,6 +750,14 @@ def shock_temperature_ratio(M=[], gas='air', metric=True):
     ----------
     M: The starting Mach # \n
     gamma: The ratio of specific heats \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> T2_T1 = gd.shock_temperature_ratio(M=1.5)
+    >>> T2_T1
+    1.320216049382716
+    >>>
     '''
     gamma, R = fluid(gas, metric)
     term1 = (1 + (gamma-1)/2 * M**2)
@@ -798,16 +809,26 @@ def shock_flow_deflection(M=[], theta=[], gas='air', metric=True):
 
     Description
     -----------
-    Given the Mach # prior to the oblique shock, the angle of the oblique shock, and the ratio of specific heats, this function returns the angle that the flow is turned. Default ratio of specific heats is for air.
+    Given the Mach # prior to the oblique shock, the angle of the oblique shock in degrees, and the ratio of specific heats, this function returns the angle that the flow is turned. Default ratio of specific heats is for air.
 
     Parameters
     ----------
     M: The Mach # before the shock \n
-    theta: The shock angle \n
+    theta: The shock angle in degrees \n
     gamma: The ratio of specific heats \n
+    
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> deflect = gd.shock_flow_deflection(M=2, theta = 22.5)
+    >>> deflect
+    -10.856560004139958
+    >>>        
     '''
     gamma, R = fluid(gas, metric)
+    theta = theta * np.pi / 180 #degrees to radians
     dirac = np.arctan( 2 * 1/np.tan(theta) * (M**2 * np.sin(theta)**2 - 1 ) / (M**2 * (gamma + np.cos(2*theta)) + 2 ))
+    dirac = dirac * 180 / np.pi
     return dirac
 
 
@@ -821,9 +842,10 @@ def shock_angle(M=[], dirac=[], gas='air', metric=True):
     Parameters
     ----------
     M: The Mach # before the shock \n
-    dirac: The flow deflection angle \n
+    dirac: The flow deflection angle in degrees\n
     gamma: The ratio of specific heats \n
     '''
+    dirac = dirac * np.pi / 180
     gamma, R = fluid(gas, metric)
     def func(theta, M=M, dirac=dirac, gamma=gamma):
         zero = 2 * 1/np.tan(theta) * (M**2 * np.sin(theta)**2 - 1 ) / (M**2 * (gamma + np.cos(2*theta)) + 2 ) - np.tan(dirac)
@@ -831,17 +853,19 @@ def shock_angle(M=[], dirac=[], gas='air', metric=True):
 
     weak = fsolve(func, x0=0.001, args=(M, dirac, gamma))
     strong = fsolve(func, x0=np.pi/2, args=(M, dirac, gamma))
-    shock_angles = [weak[0],strong[0]]
+    shock_angles = [weak[0] * 180/np.pi , strong[0] * 180/np.pi]
     return shock_angles
 
 
 def shock_mach_given_angles(theta=[], dirac=[], gas='air', metric=True):
     '''Return the Mach # given the shock angle and flow deflection
 
-    #TODO: function doc string.
 
     '''
     gamma, R = fluid(gas, metric)
+    theta = theta * np.pi / 180
+    dirac = dirac * np.pi / 180
+
     def func(M, theta=theta, dirac=dirac, gamma=gamma):
         '''
         Zero function for solving for the mach #
@@ -894,19 +918,19 @@ def shock_oblique_charts(Mach_max=6, gas='air', metric=True):
     '''
     gamma, R = fluid(gas, metric)
     #generate values and plot them
-    theta = np.linspace(.001,np.pi/2, 1000)
+    theta = np.linspace(.001,90, 1000)
     mach = np.linspace(1,Mach_max,1000)
     MACH,THETA = np.meshgrid(mach,theta)
     dirac = shock_flow_deflection(M=MACH, theta=THETA, gas=gas) 
     
-    theta_deg = []
-    [theta_deg.append(n * 180/np.pi) for n in theta]
-    dirac_deg=[]
-    [dirac_deg.append(n*180/np.pi) for n in dirac]
+   # theta_deg = []
+  #  [theta_deg.append(n * 180/np.pi) for n in theta]
+ #   dirac_deg=[]
+#    [dirac_deg.append(n*180/np.pi) for n in dirac]
     
     fig, (ax1,ax2) = plt.subplots(1,2)
     levels=[5,10,15,20,25,30,35,40]
-    h = ax1.contour(mach,theta_deg,dirac_deg,levels=levels,cmap='tab10')
+    h = ax1.contour(mach,theta,dirac,levels=levels,cmap='tab10')
     ax1.clabel(h, inline =1, fontsize=10)
     minor_ticks_mach = np.arange(1,Mach_max+.1,.1)
     minor_ticks_theta = np.arange(0,91,1)

@@ -16,9 +16,7 @@ R (J/kg K): 400
 >>> M2
 0.803783189504693
 >>>
-
 ```
-
 
 
 Generate the isentropic flow tables for a range of Mach #s and for a given gas.
@@ -55,10 +53,10 @@ M: 5.100   |   P/Pt: 0.002    |    T/Tt: 0.161    |    A/A*: 27.070    |   rho/r
 ```
 
 
-Plotting Stagnation relations versus mach number for different gammas. Arguments are min and max mach numbers, increment, and a list of gammas. Default valules are Mach_min =.01, Mach_max = 5, increment = .1, and gamma = [1.4]
+Plotting Stagnation relations versus mach number for different gammas. Arguments are the mach number range, increment, and a list of gasses. Default valules are range = [].01, 5], inc=.1, and gasses = ['air','methane','argon']
 
 ```
-plot_stgn_ratios(gamma = [1.2,1.4,1.6,1.8])
+plot_stgn_ratios()
 ```
 ![Stagnation_plots](https://github.com/fernancode/gas_dynamics/blob/master/plot_ratios.png)
 
@@ -112,7 +110,7 @@ Some miscellaneous valuable functions are also included to calculate flow rates 
 
 
 Shocks
-Determine the Mach number before and after a normal shock
+Determine the Mach # before and after a normal shock
 ```
 >>> M2 = gd.shock_mach(M1=1.5) 
 >>> M2
@@ -143,10 +141,28 @@ M: 2.00   |   M2: 0.5774   |    p2/p1: 4.5000   |    T2/T1: 1.6875   |   dV/a: 1
 ```
 
 
+Extremely useful in solving flow deflection problems are the oblique shock charts, so those are provided. For more precise solutions, equation solvers are embedded in the functions to find the exact values for the strong and weak shock solutions.
 
-Because the following formulas 
+```
+>>> deflect = gd.shock_flow_deflection(M=2, theta = 22.5)
+>>> deflect
+-10.856560004139958
+```
+Get the strong and weak shock solution for a flow deflection
+```
+>>> shocks = gd.shock_angle(M=2, dirac = -10) 
+>>> shocks
+[23.014012220565785, 96.29991962425305]
+>>> 
+```
+Solve for the Mach number
+```
+>>> M = gd.shock_mach_given_angles(theta=22.5, dirac=10) 
+>>> M
+3.9293486839798955
+>>>
+```
+
 
 <img src="https://render.githubusercontent.com/render/math?math=$\frac{T_{2}}{T_{1}} = \frac{1 + \frac{\gamma -1}{2} M_{1}^2} {1 + \frac{\gamma -1}{2} M_{2}^2}$">
 <img src="https://render.githubusercontent.com/render/math?math=$\frac{P_{2}}{P_{1}} = \left(\frac{1 + \frac{\gamma -1}{2} M_{1}^2} {1 + \frac{\gamma -1}{2} M_{2}^2}\right)^\frac{\gamma}{\gamma-1} e^\frac{\triangle s}{R}$">
-
-are used so often to either solve for temperature, pressure, or Mach number, the user is given the option to specify what they are looking for, be it temperature or pressure, or Mach number.
