@@ -4,15 +4,15 @@ Gas Dynamics equations, table generators, oblique shock chart generators, and mo
 Welcome to my gas dynamics library. To get started as quickly as possible, copy the gas_dynamics.py file into your working directory and import the library. Every function contains an argument to specify the fluid in order to obtain the appropriate gas constant and ratio of specific heats. If the fluid is not known, the default argument is for air. Alternatively, if you want to specify the gas constant and ratio of specific heats directly, you can using 'custom'.
 ```
 >>> import gas_dynamics as gd
->>> M2 = gd.shock_mach(M1=1.25) #get the Mach # following a normal shock for air
+>>> M2 = gd.shock_mach(M1=1.25)                 #get the Mach # following a normal shock for air
 >>> M2
 0.8126360553720011
->>> M2 = gd.shock_mach(M1=1.25, gas='argon') #get the Mach # following a normal shock for argon
+>>> M2 = gd.shock_mach(M1=1.25, gas='argon')    #get the Mach # following a normal shock for argon
 >>> M2
 0.8184295177443512
->>> M2 = gd.shock_mach(M2=1.25, gas='custom')
-gamma: 1.1
-R (J/kg K): 400
+>>> M2 = gd.shock_mach(M2=1.25, gas='custom')   #get the mach number for a 'custom' fluid
+gamma: 1.1                                      #input gamma
+R (J/kg K): 400                                 #input R
 >>> M2
 0.803783189504693
 >>>
@@ -53,7 +53,7 @@ M: 5.100   |   P/Pt: 0.002    |    T/Tt: 0.161    |    A/A*: 27.070    |   rho/r
 ```
 
 
-Plotting Stagnation relations versus mach number for different gammas. Arguments are the mach number range, increment, and a list of gasses. Default valules are range = [].01, 5], inc=.1, and gasses = ['air','methane','argon']
+Plotting Stagnation relations versus mach number for different gammas. Arguments are the mach number range, increment, and a list of gasses. Default valules are range = [.01, 5], inc=.1, and gasses = ['air','methane','argon']
 
 ```
 plot_stgn_ratios()
@@ -109,7 +109,6 @@ Some miscellaneous valuable functions are also included to calculate flow rates 
 ```
 
 
-Shocks
 Determine the Mach # before and after a normal shock
 ```
 >>> M2 = gd.shock_mach(M1=1.5) 
@@ -142,6 +141,12 @@ M: 2.00   |   M2: 0.5774   |    p2/p1: 4.5000   |    T2/T1: 1.6875   |   dV/a: 1
 
 
 Extremely useful in solving flow deflection problems are the oblique shock charts, so those are provided. For more precise solutions, equation solvers are embedded in the functions to find the exact values for the strong and weak shock solutions.
+
+```
+gd.shock_oblique_charts()
+```
+![Oblique_Charts](https://github.com/fernancode/gas_dynamics/blob/master/Oblique_Charts.png)
+
 
 ```
 >>> deflect = gd.shock_flow_deflection(M=2, theta = 22.5)

@@ -708,7 +708,8 @@ def shock_mach(M1=[], M2=[], gas='air', metric=True):
         M1 = ((-2/(gamma-1) -M2**2 ) / (1- ((2*gamma)/(gamma-1))*M2**2))**.5
         return M1
 
-def shock_pressure_ratio(M=[], p2_p1=[], gas='air', metric=True):
+
+def shock_pressure_ratio(M=[] ,p2_p1=[], gas='air', metric=True):
     '''Returns the pressure ratio after a standing normal shock for a given Mach #
     
     Description
@@ -727,14 +728,15 @@ def shock_pressure_ratio(M=[], p2_p1=[], gas='air', metric=True):
     >>> p2_p1   
     2.4583333333333335
     >>>
-
     '''
+
     gamma, R = fluid(gas, metric)
+
     if p2_p1 == []:
         p2_p1 = 2*gamma / (gamma+1) * M**2 - (gamma-1)/(gamma+1)
         return p2_p1
 
-    if M == []:
+    else: # M == []:
         M = ((gamma+1)/(2*gamma) * (p2_p1 + (gamma-1)/(gamma+1)) )**.5
         return M
 
@@ -777,6 +779,7 @@ def shock_dv_a(M=[], gas='air', metric=True):
     ----------
     M: The starting Mach # \n
     gamma: The ratio of specific heats \n
+    
     '''
     gamma, R = fluid(gas, metric)
     dv_a = 2/(gamma+1) * (M**2 -1)/ M
@@ -844,6 +847,14 @@ def shock_angle(M=[], dirac=[], gas='air', metric=True):
     M: The Mach # before the shock \n
     dirac: The flow deflection angle in degrees\n
     gamma: The ratio of specific heats \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> shocks = gd.shock_angle(M=2, dirac = -10) 
+    >>> shocks
+    [23.014012220565785, 96.29991962425305]
+    >>> 
     '''
     dirac = dirac * np.pi / 180
     gamma, R = fluid(gas, metric)
@@ -860,7 +871,23 @@ def shock_angle(M=[], dirac=[], gas='air', metric=True):
 def shock_mach_given_angles(theta=[], dirac=[], gas='air', metric=True):
     '''Return the Mach # given the shock angle and flow deflection
 
+    Description
+    -----------
+    #TODO: edit meee
 
+    Parameters
+    ----------
+    theta: The shock angle, in degrees \n
+    dirac: The flow deflection angle, in degrees \n
+    gas: The fluid \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> M = gd.shock_mach_given_angles(theta=22.5, dirac=10) 
+    >>> M
+    3.9293486839798955
+    >>>
     '''
     gamma, R = fluid(gas, metric)
     theta = theta * np.pi / 180
@@ -888,17 +915,24 @@ def prandtl_meyer_turn(M=[], gas='air', metric=True):
     ----------
     M: The Mach # \n
     gamma: The ratio of specific heats \n
+
+    Examples
+    --------
+    #TODO:
+
     '''
     gamma, R = fluid(gas, metric)
     nu = ((gamma+1)/(gamma-1))**.5 * np.arctan(((M**2-1)*(gamma-1)/(gamma+1))**.5) - np.arctan((M**2-1)**.5)
     return nu
 
-def prandtl_meyer_mach():
+def prandtl_meyer_mach(gas='air', metric=True):
     '''Returns the Mach number given an angle through which the flow has turned
     #TODO: make this
     '''
     gamma, R = fluid(gas, metric)
     
+
+
 
 
 def shock_oblique_charts(Mach_max=6, gas='air', metric=True):
@@ -916,25 +950,19 @@ def shock_oblique_charts(Mach_max=6, gas='air', metric=True):
     Mach_max: The upper limit Mach # for the chart \n
     gamma: The ratio of specific heats \n
     '''
+    n = 1000
     gamma, R = fluid(gas, metric)
-    #generate values and plot them
-    theta = np.linspace(.001,90, 1000)
-    mach = np.linspace(1,Mach_max,1000)
+
+    theta = np.linspace(.001,90, n)
+    mach = np.linspace(1,Mach_max,n)
     MACH,THETA = np.meshgrid(mach,theta)
     dirac = shock_flow_deflection(M=MACH, theta=THETA, gas=gas) 
-    
-   # theta_deg = []
-  #  [theta_deg.append(n * 180/np.pi) for n in theta]
- #   dirac_deg=[]
-#    [dirac_deg.append(n*180/np.pi) for n in dirac]
-    
     fig, (ax1,ax2) = plt.subplots(1,2)
-    levels=[5,10,15,20,25,30,35,40]
+    levels=[0, 5,10,15,20,25,30,35,40]
     h = ax1.contour(mach,theta,dirac,levels=levels,cmap='tab10')
     ax1.clabel(h, inline =1, fontsize=10)
     minor_ticks_mach = np.arange(1,Mach_max+.1,.1)
     minor_ticks_theta = np.arange(0,91,1)
-
     ax1.set_yticks(minor_ticks_theta, minor=True)
     ax1.set_xticks(minor_ticks_mach, minor=True)
     ax1.grid(which='major',color='k',linestyle = '--', alpha=.5,)
@@ -946,10 +974,108 @@ def shock_oblique_charts(Mach_max=6, gas='air', metric=True):
     ax1_1.get_xaxis().set_visible(False)
     ax1_1.get_yaxis().set_visible(False)
 
-    #TODO: the same table but y axis is Mach number after an oblique shock.
-    
+    n = 750
+    mach_before = np.linspace(1,Mach_max, n)
+    mach_after = np.linspace(.001,Mach_max, n)
+    dirac = np.zeros((n,n))
+    for row, m1 in enumerate(mach_before):
+        for col, m2 in enumerate(mach_after):
+            dirac[col][row] = dirac_from_machs(M1=m1, M2=m2, gas=gas)
+
+    h = ax2.contour(mach_before, mach_after, dirac , levels=levels, cmap='tab10')
+    ax2.clabel(h, inline = 1, fontsize=10)
+    minor_ticks_mach_before = np.arange(1,Mach_max+.1,.1)
+    minor_ticks_mach_after = np.arange(0,Mach_max,.1)
+    ax2.set_yticks(minor_ticks_mach_before, minor=True)
+    ax2.set_xticks(minor_ticks_mach_after, minor=True)
+    ax2.grid(which='major',color='k',linestyle = '--', alpha=.5,)
+    ax2.grid(which='minor',color='k',linestyle = '--', alpha=.1)
+    ax2.set(xlabel = 'Mach # Before')
+    ax2.set(ylabel = 'Mach # After')
+
+
+    #plot title stuff
     gas = gas.lower()
     string = 'Oblique Shock Charts for ' + gas[0].upper() + gas[1:]
     fig.suptitle(string)
     fig.tight_layout(pad=2.0)
     plt.show()
+
+
+def dirac_from_machs(M1=[], M2=[], gas='air'):
+    '''Return the flow deflection angle and the shock angle required to go from one Mach # to a second Mach #
+
+    Description
+    -----------
+
+    Parameters
+    ----------
+
+    Examples
+    --------
+
+    '''   
+    #get rid of the out of domain answers, if m2 >m1, throw it out.
+    if M2 >= M1:
+        return 0
+    if shock_mach(M1) > M2:
+        return 0
+    def zero(theta, M1=[], M2=[], gas=gas):
+        '''Local function for testing different shock angles to see if they work.
+        
+        '''
+        theta_deg = to_degrees(theta)
+        M1n = M1 * np.sin(theta)
+        M2n = shock_mach(M1n)
+        dirac = shock_flow_deflection(M=M1, theta=theta_deg, gas=gas, metric=True)
+        M2_prime = M2n / np.sin(to_radians(theta_deg-dirac))
+        zero = M2_prime - M2
+        return zero
+
+    #TODO: Gotta speed this up somehow
+    thetas = np.linspace(0, np.pi/2, 10)
+    for num, theta in enumerate(thetas[:-1]):
+        zero2 = zero(thetas[num+1], M1=M1, M2=M2, gas=gas)
+        if zero2 < 0:
+            thetas2 = np.linspace(thetas[num], thetas[num+1],10)
+            for num2, theta2 in enumerate(thetas2[:-1]):
+                zero2_2 = zero(thetas2[num2+1], M1=M1, M2=M2, gas=gas)
+                if zero2_2 <0:
+                    thetas3 = np.linspace(thetas2[num2], thetas2[num2+1], 10)
+                    for num3, theta3 in enumerate(thetas3[:-1]):
+                        zero2_3 = zero(thetas3[num3+1], M1=M1, M2=M2, gas=gas)
+                        if zero2_3 <0:
+                            thetas4 = np.linspace(thetas3[num3], thetas3[num3+1], 10)
+                            for num4, theta4 in enumerate(thetas4[:-1]):
+                                zero2_4 = zero(thetas4[num4+1], M1=M1, M2=M2, gas=gas)
+                                if zero2_4 <0:
+                                    thetas5 = np.linspace(thetas4[num4], thetas4[num4+1], 10)
+                                    for num5, theta5 in enumerate(thetas5[:-1]):
+                                        zero2_5 = zero(thetas5[num5+1], M1=M1, M2=M2, gas=gas)
+                                        if zero2_5 < 0:
+                                            return shock_flow_deflection(M=M1, theta=to_degrees(theta5),gas=gas)
+
+
+def to_degrees(theta):
+    '''Convert from radians to degrees
+
+    Parameters
+    ----------
+    theta: The angle in radians
+
+    Examples
+    --------
+
+    '''
+    return theta * 180/np.pi
+
+
+def to_radians(theta):
+    '''Convert from degrees to radians
+
+    Parameters
+    ----------
+    theta: Convert from degrees to radians
+
+    '''
+    return theta * np.pi/180

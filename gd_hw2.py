@@ -70,11 +70,12 @@ prec_p1 = prec/p1
 M1normal = gd.shock_pressure_ratio(p2_p1=prec_p1)
 M2normal = gd.shock_mach(M1=M1normal)
 theta = gd.np.arcsin(M1normal/M1)
+theta_deg = gd.to_degrees(theta)
 
-dirac = gd.shock_flow_deflection(M=M1, theta=theta)
+dirac_degrees = gd.shock_flow_deflection(M=M1, theta=theta_deg)
+dirac = gd.to_radians(dirac_degrees)
 M2 = M2normal/gd.np.sin(theta-dirac)
 T2 = T1 * gd.shock_temperature_ratio(M1normal)
-dirac_degrees = dirac * 180 / gd.np.pi
 
 #numerically solve for shock angle given dirac and mach
 sol = gd.shock_angle(M=M2, dirac=dirac)
@@ -82,8 +83,9 @@ theta_2 = min(sol) #get the weak shock angle
 M2n = M2*gd.np.sin(theta_2)
 M3n = gd.shock_mach(M2n)
 M3 = M3n / gd.np.sin(theta_2-dirac)
-T3 = T2 * gd.shock_temperature_ratio(M2n)
-p3 = prec * gd.shock_pressure_ratio(M2n)
+T3 = T2 * gd.shock_temperature_ratio(M=M2n)
+p3 = prec * gd.shock_pressure_ratio(M=M2n, gas='air')
+
 
 print('3a) Resulting Mach number is %0.2f, ' %M2, 'Temperature is %0.2f K,' % T2 ,'and deflection angle is %0.2f degrees' %dirac_degrees)
 print('3b) The flow deflection is %0.2f degrees to divert the flow back to the normal' %dirac_degrees)
@@ -91,21 +93,20 @@ print('3c) In region 3 the Mach number is %0.2f,' %M3, 'Temperature is %0.2f K,'
 print('\n')
 
 #problem 4
-theta1= 40 * gd.np.pi/180
-dirac = 15 * gd.np.pi/180
+theta1= 40 # * gd.np.pi/180
+dirac = 15 #* gd.np.pi/180
 #get the mach 1 given the angles, get mach 2
 M1 = gd.shock_mach_given_angles(theta=theta1, dirac=dirac)
-M1n = M1 * gd.np.sin(theta1)
+M1n = M1 * gd.np.sin(gd.to_radians(theta1))
 M2n = gd.shock_mach(M1n)
-M2 = M2n / gd.np.sin(theta1-dirac)
+M2 = M2n / gd.np.sin(gd.to_radians(theta1-dirac))
 #knowing mach 2 and flow deflection, get M3 and beta
 shock_angles = gd.shock_angle(M=M2, dirac=dirac) 
-theta2 = shock_angles[0]
-theta2_deg = theta2 * 180/gd.np.pi
-M2n_p = M2 * gd.np.sin(theta2)
+theta2_deg = shock_angles[0]
+M2n_p = M2 * gd.np.sin(gd.to_radians(theta2_deg))
 M3n = gd.shock_mach(M2n_p)
 #flow gets deflected back the other way so add dirac
-M3 = M3n / gd.np.sin(theta2+dirac)
+M3 = M3n / gd.np.sin(gd.to_radians(theta2_deg+dirac))
 #i believe these answers are more precise than the book way because of the equation solver i used
 p3_p1 = gd.shock_pressure_ratio(M=M1n) * gd.shock_pressure_ratio(M=M2n_p)
 pt3_pt1 = gd.shock_stagnation_ratio(M=M1n) * gd.shock_stagnation_ratio(M=M2n_p)
@@ -129,18 +130,17 @@ print('\n')
 #problem 6
 M1 = 2.28
 theta = gd.np.arctan(1.678/2.000)
-dirac = gd.shock_flow_deflection(M=M1, theta=theta)
-dirac_deg = dirac * 180/gd.np.pi
+dirac_deg = gd.shock_flow_deflection(M=M1, theta=gd.to_degrees(theta))
+dirac = gd.to_radians(dirac)
 M1n = M1 * gd.np.sin(theta)
 M2n = gd.shock_mach(M1n)
 M2 = M2n / gd.np.sin(theta-dirac)
 p2_p1 = gd.shock_pressure_ratio(M1n)
 p2_p_amb = 1.77*p2_p1
-M3 = gd.mach_pressure_ratio(p1=4.14, p2=1, M1=M2,get='M2')
-t3_t1 = gd.shock_temperature_ratio(M1n) * gd.mach_temperature_ratio(T1=1, M1=M2, M2=M3, get='T2')
+M3 = gd.mach_from_pressure_ratio(p1=4.14, p2=1, M1=M2)
+t3_t1 = gd.shock_temperature_ratio(M1n) * gd.temperature_from_mach_ratio(T1=1, M1=M2, M2=M3)
 
 print('6a) Flow deflection is %0.2f degrees' %dirac_deg)
 print('6b) Mach 2 is %0.2f,' %M2, 'Pressure 2 is %0.2f p_amb' %p2_p_amb)
 print('6c) Because the pressure in region 2 is so much greater, the wave form has to be a mach wave to accelerate the flow and drop the pressure')
 print('6d) Mach 3 is %0.2f' %M3, 'pressure is ambient pressure, and Temperature is %0.2f T1' %t3_t1)
-
