@@ -105,6 +105,7 @@ def plot_stagnation_ratios(range=[.1,5],inc=.01, gasses=['air','methane','argon'
     >>> import gas_dynamics as gd
     >>> gd.plot_stagnation_ratios()
     '''
+    plt.style.use('dark_background')
     fig, axs = plt.subplots(2,2)
     title = "Isentropic Stagnation Relations"
     fig.suptitle(title)
@@ -124,8 +125,8 @@ def plot_stagnation_ratios(range=[.1,5],inc=.01, gasses=['air','methane','argon'
         axs[0,0].plot(mach_nums,t_list,label=labl)
         axs[0,0].set_xlabel('Mach Number')
         axs[0,0].set_ylabel('T / Tt')
-        axs[0,0].grid(b=True, which='major')
-        axs[0,0].grid(b=True, which='minor')
+        axs[0,0].grid(b=True, which='major', color = 'w', linestyle = '--', alpha = .5)
+        axs[0,0].grid(b=True, which='minor', color = 'w', linestyle = '--', alpha = .5)
         axs[0,0].minorticks_on()
         axs[0,0].legend()
 
@@ -133,16 +134,16 @@ def plot_stagnation_ratios(range=[.1,5],inc=.01, gasses=['air','methane','argon'
         axs[0,1].plot(mach_nums,p_list,label=labl)
         axs[0,1].set_xlabel('Mach Number')
         axs[0,1].set_ylabel('P / Pt')
-        axs[0,1].grid(b=True, which='major')
-        axs[0,1].grid(b=True, which='minor')
+        axs[0,1].grid(b=True, which='major', color = 'w', linestyle = '--', alpha = .5)
+        axs[0,1].grid(b=True, which='minor', color = 'w', linestyle = '--', alpha = .5)
         axs[0,1].minorticks_on()
         axs[0,1].legend()
     #A/A*
         axs[1,0].plot(mach_nums,a_list,label=labl)
         axs[1,0].set_xlabel('Mach Number')
         axs[1,0].set_ylabel('A / A*')
-        axs[1,0].grid(b=True, which='major')
-        axs[1,0].grid(b=True, which='minor')
+        axs[1,0].grid(b=True, which='major', color = 'w', linestyle = '--', alpha = .5)
+        axs[1,0].grid(b=True, which='minor', color = 'w', linestyle = '--', alpha = .5)
         axs[1,0].minorticks_on()
         axs[1,0].legend()
 
@@ -150,8 +151,8 @@ def plot_stagnation_ratios(range=[.1,5],inc=.01, gasses=['air','methane','argon'
         axs[1,1].plot(mach_nums,rho_list,label=labl)
         axs[1,1].set_xlabel('Mach Number')
         axs[1,1].set_ylabel('rho / rho_t')
-        axs[1,1].grid(b=True, which='major')
-        axs[1,1].grid(b=True, which='minor')
+        axs[1,1].grid(b=True, which='major', color = 'w', linestyle = '--', alpha = .5)
+        axs[1,1].grid(b=True, which='minor', color = 'w', linestyle = '--', alpha = .5)
         axs[1,1].minorticks_on()
         axs[1,1].legend()
     plt.show()
@@ -952,7 +953,7 @@ def shock_oblique_charts(Mach_max=6, gas='air', metric=True, lite=True):
         n = 200
     else:
         n = 750
-        
+
     total, counter = n**2, 0 
     mach_before = np.linspace(1,Mach_max, n)
     mach_after = np.linspace(.001,Mach_max, n)
@@ -975,7 +976,6 @@ def shock_oblique_charts(Mach_max=6, gas='air', metric=True, lite=True):
     ax2.grid(which='minor',color='w',linestyle = '--', alpha=.1)
     ax2.set(xlabel = 'Mach # Before')
     ax2.set(ylabel = 'Mach # After')
-
 
     #plot title stuff
     gas = gas.lower()
@@ -1023,24 +1023,6 @@ def dirac_from_machs(M1=[], M2=[], gas='air'):
         if zero2 < 0:
             theta = lin_interpolate(0, zero1, zero2, thetas[num], thetas[num+1])
             return shock_flow_deflection(M=M1, theta=to_degrees(theta), gas=gas)
-#
-#            thetas2 = np.linspace(thetas[num], thetas[num+1],10)
-#            for num2, theta2 in enumerate(thetas2[:-1]):
-#                zero2_2 = zero(thetas2[num2+1], M1=M1, M2=M2, gas=gas)
-#                if zero2_2 <0:
-#                    thetas3 = np.linspace(thetas2[num2], thetas2[num2+1], 10)
-#                    for num3, theta3 in enumerate(thetas3[:-1]):
-#                        zero2_3 = zero(thetas3[num3+1], M1=M1, M2=M2, gas=gas)
-#                        if zero2_3 <0:
-#                            thetas4 = np.linspace(thetas3[num3], thetas3[num3+1], 10)
-#                            for num4, theta4 in enumerate(thetas4[:-1]):
-#                                zero2_4 = zero(thetas4[num4+1], M1=M1, M2=M2, gas=gas)
-#                                if zero2_4 <0:
-#                                    thetas5 = np.linspace(thetas4[num4], thetas4[num4+1], 10)
-#                                    for num5, theta5 in enumerate(thetas5[:-1]):
-#                                        zero2_5 = zero(thetas5[num5+1], M1=M1, M2=M2, gas=gas)
-#                                        if zero2_5 < 0:
-#                                            return shock_flow_deflection(M=M1, theta=to_degrees(theta5),gas=gas)
 
 
 def to_degrees(theta):
