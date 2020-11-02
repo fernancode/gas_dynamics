@@ -88,36 +88,6 @@ def fluid(fluid=[], metric=True, R=[], gamma=[]):
         return gamma, R
 
 
-def area_dia(dia=[], area=[]):
-    '''
-    Description
-    -----------
-    Given area or diameter, return the unknown
-
-    Parameters
-    ----------
-    dia: Diameter \n
-    area: Area \n
-
-    Examples
-    --------
-    >>> import gas_dynamics as gd
-    >>> area = gd.area_dia(dia=1)    
-    >>> area
-    0.7853981633974483
-    >>> dia = gd.area_dia(area=area)
-    >>> dia 
-    1.0
-    >>>
-    '''
-    if area == []:
-        area = np.pi *dia**2 / 4
-        return area
-    if dia == []:
-        dia = (area * 4 / np.pi )**.5
-        return dia
-
-
 def plot_stagnation_ratios(range=[.1,5],inc=.01, gasses=['air','methane','argon']):
     '''
     Description
@@ -701,6 +671,7 @@ def shock_mach(M1=[], M2=[], gas='air', metric=True):
     '''
     gamma, R = fluid(gas, metric)
     if M2 == []:
+        #TODO: keep getting runtime double scalars warning what is this
         M2 = ((M1**2 + 2/(gamma-1)) / ((2*gamma / (gamma-1)) * M1**2 - 1))**.5
         return M2
 
@@ -935,7 +906,7 @@ def prandtl_meyer_mach(gas='air', metric=True):
 
 
 
-def shock_oblique_charts(Mach_max=6, gas='air', metric=True):
+def shock_oblique_charts(Mach_max=6, gas='air', metric=True, lite=True):
     '''Generate 2-D Oblique Shock Charts
 
     Description
@@ -948,7 +919,9 @@ def shock_oblique_charts(Mach_max=6, gas='air', metric=True):
     Parameters
     ----------
     Mach_max: The upper limit Mach # for the chart \n
-    gamma: The ratio of specific heats \n
+    gas: The fluid \n
+    big: 
+
     '''
     n = 1000
     gamma, R = fluid(gas, metric)
@@ -956,7 +929,8 @@ def shock_oblique_charts(Mach_max=6, gas='air', metric=True):
     theta = np.linspace(.001,90, n)
     mach = np.linspace(1,Mach_max,n)
     MACH,THETA = np.meshgrid(mach,theta)
-    dirac = shock_flow_deflection(M=MACH, theta=THETA, gas=gas) 
+    dirac = shock_flow_deflection(M=MACH, theta=THETA, gas=gas)
+    plt.style.use('dark_background')
     fig, (ax1,ax2) = plt.subplots(1,2)
     levels=[0, 5,10,15,20,25,30,35,40]
     h = ax1.contour(mach,theta,dirac,levels=levels,cmap='tab10')
@@ -965,8 +939,8 @@ def shock_oblique_charts(Mach_max=6, gas='air', metric=True):
     minor_ticks_theta = np.arange(0,91,1)
     ax1.set_yticks(minor_ticks_theta, minor=True)
     ax1.set_xticks(minor_ticks_mach, minor=True)
-    ax1.grid(which='major',color='k',linestyle = '--', alpha=.5,)
-    ax1.grid(which='minor',color='k',linestyle = '--', alpha=.1)
+    ax1.grid(which='major',color='w',linestyle = '--', alpha=.5,)
+    ax1.grid(which='minor',color='w',linestyle = '--', alpha=.1)
     ax1.set(xlabel = 'Mach #')
     ax1.set(ylabel = 'Oblique Shock Wave Angle')
     ax1_1 = ax1.twinx()
@@ -974,22 +948,31 @@ def shock_oblique_charts(Mach_max=6, gas='air', metric=True):
     ax1_1.get_xaxis().set_visible(False)
     ax1_1.get_yaxis().set_visible(False)
 
-    n = 750
+    if lite == True:
+        n = 200
+    else:
+        n = 750
+        
+    total, counter = n**2, 0 
     mach_before = np.linspace(1,Mach_max, n)
     mach_after = np.linspace(.001,Mach_max, n)
     dirac = np.zeros((n,n))
     for row, m1 in enumerate(mach_before):
         for col, m2 in enumerate(mach_after):
             dirac[col][row] = dirac_from_machs(M1=m1, M2=m2, gas=gas)
+            counter += 1
+            percent =counter / total * 100
+            print(' %0.3f%% complete' %percent)
+
 
     h = ax2.contour(mach_before, mach_after, dirac , levels=levels, cmap='tab10')
     ax2.clabel(h, inline = 1, fontsize=10)
-    minor_ticks_mach_before = np.arange(1,Mach_max+.1,.1)
+    minor_ticks_mach_before = np.arange(0,Mach_max+.1,.1)
     minor_ticks_mach_after = np.arange(0,Mach_max,.1)
     ax2.set_yticks(minor_ticks_mach_before, minor=True)
     ax2.set_xticks(minor_ticks_mach_after, minor=True)
-    ax2.grid(which='major',color='k',linestyle = '--', alpha=.5,)
-    ax2.grid(which='minor',color='k',linestyle = '--', alpha=.1)
+    ax2.grid(which='major',color='w',linestyle = '--', alpha=.5,)
+    ax2.grid(which='minor',color='w',linestyle = '--', alpha=.1)
     ax2.set(xlabel = 'Mach # Before')
     ax2.set(ylabel = 'Mach # After')
 
@@ -1020,6 +1003,7 @@ def dirac_from_machs(M1=[], M2=[], gas='air'):
         return 0
     if shock_mach(M1) > M2:
         return 0
+
     def zero(theta, M1=[], M2=[], gas=gas):
         '''Local function for testing different shock angles to see if they work.
         
@@ -1032,28 +1016,31 @@ def dirac_from_machs(M1=[], M2=[], gas='air'):
         zero = M2_prime - M2
         return zero
 
-    #TODO: Gotta speed this up somehow
-    thetas = np.linspace(0, np.pi/2, 10)
+    thetas = np.linspace(0, np.pi/2, 90)
     for num, theta in enumerate(thetas[:-1]):
+        zero1 = zero(thetas[num], M1=M1, M2=M2, gas=gas)
         zero2 = zero(thetas[num+1], M1=M1, M2=M2, gas=gas)
         if zero2 < 0:
-            thetas2 = np.linspace(thetas[num], thetas[num+1],10)
-            for num2, theta2 in enumerate(thetas2[:-1]):
-                zero2_2 = zero(thetas2[num2+1], M1=M1, M2=M2, gas=gas)
-                if zero2_2 <0:
-                    thetas3 = np.linspace(thetas2[num2], thetas2[num2+1], 10)
-                    for num3, theta3 in enumerate(thetas3[:-1]):
-                        zero2_3 = zero(thetas3[num3+1], M1=M1, M2=M2, gas=gas)
-                        if zero2_3 <0:
-                            thetas4 = np.linspace(thetas3[num3], thetas3[num3+1], 10)
-                            for num4, theta4 in enumerate(thetas4[:-1]):
-                                zero2_4 = zero(thetas4[num4+1], M1=M1, M2=M2, gas=gas)
-                                if zero2_4 <0:
-                                    thetas5 = np.linspace(thetas4[num4], thetas4[num4+1], 10)
-                                    for num5, theta5 in enumerate(thetas5[:-1]):
-                                        zero2_5 = zero(thetas5[num5+1], M1=M1, M2=M2, gas=gas)
-                                        if zero2_5 < 0:
-                                            return shock_flow_deflection(M=M1, theta=to_degrees(theta5),gas=gas)
+            theta = lin_interpolate(0, zero1, zero2, thetas[num], thetas[num+1])
+            return shock_flow_deflection(M=M1, theta=to_degrees(theta), gas=gas)
+#
+#            thetas2 = np.linspace(thetas[num], thetas[num+1],10)
+#            for num2, theta2 in enumerate(thetas2[:-1]):
+#                zero2_2 = zero(thetas2[num2+1], M1=M1, M2=M2, gas=gas)
+#                if zero2_2 <0:
+#                    thetas3 = np.linspace(thetas2[num2], thetas2[num2+1], 10)
+#                    for num3, theta3 in enumerate(thetas3[:-1]):
+#                        zero2_3 = zero(thetas3[num3+1], M1=M1, M2=M2, gas=gas)
+#                        if zero2_3 <0:
+#                            thetas4 = np.linspace(thetas3[num3], thetas3[num3+1], 10)
+#                            for num4, theta4 in enumerate(thetas4[:-1]):
+#                                zero2_4 = zero(thetas4[num4+1], M1=M1, M2=M2, gas=gas)
+#                                if zero2_4 <0:
+#                                    thetas5 = np.linspace(thetas4[num4], thetas4[num4+1], 10)
+#                                    for num5, theta5 in enumerate(thetas5[:-1]):
+#                                        zero2_5 = zero(thetas5[num5+1], M1=M1, M2=M2, gas=gas)
+#                                        if zero2_5 < 0:
+#                                            return shock_flow_deflection(M=M1, theta=to_degrees(theta5),gas=gas)
 
 
 def to_degrees(theta):
@@ -1079,3 +1066,38 @@ def to_radians(theta):
 
     '''
     return theta * np.pi/180
+
+
+def area_dia(dia=[], area=[]):
+    '''
+    Description
+    -----------
+    Given area or diameter, return the unknown
+
+    Parameters
+    ----------
+    dia: Diameter \n
+    area: Area \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> area = gd.area_dia(dia=1)    
+    >>> area
+    0.7853981633974483
+    >>> dia = gd.area_dia(area=area)
+    >>> dia 
+    1.0
+    >>>
+    '''
+    if area == []:
+        area = np.pi *dia**2 / 4
+        return area
+    if dia == []:
+        dia = (area * 4 / np.pi )**.5
+        return dia
+
+
+def lin_interpolate(x, x0, x1, y0, y1):
+    y = y0 + (x-x0) * (y1-y0)/(x1-x0)
+    return y
