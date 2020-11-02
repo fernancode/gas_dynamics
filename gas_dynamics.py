@@ -959,11 +959,12 @@ def shock_oblique_charts(Mach_max=6, gas='air', metric=True, lite=True):
     mach_after = np.linspace(.001,Mach_max, n)
     dirac = np.zeros((n,n))
     for row, m1 in enumerate(mach_before):
+        percent =counter / total * 100
+        print(' %0.3f%% complete' %percent)
         for col, m2 in enumerate(mach_after):
             dirac[col][row] = dirac_from_machs(M1=m1, M2=m2, gas=gas)
             counter += 1
-            percent =counter / total * 100
-            print(' %0.3f%% complete' %percent)
+
 
 
     h = ax2.contour(mach_before, mach_after, dirac , levels=levels, cmap='tab10')
