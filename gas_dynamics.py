@@ -1031,7 +1031,7 @@ def to_degrees(theta):
 
     Parameters
     ----------
-    theta: The angle in radians
+    theta: The angle in radians \n
 
     Examples
     --------
@@ -1045,7 +1045,7 @@ def to_radians(theta):
 
     Parameters
     ----------
-    theta: Convert from degrees to radians
+    theta: Convert from degrees to radians \n
 
     '''
     return theta * np.pi/180
@@ -1082,5 +1082,27 @@ def area_dia(dia=[], area=[]):
 
 
 def lin_interpolate(x, x0, x1, y0, y1):
+    '''Linear interpolation formula
+
+    Description
+    -----------
+    Given two x values and their corresponding y values, interpolate for an unknown y value at x
+
+    Parameters
+    ----------
+    x: The x value at which the y value is unknown \n
+    x0: The x value of the first known pair \n
+    x1: The x value of the second known pair \n
+    y0: The y value of the first known pair \n
+    y1: The y value of the second known pair \n
+
+    Examples
+    --------
+    >>> import gas_dynamics as gd
+    >>> y = gd.lin_interpolate(x=5, x0=4, x1=6, y0=25, y1=33)
+    >>> y
+    29.0
+    >>>
+    '''
     y = y0 + (x-x0) * (y1-y0)/(x1-x0)
     return y
