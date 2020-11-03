@@ -3,18 +3,24 @@ from scipy.optimize import fsolve
 import matplotlib.pyplot as plt
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,AutoMinorLocator)
 
+#GOOD
 def fluid(fluid=[], metric=True, R=[], gamma=[]):
-    '''
+    """Return the ratio of specific heats and gas constant for the fluid
+
     Description
     -----------
     Return the ratio of specific heats and gas constant for the fluid
 
     Parameters
     ----------
-    fluid: The fluid in question, string \n
-    metric: Metric or Standard \n
-    R: Gas constant, if known \n
-    gamma: Ratio of specific heats, if known \n
+    fluid : `string`
+        The fluid\n
+    metric : `bool`
+        Use Metric or US Standard \n
+    R : `float`
+        Gas constant, if known \n
+    gamma : `gamma`
+        Ratio of specific heats, if known \n
 
     Examples
     --------
@@ -23,7 +29,8 @@ def fluid(fluid=[], metric=True, R=[], gamma=[]):
     >>> R, gamma
     (1.4, 296)
     >>>       
-    '''
+    """
+
     if R or gamma != []:
         return gamma, R
     
@@ -87,24 +94,29 @@ def fluid(fluid=[], metric=True, R=[], gamma=[]):
             gamma, R = 1.4, 55.3
         return gamma, R
 
-
+#GOOD
 def plot_stagnation_ratios(range=[.1,5],inc=.01, gasses=['air','methane','argon']):
-    '''
+    """Plot the isentropic stagnation relationships for different gasses
+
     Description
     -----------
-    Plots Mach # vs T/T, P/Pt, A/A*, rho/rho_t, for a list of specific heat ratios.
+    Plots Mach number vs T/T, P/Pt, A/A*, rho/rho_t, for a list of specific heat ratios.
 
     Parameters
     ----------
-    range: The starting and ending Mach # in a list, ex: [.01,5] \n
-    inc: The increment between min and max \n
-    gamma: A list of the gasses to be plotted, ex ['air','methane','argon'] \n
+    range : `list`
+        The starting and ending Mach # in a list, ex: [.01,5] \n
+    inc : `float`
+        The increment between min and max \n
+    gasses : `list`
+        A list of the gasses to be plotted, ex ['air','methane','argon'] \n
 
     Examples
     --------
     >>> import gas_dynamics as gd
     >>> gd.plot_stagnation_ratios()
-    '''
+    """
+
     plt.style.use('dark_background')
     fig, axs = plt.subplots(2,2)
     title = "Isentropic Stagnation Relations"
@@ -157,19 +169,22 @@ def plot_stagnation_ratios(range=[.1,5],inc=.01, gasses=['air','methane','argon'
         axs[1,1].legend()
     plt.show()
 
-
-def stagnation_ratios(range=[0,5], inc=.1, gas='air'):
-    '''Returns the isentropic flow relation tables for all Mach #'s in the given range.
+#GOOD
+def stagnation_ratios(range=[0,5], inc=.1, gas='air') -> str:
+    """Returns the isentropic flow relation tables for all Mach numbers in the given range.
     
     Description
     -----------
-    Given a ratio of specific heats, print out the stagnation temperature ratio, stagnation pressure ratio, the area to choked area ratio, and the stagnation density ratio for every incremental Mach #.
+    Given a ratio of specific heats, print out the stagnation temperature ratio, stagnation pressure ratio, the area to choked area ratio, and the stagnation density ratio for every incremental Mach number.
 
     Parameters
     ----------
-    range: The starting and ending Mach # in a list, ex: [.01,5] \n
-    inc: The increment between min and max \n
-    gas: The gas in question \n
+    range : `list`
+        The starting and ending Mach numbers in a list, ex: [.01,5] \n
+    inc : `float`
+        The increment between min and max \n
+    gas : `str`
+        The fluid \n
 
     Examples
     --------
@@ -187,7 +202,8 @@ def stagnation_ratios(range=[0,5], inc=.1, gas='air'):
     M: 1.800   |   P/Pt: 0.174    |    T/Tt: 0.607    |    A/A*: 1.439    |   rho/rho_t: 0.287
     M: 2.000   |   P/Pt: 0.128    |    T/Tt: 0.556    |    A/A*: 1.688    |   rho/rho_t: 0.230
     >>>
-    '''
+    """
+
     gamma, R = fluid(gas)
 
     Mach_min = range[0]
@@ -205,19 +221,20 @@ def stagnation_ratios(range=[0,5], inc=.1, gas='air'):
         print('M: %0.3f' % num, '  |   P/Pt: %0.3f' % p_list[index], '   |    T/Tt: %0.3f' % t_list[index],  '   |    A/A*: %0.3f' % a_list[index],  '   |   rho/rho_t: %0.3f ' % rho_list[index])
     print("\n \n \n")
 
-
-def sonic_velocity(gas='air' ,metric=True, T=273.15):
-    '''Returns the local speed of sound.
+#GOOD
+def sonic_velocity(gas='air' ,metric=True, T=273.15) -> float:
+    """Returns the local speed of sound.
 
     Description
     -----------
-    Given a ratio of specific heats, gas constant, and temperature, this function returns the locoal speed of sound.
+    Given a ratio of specific heats, gas constant, and temperature, this function returns the locoal speed of sound. Default fluid is air.
     
     Parameters
     ----------
-    gamma: The ratio of specific heats. \n
-    R: The gas constant. \n
-    T: The temperature \n
+    gas: `str`
+        The fluid. \n
+    T : `float`
+        The temperature \n
 
     Examples
     --------
@@ -225,14 +242,15 @@ def sonic_velocity(gas='air' ,metric=True, T=273.15):
     >>> gd.sonic_velocity('air',T=500)
     448.2186966202994
     >>> gd.sonic_velocity(gas='argon', T=300)
-    '''
+    """
+
     gamma, R = fluid(gas, metric)
     a = (gamma*R*T)**.5
     return a
 
-
-def entropy_produced(pt1=[], pt2=[], gas='air', metric=True):
-    '''Return the change in specific entropy from the stagnation pressure ratio
+#GOOD
+def entropy_produced(pt1: float, pt2: float, gas='air', metric=True) -> float:
+    """Return the change in specific entropy from the stagnation pressure ratio
 
     Description
     -----------
@@ -240,9 +258,14 @@ def entropy_produced(pt1=[], pt2=[], gas='air', metric=True):
 
     Parameters
     ----------
-    pt1: Stagnation pressure in region 1 \n
-    pt2: Stagnation pressure in region 2 \n
-    gas: The fluid \n
+    pt1 : `float`
+        Stagnation pressure in region 1 \n
+    pt2 : `float`
+        Stagnation pressure in region 2 \n
+    gas : `float`
+        The fluid \n
+    metric : `bool`
+        Use metric or US standard\n
 
     Examples
     --------
@@ -250,26 +273,34 @@ def entropy_produced(pt1=[], pt2=[], gas='air', metric=True):
     >>> gd.entropy_produced(pt1=10, pt2=9, gas='air')
     30.238467993796142 #J / kg K
     >>> 
-    '''
+    """
     
     gamma, R = fluid(gas, metric)   
     ds = -R*np.log(pt2/pt1)
     return ds
 
-
-def pressure_from_mach_ratio(M1=[], M2=[], p1=[], ds=0, gas='air', metric=True):
-    '''Return the pressure given a starting pressure and the two Mach #s
+#GOOD
+def pressure_from_mach_ratio(M1: float, M2: float, p1: float, ds=0, gas='air', metric=True) -> float:
+    """Return the pressure given a starting pressure and the two Mach numbers
 
     Description
     -----------
-    Given the Mach #s in two regions and the pressure in one, return the missing pressure from the second region. Default arguments are for air and isentropic flow.
+    Given the Mach numbers in two regions and the pressure in one, return the missing pressure from the second region. Default arguments are for air and isentropic flow.
 
     Parameters:
-    M1: Mach # in region 1 \n
-    M2: Mach # in region 2 \n
-    p1: Pressure in region 1 \n
-    ds: Change in entropy, if any \n
-    gas: The fluid \n
+    ----------
+    M1 : `float`
+        Mach number in region 1 \n
+    M2 : `float`
+        Mach number in region 2 \n
+    p1 : `float`
+        Pressure in region 1 \n
+    ds : `float`
+        Change in entropy, if any \n
+    gas : `str`
+        The fluid \n
+    metric : `bool`
+        Use metric or US standard\n
 
     Examples
     --------
@@ -278,25 +309,34 @@ def pressure_from_mach_ratio(M1=[], M2=[], p1=[], ds=0, gas='air', metric=True):
     >>> p2
     2.4192491286747444
     >>>
-    '''
+    """
+
     gamma, R = fluid(gas, metric)
     p2 = p1 * ((1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2))**(gamma/(gamma-1)) * np.exp(-ds/R)
     return p2
 
-
-def mach_from_pressure_ratio(p1=[], p2=[], M1=[], ds=0, gas='air', metric=True):
-    '''Return the Mach # given a starting Mach # and the two local pressures
+#GOOD
+def mach_from_pressure_ratio(p1: float, p2: float, M1: float, ds=0, gas='air', metric=True) -> float:
+    """Return the Mach number given a starting Mach number and the two local pressures
 
     Description
     -----------
-    Given the local pressure in two regions and the Mach # in one, return the missing Mach # in the second region. Default arguments are for air and isentropic flow.
+    Given the local pressure in two regions and the Mach number in one, return the missing Machnumber# in the second region. Default arguments are for air and isentropic flow.
 
     Parameters:
-    p1: Pressure in region 1 \n
-    p2: Pressure in region 2 \n
-    M1: Mach # in region 1 \n
-    ds: Change in entropy, if any \n
-    gas: The fluid \n
+    ----------
+    p1 : `float`
+        Pressure in region 1 \n
+    p2 : `float`
+        Pressure in region 2 \n
+    M1 : `float`
+        Mach number in region 1 \n
+    ds : `float`
+        Change in entropy, if any \n
+    gas : `str`
+        The fluid \n
+    metric : `bool`
+        Use metric or US standard\n
 
     Examples
     --------
@@ -305,25 +345,32 @@ def mach_from_pressure_ratio(p1=[], p2=[], M1=[], ds=0, gas='air', metric=True):
     >>> M2
     2.1220079294384067
     >>>
-    '''
+    """
+
     gamma, R = fluid(gas, metric)
     M2 = (((p1/p2 * np.exp(ds/R))**((gamma-1)/gamma) * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
     return M2
 
-
-def temperature_from_mach_ratio(M1=[], M2=[], T1=[], gas='air', metric=True):
-    '''Return the temperature given a starting temperature and the two Mach #s
+#GOOD
+def temperature_from_mach_ratio(M1: float, M2: float, T1: float, gas='air', metric=True) -> float:
+    """Return the temperature given a starting temperature and the two Mach numbers
 
     Description
     -----------
-    Given the local mach # in two regions and the temperature number in one, return the missing temperature from the second region. Default arguments are for air.
+    Given the local Mach number in two regions and the temperature number in one, return the missing temperature from the second region. Default fluid is air.
 
     Parameters
     ----------
-    M1: Mach # in region 1 \n
-    M2: Mach # in region 2 \n
-    T1: Temperature in region 1 \n
-    gas: The fluid \n
+    M1 : `float`
+        Mach number in region 1 \n
+    M2 : `float`
+        Mach number in region 2 \n
+    T1 : `float`
+        Temperature in region 1 \n
+    gas : `str` 
+        The fluid \n
+    metric : `bool`
+        Use metric or US standard\n
 
     Examples
     --------
@@ -332,25 +379,32 @@ def temperature_from_mach_ratio(M1=[], M2=[], T1=[], gas='air', metric=True):
     >>> T2
     198.10000000000002
     >>>
-    '''
+    """
+
     gamma, R = fluid(gas, metric)
     T2 = T1 * (1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2)
     return T2
 
-
-def mach_from_temperature_ratio(T1=[], T2=[], M1=[], gas='air', metric=True):
-    '''Return the Mach # given a starting Mach # and the two local temperatures
+#GOOD
+def mach_from_temperature_ratio(T1: float, T2: float, M1: float, gas='air', metric=True) -> float:
+    """Return the Mach number given a starting Mach # and the two local temperatures
 
     Description
     -----------
-    Given the local temperatures in two regions and the mach # in one, return the missing mach # from the second region. Default arguments are for air..
+    Given the local temperatures in two regions and the mach # in one, return the missing mach # from the second region. Default fluid is air.
 
     Parameters
     ----------
-    T1: Temperature in region 1 \n
-    T2: Temperature in region 2 \n
-    M1: Mach # in region 1 \n
-    gas: The fluid \n
+    T1 : `float`
+        Temperature in region 1 \n
+    T2 : `float`
+        Temperature in region 2 \n
+    M1 : `float`
+        Mach number in region 1 \n
+    gas : `float`
+        The fluid \n
+    metric : `bool`
+        Use metric or US standard\n
 
     Examples
     --------
@@ -359,24 +413,32 @@ def mach_from_temperature_ratio(T1=[], T2=[], M1=[], gas='air', metric=True):
     >>> M2
     2.6457513110645907
     >>>
-    '''
+    """
+
     gamma, R = fluid(gas, metric)
     M2 = (( T1/T2 * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
     return M2
 
-
-def mach_area_ratio(M1=[], M2=[], gas='air', ds=0, metric=True):
-    '''Return the area ratio given the two Mach #s
+#GOOD
+def mach_area_ratio(M1: float, M2: float, gas='air', ds=0, metric=True) -> float:
+    """Return the area ratio given the two Mach numberss
 
     Description
     -----------
+    Given two mach numbers, return the area ratio required to accelerate or deaccelerate the flow accordingly. Default fluid is air.
 
     Parameters
     ----------
-    M1: Mach # in region 1 \n
-    M2: Mach # in region 2 \n
-    gas: The fluid \n
-    ds: Entropy produced, if any \n
+    M1 : `float` 
+        Mach number in region 1 \n
+    M2 : `float`
+        Mach number in region 2 \n
+    gas : `str`
+        The Fluid\n
+    ds : `float`
+        Entropy produced, if any \n
+    metric : `bool`
+        Use metric or US standard\n
 
     Examples
     --------
@@ -385,23 +447,28 @@ def mach_area_ratio(M1=[], M2=[], gas='air', ds=0, metric=True):
     >>> A2_A1
     2.241789331255894   #area ratio
     >>>
-    '''
+    """
+
     gamma, R = fluid(gas, metric)
     A2_A1 = M1/M2 * ((1 + (gamma-1)/2 * M2**2 )/(1 + (gamma-1)/2 * M1**2 ))**((gamma+1)/(2*(gamma-1))) * np.exp(ds/R)
     return A2_A1
 
-
-def mach_area_choked_ratio(M=[], a_ratio=[], gas='air', metric=True):
-    '''Returns the ratio of A / A* given the Mach #.
+#GOOD
+def mach_area_choked_ratio(M: float, gas='air', metric=True) -> float:
+    """Returns the ratio of A / A* given the Mach number.
     
     Description
     -----------
-    Given the Mach # and the ratio of specific heats, return the area ratio of the Mach # given to M = 1.
+    Given the Mach number and the ratio of specific heats, return the area ratio of the Mach number given to Mach number equal to 1. Default fluid is air.
 
     Parameters
     ----------
-    M: Mach Number \n
-    gamma: Ratio of specific heats \n
+    M : `float`
+        Mach Number \n
+    gas : `str`
+        The Fluid\n
+    metric : `bool`
+        Use metric or US standard\n
 
     Examples
     --------
@@ -410,25 +477,32 @@ def mach_area_choked_ratio(M=[], a_ratio=[], gas='air', metric=True):
     >>> A_Astar
     4.23456790123457
     >>>
-    '''
+    """
+
     gamma, R = fluid(gas, metric)
     a_star_ratio = 1/M * ((1 + (gamma-1)/2 * M**2) / ((gamma+1)/2)) ** ((gamma+1)/(2*(gamma-1)))
     return a_star_ratio
 
-
-def stagnation_pressure(p=[], M=[], pt=[], gas='air', metric=True):
-    '''Returns the stagnation pressure given pressure and Mach #.
+#GOOD
+def stagnation_pressure(pt=None, M=None, p=None, gas='air', metric=True) -> float:
+    """Returns the stagnation pressure given pressure and Mach number.
 
     Description
     -----------
-    Given a pressure, Mach #, and a ratio of specific heats, return the stagnation pressure. Alternatively, provided two arguments the function will return the missing one. Default ratio of specific heats is for air.
+    Given a pressure, Mach number, and a ratio of specific heats, return the stagnation pressure. Alternatively, provided two arguments the function will return the missing one. Default fluid is air.
 
     Parameters
     ----------
-    pt: The stagnation pressure. \n
-    p: The pressure. \n
-    M: The Mach # \n
-    gamma: The ideal gas constant \n
+    pt : `float`
+        The stagnation pressure.\n
+    p : `float`
+        The pressure.\n
+    M : `float`
+        The Mach number\n
+    gas : `str`
+        The Fluid\n
+    metric : `bool`
+        Use metric or US standard\n
 
     Examples
     --------
@@ -440,7 +514,8 @@ def stagnation_pressure(p=[], M=[], pt=[], gas='air', metric=True):
     >>> M
     1.0
     >>>
-    '''
+    """
+
     gamma, R = fluid(gas, metric)
     if pt == []:
         pt = p* ( 1 + (gamma-1)/2 * M**2)** (gamma/(gamma-1))
@@ -454,18 +529,22 @@ def stagnation_pressure(p=[], M=[], pt=[], gas='air', metric=True):
         p = pt / ( 1 + (gamma-1)/2 * M**2)** (gamma/(gamma-1))
         return p
 
-
-def stagnation_pressure_ratio(M, gas='air', metric=True):
-    '''Returns the pressure ratio of p / p_t
+#GOOD
+def stagnation_pressure_ratio(M: float, gas='air', metric=True) -> float:
+    """Returns the pressure ratio of p / p_t
 
     Description
     -----------
-    Given a Mach # and ratio of specific heats, return the relation of p / p_t. Default ratio of specific heats is for air.
+    Given a Mach number and ratio of specific heats, return the relation of p / p_t. Default fluid is air.
 
     Parameters
     ----------
-    M: The Mach # \n
-    gamma: The ratio of specific heats \n
+    M : `float`
+        The Mach number\n
+    gas : `str`
+        The Fluid\n
+    metric : `bool`
+        Use metric or US standard\n
 
     Examples
     --------
@@ -474,26 +553,33 @@ def stagnation_pressure_ratio(M, gas='air', metric=True):
     >>> p_pt
     0.027223683703862817
     >>>
-    '''
+    """
+
     gamma, R = fluid(gas, metric)
     denom = 1 + (gamma-1)/2 * M**2
     Pt_ratio = (1 / denom ) ** (gamma/(gamma-1))
     return Pt_ratio
 
-
-def stagnation_temperature(Tt =[], T=[] , M=[], gas='air', metric=True):
-    '''Returns the stagnation temperature given temperature and Mach #.
+#GOOD
+def stagnation_temperature(T=None, Tt=None , M=None, gas='air', metric=True) -> float :
+    """Returns the stagnation temperature given temperature and Mach number.
 
     Description
     -----------
-    Given a temperature, Mach #, and a ratio of specific heats, this function returns the stagnation temperature. Alternatively, provided two arguments the function will return the missing one. Default ratio of specific heats is for air.
+    Given a temperature, Mach number, and a ratio of specific heats, this function returns the stagnation temperature. Alternatively, provided two arguments the function will return the missing one. Default fluid is air.
 
     Parameters
     ----------
-    Tt: The stagnation temperature. \n
-    T: The temperature. \n
-    M: The Mach # \n
-    gamma: The ratio of specific heats \n
+    Tt : `float`
+        The stagnation temperature\n
+    T : `float`
+        The temperature\n
+    M : `float`
+        The Mach number\n
+    gas : `str`
+        The Fluid\n
+    metric : `bool`
+        Use metric or US standard\n
 
     Examples
     --------
@@ -504,76 +590,94 @@ def stagnation_temperature(Tt =[], T=[] , M=[], gas='air', metric=True):
     >>> M 
     1.0
     >>>
-    '''
+    """
+
     gamma, R = fluid(gas, metric)
-    if Tt == []:
+    if Tt == None:
         Tt = T * ( 1 + (gamma-1)/2 * M**2)
         return Tt
 
-    if M == []:
+    if M == None:
         M = ((Tt /T - 1) * 2/(gamma-1))**.5
         return M
         
-    if T == []:
+    if T == None:
         T = Tt/( 1 + (gamma-1)/2 * M**2)
         return T
 
-
-def stagnation_temperature_ratio(M, gas='air', metric=True):
-    '''Returns the temperature ratio of T / T_t
-
-    Description
-    -----------
-    Given a Mach # and ratio of specific heats, return the relation of T / T_t.  Default ratio of specific heats is for air.
-
-    Parameters
-    ----------
-    M: The Mach # \n
-    gamma: The ratio of specific heats \n
-    '''
-    gamma, R = fluid(gas, metric)
-    Tt_ratio = 1 / (1+(gamma-1)/2 *M**2)
-    return Tt_ratio
-
-
-def stagnation_density_ratio(M, gas='air', metric=True):
-    '''Returns the density ratio of rho/ rho_t
+#TODO: ADD EXAMPLES
+def stagnation_temperature_ratio(M: float, gas='air', metric=True) -> float:
+    """Returns the temperature ratio of T / T_t
 
     Description
     -----------
-    Given a Mach # and ratio of specific heats, return the relation of rho / rho_t. Default ratio of specific heats is for air.
+    Given a Mach number and ratio of specific heats, return the relation of T / T_t.  Default fluid is air.
 
     Parameters
     ----------
-    M: The Mach # \n
-    gamma: The ratio of specific heats \n
+    M : `float`
+        The Mach number\n
+    gas : `str`
+        The Fluid\n
+    metric : `bool`
+        Use metric or US standard\n
     
     Examples
     --------
 
+    """
 
-    '''
+    gamma, R = fluid(gas, metric)
+    Tt_ratio = 1 / (1+(gamma-1)/2 *M**2)
+    return Tt_ratio
+
+#TODO: add examples
+def stagnation_density_ratio(M: float, gas='air', metric=True) -> float:
+    """Returns the density ratio of rho/ rho_t
+
+    Description
+    -----------
+    Given a Mach number and ratio of specific heats, return the relation of rho / rho_t. Default fluid is air.
+
+    Parameters
+    ----------
+    M : `float`
+        The Mach # \n
+    gas : `str`
+        The Fluid\n
+    metric : `bool`
+        Use metric or US standard\n
+
+    Examples
+    --------
+    
+    """
+
     gamma, R = fluid(gas, metric)
     rho_t_ratio = (1 / (1 + (gamma-1)/2 * M**2 )) ** (1 / (gamma-1))
     return rho_t_ratio
 
-
-def choked_mdot(pt=[], Tt=[], gas='air', metric=True):
-    '''Returns the maximum flow rate per unit choked area
+#GOOD
+def choked_mdot(pt: float, Tt: float, gas='air', metric=True) -> float:
+    """Returns the maximum flow rate per unit choked area
 
     Description
     -----------
     Given stagnation pressure, stagnation temperature, and the fluid, return the flow rate per unit choked area. Default fluid is air. 
     
     Check your units! metric units need to be in Pa \n
-    #TODO: figure out what the std units output are
+    #TODO: figure out what the std units output is
     
     Parameters
     ----------
-    pt: The stagnation pressure. \n
-    Tt: The stagnation temperature. \n
-    R: The gas constant J / kg K \n
-    gamma: The ratio of specific heats \n
+    pt : `float`
+        The stagnation pressure.\n
+    Tt : `float`
+        The stagnation temperature.\n
+    gas : `str`
+        The Fluid.\n
+    metric : `bool`
+        Use metric or US standard.\n
 
     Examples
     --------
@@ -585,7 +689,8 @@ def choked_mdot(pt=[], Tt=[], gas='air', metric=True):
     >>> throat_area             #units are in meters squared
     0.0021426503214477164
     >>>
-    '''
+    """
+
     gamma, R = fluid(gas, metric)
     if metric == True:
         mdot_a_star = (((gamma/(R))*(2/(gamma+1))**((gamma+1)/(gamma-1)))**.5 * pt/(Tt**.5))
@@ -596,19 +701,24 @@ def choked_mdot(pt=[], Tt=[], gas='air', metric=True):
         mdot_a_star = (((gc*gamma/(R))*(2/(gamma+1))**((gamma+1)/(gamma-1)))**.5 * pt/(Tt**.5))
         return mdot_a_star
 
-
-def shock_tables(range=[1,5], inc=.01, gas='air', metric=True):
-    '''Returns shock tables for a range of Mach #'s.
+#GOOD:
+def shock_tables(range=[1,5], inc=.01, gas='air', metric=True) -> str:
+    """Returns shock tables for a range of Mach numberss.
 
     Description
     -----------
-    Given a range of Mach #'s and a ratio of specific heats, generate the standing normal shock tables for every incremental Mach # in-between.
+    Given a range of Mach numberss and a ratio of specific heats, generate the standing normal shock tables for every incremental Mach number in between.
 
     Parameters
     ----------
-    :param range: The starting and ending Mach # in a list, ie: [1,5]. \n
-    :param inc: The step size for the tables. \n
-    :param gamma: The ratio of specific heats \n
+    range : `list`
+        The starting and ending Mach # in a list, ie: [1,5]. \n
+    inc : `float`
+        The step size for the tables. \n
+    gas : `str`
+        The fluid \n
+    metric : `bool`
+        Use metric or US standard \n
 
     Examples
     --------
@@ -627,7 +737,8 @@ def shock_tables(range=[1,5], inc=.01, gas='air', metric=True):
     M: 1.90   |   M2: 0.5956   |    p2/p1: 4.0450   |    T2/T1: 1.6079   |   dV/a: 1.1447   |   pt2/pt1: 0.767357
     M: 2.00   |   M2: 0.5774   |    p2/p1: 4.5000   |    T2/T1: 1.6875   |   dV/a: 1.2500   |   pt2/pt1: 0.720874
     >>> 
-    '''
+    """
+
     Mach_min = range[0]
     Mach_max = range[1]
 
@@ -646,19 +757,22 @@ def shock_tables(range=[1,5], inc=.01, gas='air', metric=True):
         print("M: " + f"{num:.2f}" + "   |"+"   M2: " + f"{M2[index]:.4f}" + "   | " + "   p2/p1: " + f"{p2_p1[index]:.4f}" + "   | "+"   T2/T1: " + f"{T2_T1[index]:.4f}" + "   |"+"   dV/a: " + f"{dv_a[index]:.4f}"+ "   |"+"   pt2/pt1: " + f"{pt2_pt1[index]:.6f}" )
     print("\n \n \n")
 
-
-def shock_mach(M1=[], M2=[], gas='air', metric=True):
-    '''Returns the Mach # after a standing normal shock.
+#TODO: fix runtime double scalars warning
+def shock_mach(M1=None, M2=None, gas='air', metric=True) -> float:
+    """Returns the Mach number after a standing normal shock or the Mach number prior a standing normal shock
 
     Description
     -----------
-    Given a starting Mach # M1 and the ratio of specific heats, return the Mach # M2 that immediately follows the shock. If M1 is not specified and M2 is, returns the Mach # prior to the shock. Default ratio of specific heats is for air.
+    Given a starting Mach number M1 and the ratio of specific heats, return the Mach number M2 that immediately follows the shock. If M1 is not specified and M2 is, returns the Mach number prior to the shock. Default fluid is air.
 
     Parameters
     ----------
-    M1: The Mach # before the shock \n
-    M2: The Mach # after the shock \n
-    gamma: The ratio of specific heats \n
+    M1 : `float`
+        The Mach # before the shock\n
+    M2 : `float`
+        The Mach # after the shock\n
+    gas : `str`
+        The Fluid\n
 
     Examples
     --------
@@ -669,29 +783,34 @@ def shock_mach(M1=[], M2=[], gas='air', metric=True):
     >>> M1
     1.4999999999999998
     >>>
-    '''
+    """
+
     gamma, R = fluid(gas, metric)
-    if M2 == []:
+    if M2 == None:
         #TODO: keep getting runtime double scalars warning what is this
         M2 = ((M1**2 + 2/(gamma-1)) / ((2*gamma / (gamma-1)) * M1**2 - 1))**.5
         return M2
 
-    if M1 == []:
+    if M1 == None:
         M1 = ((-2/(gamma-1) -M2**2 ) / (1- ((2*gamma)/(gamma-1))*M2**2))**.5
         return M1
 
 
-def shock_pressure_ratio(M=[] ,p2_p1=[], gas='air', metric=True):
-    '''Returns the pressure ratio after a standing normal shock for a given Mach #
+def shock_pressure_ratio(M=None ,p2_p1=None, gas='air', metric=True) -> float:
+    """Returns the pressure ratio after a standing normal shock for a given Mach number
     
     Description
     -----------
-    Given a starting Mach # and a ratio of specific heats, this function returns the ratio of p2 / p1 across a standing normal shock. If Mach # is not specified and p2_p1 is, function returns Mach #. Default ratio of specific heats is for air.
+    Given a starting Mach number and a ratio of specific heats, this function returns the ratio of p2 / p1 across a standing normal shock. If Mach number is not specified and p2_p1 is, function returns Mach number. Default ratio of specific heats is for air.
     
     Parameters
     ----------
-    M: The starting Mach # \n
-    gamma: The ratio of specific heats \n
+    M : `float`
+        The starting Mach number \n
+    p2_p1 : `float
+        The pressure ratio\n
+    gas : `str`
+        The ratio of specific heats \n
 
     Examples
     --------
@@ -700,15 +819,15 @@ def shock_pressure_ratio(M=[] ,p2_p1=[], gas='air', metric=True):
     >>> p2_p1   
     2.4583333333333335
     >>>
-    '''
+    """
 
     gamma, R = fluid(gas, metric)
 
-    if p2_p1 == []:
+    if p2_p1 == None:
         p2_p1 = 2*gamma / (gamma+1) * M**2 - (gamma-1)/(gamma+1)
         return p2_p1
 
-    else: # M == []:
+    if M == None:
         M = ((gamma+1)/(2*gamma) * (p2_p1 + (gamma-1)/(gamma+1)) )**.5
         return M
 

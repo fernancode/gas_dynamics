@@ -38,15 +38,12 @@ mdot = 5
 
 a_star = mdot / gd.choked_mdot(pt=p_t*1000, Tt=T_t)
 #use the pressure ratio to get the mach number and the area reqiured for that accelerated flow
-
 M2 = gd.stagnation_pressure(p=p2, pt=p_t)
 A2 = a_star * gd.mach_area_ratio(M1=1, M2=M2)
-
 #get the stagnation pressure ratio across the shock and multiply by p_t to get pt4
 pt4 = p_t * gd.shock_stagnation_ratio(M=M2)
 #knowing pt4 and that M=.5, get p
 prec = gd.stagnation_pressure(M=M4, pt=pt4)
-
 #the mach number after the shock is a function of Mach only, use this to get A2/A1 for M2=.5
 M3 = gd.shock_mach(M1=M2)
 A4 = A2 * gd.mach_area_ratio(M1=M3, M2=M4)
@@ -71,26 +68,23 @@ M1normal = gd.shock_pressure_ratio(p2_p1=prec_p1)
 M2normal = gd.shock_mach(M1=M1normal)
 theta = gd.np.arcsin(M1normal/M1)
 theta_deg = gd.to_degrees(theta)
-
 dirac_degrees = gd.shock_flow_deflection(M=M1, theta=theta_deg)
 dirac = gd.to_radians(dirac_degrees)
 M2 = M2normal/gd.np.sin(theta-dirac)
 T2 = T1 * gd.shock_temperature_ratio(M1normal)
-
 #numerically solve for shock angle given dirac and mach
 sol = gd.shock_angle(M=M2, dirac=dirac)
-theta_2 = min(sol) #get the weak shock angle
-M2n = M2*gd.np.sin(theta_2)
+theta_2 = gd.to_radians(min(sol)) #get the weak shock angle
+M2n = M2*gd.np.sin(theta_2+dirac)
 M3n = gd.shock_mach(M2n)
-M3 = M3n / gd.np.sin(theta_2-dirac)
+M3 = M3n / gd.np.sin(theta_2)
 T3 = T2 * gd.shock_temperature_ratio(M=M2n)
 p3 = prec * gd.shock_pressure_ratio(M=M2n, gas='air')
-
-
 print('3a) Resulting Mach number is %0.2f, ' %M2, 'Temperature is %0.2f K,' % T2 ,'and deflection angle is %0.2f degrees' %dirac_degrees)
 print('3b) The flow deflection is %0.2f degrees to divert the flow back to the normal' %dirac_degrees)
 print('3c) In region 3 the Mach number is %0.2f,' %M3, 'Temperature is %0.2f K,' %T3, 'Pressure is %0.2f.' %p3)
 print('\n')
+
 
 #problem 4
 theta1= 40 # * gd.np.pi/180
@@ -143,4 +137,4 @@ t3_t1 = gd.shock_temperature_ratio(M1n) * gd.temperature_from_mach_ratio(T1=1, M
 print('6a) Flow deflection is %0.2f degrees' %dirac_deg)
 print('6b) Mach 2 is %0.2f,' %M2, 'Pressure 2 is %0.2f p_amb' %p2_p_amb)
 print('6c) Because the pressure in region 2 is so much greater, the wave form has to be a mach wave to accelerate the flow and drop the pressure')
-print('6d) Mach 3 is %0.2f' %M3, 'pressure is ambient pressure, and Temperature is %0.2f T1' %t3_t1)
+print('6d) Mach 3 is %0.2f, ' %M3, 'pressure is ambient pressure, and Temperature is %0.2f T1' %t3_t1)
