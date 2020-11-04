@@ -830,7 +830,7 @@ def shock_mach(M1=None, M2=None, gas='air', metric=True) -> float:
         The Mach # after the shock\n
     gas : `str`
         The Fluid\n
-    metric : `bool
+    metric : `bool`
         Use metric or US standard\n
     
     Examples
