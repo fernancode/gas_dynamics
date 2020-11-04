@@ -1,7 +1,9 @@
-# Gas_Dynamics
+# Gas Dynamics
+
 Gas Dynamics equations, table generators, oblique shock chart generators, and more.
 
 Welcome to my gas dynamics library. To get started as quickly as possible, copy the gas_dynamics.py file into your working directory and import the library. Every function contains an argument to specify the fluid in order to obtain the appropriate gas constant and ratio of specific heats. If the fluid is not known, the default argument is for air. Alternatively, if you want to specify the gas constant and ratio of specific heats directly, you can using 'custom'.
+
 ```
 >>> import gas_dynamics as gd
 >>> M2 = gd.shock_mach(M1=1.25)                 #get the Mach # following a normal shock for air
@@ -18,8 +20,8 @@ R (J/kg K): 400                                 #input R
 >>>
 ```
 
+Generate the isentropic flow tables for a range of Mach numbers and for a given gas.
 
-Generate the isentropic flow tables for a range of Mach #s and for a given gas.
 ```
 >>> gd.stagnation_ratios(range=[.1,5], inc=.2, gas='nitrogen') 
 Isentropic Flow Parameters for γ = 1.4
@@ -49,7 +51,6 @@ M: 4.500   |   P/Pt: 0.003    |    T/Tt: 0.198    |    A/A*: 16.562    |   rho/r
 M: 4.700   |   P/Pt: 0.003    |    T/Tt: 0.185    |    A/A*: 19.583    |   rho/rho_t: 0.015
 M: 4.900   |   P/Pt: 0.002    |    T/Tt: 0.172    |    A/A*: 23.067    |   rho/rho_t: 0.012
 M: 5.100   |   P/Pt: 0.002    |    T/Tt: 0.161    |    A/A*: 27.070    |   rho/rho_t: 0.010
-
 ```
 
 
@@ -58,11 +59,13 @@ Plotting Stagnation relations versus mach number for different gammas. Arguments
 ```
 plot_stgn_ratios()
 ```
-![Stagnation_plots](https://github.com/fernancode/gas_dynamics/blob/master/plot_ratios.png)
+
+![Stagnation_plots](./README_images/plot_ratios.png)
 
 
 All of the stagnation ratios are available, for example:
 Return the area ratio required to accelerate a flow to M = 3 and the corresponding stagnation pressure and temperature ratio
+
 ```
 >>> import gas_dynamics as gd
 >>> A_Astar =gd.mach_area_choked_ratio(M=3)
@@ -79,6 +82,7 @@ Return the area ratio required to accelerate a flow to M = 3 and the correspondi
 
 
 For the stagnation pressure and stagnation temperature relations, if two of the three necessary arguments are provided, the function will return the missing argument.
+
 ```
 >>> pt = gd.stagnation_pressure(p=10, M=1)
 >>> pt
@@ -97,6 +101,7 @@ For the stagnation pressure and stagnation temperature relations, if two of the 
 
 
 Some miscellaneous valuable functions are also included to calculate flow rates or areas required for choked flow
+
 ```
 >>> mdot = 5 #kg/s
 >>> mdot_per_area = gd.choked_mdot(1000000, 300) #units are in Pascals
@@ -110,6 +115,7 @@ Some miscellaneous valuable functions are also included to calculate flow rates 
 
 
 Determine the Mach # before and after a normal shock
+
 ```
 >>> M2 = gd.shock_mach(M1=1.5) 
 >>> M2
@@ -120,8 +126,8 @@ Determine the Mach # before and after a normal shock
 >>>
 ```
 
-
 Generate the shock tables using
+
 ```
 >>> gd.shock_tables(range=[1,2], inc=.1)
 Normal Shock Parameters for γ = 1.4
@@ -139,13 +145,13 @@ M: 2.00   |   M2: 0.5774   |    p2/p1: 4.5000   |    T2/T1: 1.6875   |   dV/a: 1
 
 ```
 
-
 Extremely useful in solving flow deflection problems are the oblique shock charts, so those are provided. For more precise solutions, equation solvers are embedded in the functions to find the exact values for the strong and weak shock solutions.
 
 ```
 gd.shock_oblique_charts()
 ```
-![Oblique_Charts](https://github.com/fernancode/gas_dynamics/blob/master/Oblique_Charts.png)
+
+![Oblique_Charts](./README_images/Oblique_Charts.png)
 
 
 ```
@@ -153,21 +159,21 @@ gd.shock_oblique_charts()
 >>> deflect
 -10.856560004139958
 ```
+
 Get the strong and weak shock solution for a flow deflection
+
 ```
 >>> shocks = gd.shock_angle(M=2, dirac = -10) 
 >>> shocks
 [23.014012220565785, 96.29991962425305]
 >>> 
 ```
+
 Solve for the Mach number
+
 ```
 >>> M = gd.shock_mach_given_angles(theta=22.5, dirac=10) 
 >>> M
 3.9293486839798955
 >>>
 ```
-
-
-<img src="https://render.githubusercontent.com/render/math?math=$\frac{T_{2}}{T_{1}} = \frac{1 + \frac{\gamma -1}{2} M_{1}^2} {1 + \frac{\gamma -1}{2} M_{2}^2}$">
-<img src="https://render.githubusercontent.com/render/math?math=$\frac{P_{2}}{P_{1}} = \left(\frac{1 + \frac{\gamma -1}{2} M_{1}^2} {1 + \frac{\gamma -1}{2} M_{2}^2}\right)^\frac{\gamma}{\gamma-1} e^\frac{\triangle s}{R}$">
