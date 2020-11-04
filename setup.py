@@ -3,8 +3,8 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-setuptools.setup(name="gas-dynamics",
-      version="0.1.1",
+setuptools.setup(name="gas_dynamics",
+      version="0.1.9",
       author="Fernando de la Fuente",
       author_email="FernandoAdelaFuente@gmail.com",
       description="Package containing functions for working with compressible flow",
@@ -19,4 +19,8 @@ setuptools.setup(name="gas-dynamics",
       ],
       license="MIT",
       python_requires=">=3.5",
+      test_suite='nose.collector',
+      tests_require=['nose'],
+      setup_requires=["numpy==1.19.3"],
+      install_requires=["numpy==1.19.3", "scipy.optimize", "matplotlib==3.3.2"]
 )
