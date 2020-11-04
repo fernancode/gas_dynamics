@@ -32,9 +32,6 @@ mach number relationships.
   M: 1.800   |   P/Pt: 0.179    |    T/Tt: 0.659    |    A/A*: 1.474    |   rho/rho_t: 0.271
   M: 2.000   |   P/Pt: 0.130    |    T/Tt: 0.610    |    A/A*: 1.754    |   rho/rho_t: 0.213
 
-
-Copyright 2020 by Fernando A de la Fuente
-All rights reserved
 """
 
 import numpy as np

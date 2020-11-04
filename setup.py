@@ -18,5 +18,5 @@ setuptools.setup(name="gas-dynamics",
           "Operating System :: OS Independent"
       ],
       license="MIT",
-      python_requires=">=3.6",
+      python_requires=">=3.5",
 )
