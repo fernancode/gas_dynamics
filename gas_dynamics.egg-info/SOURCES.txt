@@ -1,0 +1,8 @@
+README.md
+setup.py
+gas-dynamics/__init__.py
+gas-dynamics/gas_dynamics.py
+gas_dynamics.egg-info/PKG-INFO
+gas_dynamics.egg-info/SOURCES.txt
+gas_dynamics.egg-info/dependency_links.txt
+gas_dynamics.egg-info/top_level.txt

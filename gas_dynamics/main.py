@@ -1,4 +1,5 @@
-"""Equatons, plots, and tables for solving compresible flow problems.
+"""
+Equatons, plots, and tables for solving compresible flow problems.
 
 Included are functions to solve problems relating to compressible flow,
 from stagnation relations to determining the mach number from changes in
@@ -6,17 +7,16 @@ local properties. Tables can be made for any gas and its respective
 ratio of specific heats, as well as plots and charts for shock and
 mach number relationships.
 
-  Typical usage example:
-  determine the mach number after a normal shock, given a starting
-  mach number of 2
-
+Typical usage example 
+determine the mach number after a normal shock, given a starting
+mach number of 2.
+  
   >>> import gas_dynamics as gd
   >>> mach_before_shock = 2
   >>> mach_after_shock = gd.shock_mach(M1=mach_before_shock)
   >>> mach_after_shock
   0.5773502691896257
   >>>
-
   Generate isentropic flow stagnation relations for methane
   >>> import gas_dynamics as gd
   >>> gd.stagnation_ratios(range=[0,2], inc=.2, gas='methane')
@@ -31,7 +31,6 @@ mach number relationships.
   M: 1.600   |   P/Pt: 0.243    |    T/Tt: 0.709    |    A/A*: 1.267    |   rho/rho_t: 0.342
   M: 1.800   |   P/Pt: 0.179    |    T/Tt: 0.659    |    A/A*: 1.474    |   rho/rho_t: 0.271
   M: 2.000   |   P/Pt: 0.130    |    T/Tt: 0.610    |    A/A*: 1.754    |   rho/rho_t: 0.213
-
 """
 
 import numpy as np
@@ -39,7 +38,7 @@ from scipy.optimize import fsolve
 import matplotlib.pyplot as plt
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,AutoMinorLocator)
 
-#GOOD
+
 def fluid(fluid=[], metric=True, R=[], gamma=[]):
     """Return the ratio of specific heats and gas constant for the fluid
 
