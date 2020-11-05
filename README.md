@@ -1,4 +1,4 @@
-# Gas Dynamics
+# gas dynamics
 
 Gas Dynamics equations, table generators, oblique shock chart generators, and more.
 
