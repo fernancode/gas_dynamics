@@ -1,6 +1,6 @@
-# gas dynamics
+# gas_dynamics
 
-Gas Dynamics equations, table generators, oblique shock chart generators, and more.
+Gas dynamics equations, table generators, oblique shock chart generators, and more.
 
 To install with pip, use 
 
