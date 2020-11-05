@@ -27,6 +27,7 @@ mach number relationships.
   M: 1.600   |   P/Pt: 0.243    |    T/Tt: 0.709    |    A/A*: 1.267    |   rho/rho_t: 0.342
   M: 1.800   |   P/Pt: 0.179    |    T/Tt: 0.659    |    A/A*: 1.474    |   rho/rho_t: 0.271
   M: 2.000   |   P/Pt: 0.130    |    T/Tt: 0.610    |    A/A*: 1.754    |   rho/rho_t: 0.213
+
 Copyright 2020 by Fernando A de la Fuente
 All rights reserved
 """
@@ -36,7 +37,8 @@ from scipy.optimize import fsolve
 import matplotlib.pyplot as plt
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,AutoMinorLocator)
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def fluid(fluid=[], metric=True, R=[], gamma=[]):
     """Return the ratio of specific heats and gas constant for the fluid
     Description
@@ -94,6 +96,10 @@ def fluid(fluid=[], metric=True, R=[], gamma=[]):
         elif fluid == 'custom':
             gamma = float(input('gamma: '))
             R = float(input('R (J/kg K): '))
+        elif fluid[0] == '$':
+            new_fluid = fluid[1:]
+            gamma = float(new_fluid.split(',')[0])
+            R = float(new_fluid.split(',')[1])            
         else:
             gamma, R = 1.4, 287
         return gamma, R
@@ -124,7 +130,8 @@ def fluid(fluid=[], metric=True, R=[], gamma=[]):
             gamma, R = 1.4, 55.3
         return gamma, R
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def plot_stagnation_ratios(range=[.1,5],inc=.01, gasses=['air','methane','argon']):
     """Plot the isentropic stagnation relationships for different gasses
     
@@ -200,7 +207,8 @@ def plot_stagnation_ratios(range=[.1,5],inc=.01, gasses=['air','methane','argon'
         axs[1,1].legend()
     plt.show()
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def stagnation_ratios(range=[0,5], inc=.1, gas='air') -> str:
     """Returns the isentropic flow tables in the given range.
     
@@ -255,7 +263,8 @@ def stagnation_ratios(range=[0,5], inc=.1, gas='air') -> str:
         print('M: %0.3f' % num, '  |   P/Pt: %0.3f' % p_list[index], '   |    T/Tt: %0.3f' % t_list[index],  '   |    A/A*: %0.3f' % a_list[index],  '   |   rho/rho_t: %0.3f ' % rho_list[index])
     print("\n \n \n")
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def sonic_velocity(gas='air' ,metric=True, T=273.15) -> float:
     """Returns the local speed of sound.
     
@@ -283,7 +292,8 @@ def sonic_velocity(gas='air' ,metric=True, T=273.15) -> float:
     a = (gamma*R*T)**.5
     return a
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def entropy_produced(pt1: float, pt2: float, gas='air', metric=True) -> float:
     """Return the change in specific entropy from the stagnation pressure ratio
     
@@ -315,7 +325,8 @@ def entropy_produced(pt1: float, pt2: float, gas='air', metric=True) -> float:
     ds = -R*np.log(pt2/pt1)
     return ds
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def pressure_from_mach_ratio(M1: float, M2: float, p1: float, ds=0, gas='air', metric=True) -> float:
     """Return the pressure given a starting pressure and the two Mach numbers
     
@@ -353,7 +364,8 @@ def pressure_from_mach_ratio(M1: float, M2: float, p1: float, ds=0, gas='air', m
     p2 = p1 * ((1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2))**(gamma/(gamma-1)) * np.exp(-ds/R)
     return p2
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def mach_from_pressure_ratio(p1: float, p2: float, M1: float, ds=0, gas='air', metric=True) -> float:
     """Return the Mach number given a Mach number and the local pressures
     
@@ -391,7 +403,8 @@ def mach_from_pressure_ratio(p1: float, p2: float, M1: float, ds=0, gas='air', m
     M2 = (((p1/p2 * np.exp(ds/R))**((gamma-1)/gamma) * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
     return M2
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def temperature_from_mach_ratio(M1: float, M2: float, T1: float, gas='air', metric=True) -> float:
     """Return the temperature given a temperature and the two Mach numbers
     
@@ -427,7 +440,8 @@ def temperature_from_mach_ratio(M1: float, M2: float, T1: float, gas='air', metr
     T2 = T1 * (1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2)
     return T2
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def mach_from_temperature_ratio(T1: float, T2: float, M1: float, gas='air', metric=True) -> float:
     """Return the Mach number given a Mach number and two local temperatures
     
@@ -463,9 +477,10 @@ def mach_from_temperature_ratio(T1: float, T2: float, M1: float, gas='air', metr
     M2 = (( T1/T2 * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
     return M2
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def mach_area_ratio(M1: float, M2: float, gas='air', ds=0, metric=True) -> float:
-    """Return the area ratio given the two Mach numberss
+    """Return the area ratio given the two Mach numbers
     Description
     -----------
     Given two mach numbers, return the area ratio required to accelerate
@@ -497,7 +512,17 @@ def mach_area_ratio(M1: float, M2: float, gas='air', ds=0, metric=True) -> float
     A2_A1 = M1/M2 * ((1 + (gamma-1)/2 * M2**2 )/(1 + (gamma-1)/2 * M1**2 ))**((gamma+1)/(2*(gamma-1))) * np.exp(ds/R)
     return A2_A1
 
-#GOOD
+
+#ADDED TO SUBMODULE
+def  mach_from_area_ratio():
+    """ Return the possible mach numbers given an area ratio
+    
+    Description
+
+    """
+
+
+#ADDED TO SUBMODULE
 def mach_area_choked_ratio(M: float, gas='air', metric=True) -> float:
     """Returns the ratio of A / A* given the Mach number.
     
@@ -529,7 +554,8 @@ def mach_area_choked_ratio(M: float, gas='air', metric=True) -> float:
     a_star_ratio = 1/M * ((1 + (gamma-1)/2 * M**2) / ((gamma+1)/2)) ** ((gamma+1)/(2*(gamma-1)))
     return a_star_ratio
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def stagnation_pressure(pt=None, M=None, p=None, gas='air', metric=True) -> float:
     """Returns the stagnation pressure given pressure and Mach number.
     Description
@@ -576,7 +602,8 @@ def stagnation_pressure(pt=None, M=None, p=None, gas='air', metric=True) -> floa
         p = pt / ( 1 + (gamma-1)/2 * M**2)** (gamma/(gamma-1))
         return p
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def stagnation_pressure_ratio(M: float, gas='air', metric=True) -> float:
     """Returns the pressure ratio of p / p_t
     
@@ -608,7 +635,8 @@ def stagnation_pressure_ratio(M: float, gas='air', metric=True) -> float:
     Pt_ratio = (1 / denom ) ** (gamma/(gamma-1))
     return Pt_ratio
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def stagnation_temperature(T=None, Tt=None , M=None, gas='air', metric=True) -> float :
     """Returns the stagnation temperature given temperature and Mach number.
     
@@ -656,7 +684,8 @@ def stagnation_temperature(T=None, Tt=None , M=None, gas='air', metric=True) -> 
         T = Tt/( 1 + (gamma-1)/2 * M**2)
         return T
 
-#TODO: ADD EXAMPLES
+
+#ADDED TO SUBMODULE
 def stagnation_temperature_ratio(M: float, gas='air', metric=True) -> float:
     """Returns the temperature ratio of T / T_t
     
@@ -682,7 +711,8 @@ def stagnation_temperature_ratio(M: float, gas='air', metric=True) -> float:
     Tt_ratio = 1 / (1+(gamma-1)/2 *M**2)
     return Tt_ratio
 
-#TODO: add examples
+
+#ADDED TO SUBMODULE
 def stagnation_density_ratio(M: float, gas='air', metric=True) -> float:
     """Returns the density ratio of rho/ rho_t
     
@@ -708,7 +738,8 @@ def stagnation_density_ratio(M: float, gas='air', metric=True) -> float:
     rho_t_ratio = (1 / (1 + (gamma-1)/2 * M**2 )) ** (1 / (gamma-1))
     return rho_t_ratio
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def choked_mdot(pt: float, Tt: float, gas='air', metric=True) -> float:
     """Returns the maximum flow rate per unit choked area
     
@@ -753,7 +784,8 @@ def choked_mdot(pt: float, Tt: float, gas='air', metric=True) -> float:
         mdot_a_star = (((gc*gamma/(R))*(2/(gamma+1))**((gamma+1)/(gamma-1)))**.5 * pt/(Tt**.5))
         return mdot_a_star
 
-#GOOD:
+
+#ADDED TO SUBMODULE
 def shock_tables(range=[1,5], inc=.01, gas='air', metric=True) -> str:
     """Returns shock tables for a range of Mach numberss.
     
@@ -811,7 +843,8 @@ def shock_tables(range=[1,5], inc=.01, gas='air', metric=True) -> str:
         print("M: " + f"{num:.2f}" + "   |"+"   M2: " + f"{M2[index]:.4f}" + "   | " + "   p2/p1: " + f"{p2_p1[index]:.4f}" + "   | "+"   T2/T1: " + f"{T2_T1[index]:.4f}" + "   |"+"   dV/a: " + f"{dv_a[index]:.4f}"+ "   |"+"   pt2/pt1: " + f"{pt2_pt1[index]:.6f}" )
     print("\n \n \n")
 
-#TODO: fix runtime double scalars warning
+
+#ADDED TO SUBMODULE
 def shock_mach(M1=None, M2=None, gas='air', metric=True) -> float:
     """Returns the Mach number after a standing normal shock or the Mach number prior a standing normal shock
     
@@ -854,6 +887,8 @@ def shock_mach(M1=None, M2=None, gas='air', metric=True) -> float:
         M1 = ((-2/(gamma-1) -M2**2 ) / (1- ((2*gamma)/(gamma-1))*M2**2))**.5
         return M1
 
+
+#ADDED TO SUBMODULE
 #GOOD #FIXME: maybe split these kinds of functions into two
 def shock_pressure_ratio(M=None ,p2_p1=None, gas='air', metric=True) -> float:
     """Returns the pressure ratio after a standing normal shock for a given Mach number
@@ -895,7 +930,8 @@ def shock_pressure_ratio(M=None ,p2_p1=None, gas='air', metric=True) -> float:
         M = ((gamma+1)/(2*gamma) * (p2_p1 + (gamma-1)/(gamma+1)) )**.5
         return M
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def shock_temperature_ratio(M: float, gas='air', metric=True) -> float:
     """Returns the temperature ratio after a standing normal shock for a given Mach number
     
@@ -930,7 +966,8 @@ def shock_temperature_ratio(M: float, gas='air', metric=True) -> float:
     t2_t1 = (term1 * term2) / term3
     return t2_t1
 
-#TODO: add examples
+
+#ADDED TO SUBMODULE
 def shock_dv_a(M: float, gas='air', metric=True) -> float:
     """Returns change in velocity over the local speed of sound after a normal shock.
     
@@ -957,6 +994,8 @@ def shock_dv_a(M: float, gas='air', metric=True) -> float:
     dv_a = 2/(gamma+1) * (M**2 -1)/ M
     return dv_a
 
+
+#ADDED TO SUBMODULE
 #TODO: add examples
 def shock_stagnation_ratio(M: float, gas='air', metric=True) -> float:
     """Returns stagnation pressure ratio after a normal shock.
@@ -987,7 +1026,8 @@ def shock_stagnation_ratio(M: float, gas='air', metric=True) -> float:
     term4 = (2*gamma / (gamma+1) * M**2 - ((gamma-1)/(gamma+1)))**(1/(1-gamma))
     return term3 * term4
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def shock_flow_deflection(M: float, theta: float, gas='air', metric=True) -> float:
     """Returns flow deflection angle from Mach number and Oblique shock angle
     Description
@@ -1022,7 +1062,8 @@ def shock_flow_deflection(M: float, theta: float, gas='air', metric=True) -> flo
     dirac = dirac * 180 / np.pi
     return dirac
 
-#GOOD
+
+#ADDED TO SUBMODULE
 def shock_angle(M: float, dirac: float, gas='air', metric=True) -> float:
     """Return the shock angle given the Mach number prior to the shock and the deflection angle
     
@@ -1064,6 +1105,8 @@ def shock_angle(M: float, dirac: float, gas='air', metric=True) -> float:
     shock_angles = [weak[0] * 180/np.pi , strong[0] * 180/np.pi]
     return shock_angles
 
+
+#ADDED TO SUBMODULE
 #TODO: edit docstring
 def shock_mach_given_angles(theta: float, dirac: float, gas='air', metric=True) -> float:
     """Return the Mach number given the shock angle and flow deflection
@@ -1106,6 +1149,8 @@ def shock_mach_given_angles(theta: float, dirac: float, gas='air', metric=True) 
     sol = fsolve(func, x0=0.001, args=(theta, dirac, gamma))
     return sol[0]
 
+
+#ADDED TO SUBMODULE
 #TODO: add examples
 def prandtl_meyer_turn(M: float, gas='air', metric=True) -> float:
     """Returns the angle through which a flow has turned to reach a Mach number
@@ -1113,8 +1158,9 @@ def prandtl_meyer_turn(M: float, gas='air', metric=True) -> float:
     Description
     -----------
     Given a Mach number and ratio of specific heats, calculate angle through
-    which a flow has turned to reach the Mach number given. Also known as
-    the Prandtl-Meyer function. Default fluid is air
+    which a flow has turned to reach the Mach number given from a starting
+    Mach number of 1. Also known as the Prandtl-Meyer function. Default fluid
+    is air
     
     Parameters
     ----------
@@ -1132,10 +1178,11 @@ def prandtl_meyer_turn(M: float, gas='air', metric=True) -> float:
 
     gamma, R = fluid(gas, metric)
     nu = ((gamma+1)/(gamma-1))**.5 * np.arctan(((M**2-1)*(gamma-1)/(gamma+1))**.5) - np.arctan((M**2-1)**.5)
-    return nu
+    return degrees(nu)
 
-#TODO: make this function
-def prandtl_meyer_mach(gas='air', metric=True):
+
+#ADDED TO SUBMODULE
+def prandtl_meyer_mach(nu: float, gas='air', metric=True) -> float:
     """Returns the Mach number given an angle through which the flow has turned
     
     Description
@@ -1147,9 +1194,15 @@ def prandtl_meyer_mach(gas='air', metric=True):
     >>> 
     >>> 
     """
-    gamma, R = fluid(gas, metric)
     
-#GOOD for now
+    def get_mach(M: float, nu=nu, gas=gas) -> float:
+        return prandtl_meyer_turn(M, gas=gas) - nu
+    
+    sol = fsolve(get_mach, x0=1.5, args=(nu, gas))
+    return sol[0]
+
+
+#ADDED TO SUBMODULE
 def shock_oblique_charts(Mach_max=6, gas='air', metric=True, lite=True):
     """Generate 2-D Oblique Shock Charts
     
@@ -1236,7 +1289,8 @@ def shock_oblique_charts(Mach_max=6, gas='air', metric=True, lite=True):
     fig.tight_layout(pad=2.0)
     plt.show()
 
-#TODO: make dosctring
+
+#ADDED TO SUBMODULE
 def dirac_from_machs(M1=[], M2=[], gas='air'):
     """Return the flow deflection angle and the shock angle required to go from one Mach # to a second Mach #
     Description
@@ -1273,6 +1327,7 @@ def dirac_from_machs(M1=[], M2=[], gas='air'):
             return shock_flow_deflection(M=M1, theta=degrees(theta), gas=gas)
 
 
+#ADDED TO SUBMODULE
 #TODO: make docstrings
 def degrees(theta: float) -> float:
     """Convert from radians to degrees
@@ -1291,7 +1346,8 @@ def degrees(theta: float) -> float:
 
     return theta * 180/np.pi
 
-#TODO: make docstrings
+
+#ADDED TO SUBMODULE
 def radians(theta: float) -> float:
     """Convert from degrees to radians
     Parameters
@@ -1310,6 +1366,7 @@ def radians(theta: float) -> float:
     return theta * np.pi/180
 
 
+#ADDED TO SUBMODULE
 def sind(theta: float) -> float:
     """Sine given degrees
     Parameters
@@ -1329,6 +1386,7 @@ def sind(theta: float) -> float:
     return np.sin(theta_radians)
     
 
+#ADDED TO SUBMODULE
 def arcsind(sin: float) -> float:
     """Return the arcsine in degrees
     Parameters
@@ -1349,6 +1407,7 @@ def arcsind(sin: float) -> float:
     return theta
 
 
+#ADDED TO SUBMODULE
 def cosd(theta: float) -> float:
     """Cosine given degrees
     Parameters
@@ -1368,6 +1427,7 @@ def cosd(theta: float) -> float:
     return np.cos(theta_radians)
 
 
+#ADDED TO SUBMODULE
 def arccosd(cos: float) -> float:
     """Return the arccosine in degrees
     Parameters
@@ -1388,6 +1448,7 @@ def arccosd(cos: float) -> float:
     return theta
 
 
+#ADDED TO SUBMODULE
 def tand(theta: float) -> float:
     """Tangent given degrees
     Parameters
@@ -1406,6 +1467,7 @@ def tand(theta: float) -> float:
     return np.tan(theta_rad)
 
 
+#ADDED TO SUBMODULE
 def arctand(tan: float) -> float:
     """Return the arctangent in degrees
     Parameters
@@ -1425,6 +1487,7 @@ def arctand(tan: float) -> float:
     return theta
 
 #TODO: make docstrings
+#ADDED TO SUBMODULE
 def area_dia(dia=[], area=[]):
     """
     Description
@@ -1454,7 +1517,7 @@ def area_dia(dia=[], area=[]):
         return dia
 
 
-#GOOD
+#ADDED TO SUBMODULE
 def lin_interpolate(x, x0, x1, y0, y1):
     """Linear interpolation formula
     

@@ -2,19 +2,32 @@
 
 Gas Dynamics equations, table generators, oblique shock chart generators, and more.
 
-Welcome to my gas dynamics library. To get started as quickly as possible, copy the gas_dynamics.py file into your working directory and import the library. Every function contains an argument to specify the fluid in order to obtain the appropriate gas constant and ratio of specific heats. If the fluid is not known, the default argument is for air. Alternatively, if you want to specify the gas constant and ratio of specific heats directly, you can using 'custom'.
+To install with pip, use 
+
+```
+py -m pip install gas_dynamics
+```
+
+Equatons, plots, and tables for solving compresible flow problems. Included are functions to solve problems relating to compressible flow, from stagnation relations to determining the mach number from changes in
+local properties. Tables can be made for any gas and its respective ratio of specific heats, as well as plots and charts of relationships. 
+
+All functions contains an argument to specify the fluid so as to obtain the appropriate ratio of specific heats and gas constant. If the fluid is not specified, the default argument is for air with a ratio of specific heats of 1.4 and a gas constant of 287 J / Kg K. Alternatively, if you want to specify the ratio of specific heats and gas constant directly, enter the values as a string preceded by a $. 
 
 ```
 >>> import gas_dynamics as gd
->>> M2 = gd.shock_mach(M1=1.25)                 #get the Mach # following a normal shock for air
+>>> 
+#Mach number after a normal shock for air
+>>> M2 = gd.shock_mach(M1=1.25)
 >>> M2
 0.8126360553720011
->>> M2 = gd.shock_mach(M1=1.25, gas='argon')    #get the Mach # following a normal shock for argon
+>>>
+#Mach number after a normal shock for argon
+>>> M2 = gd.shock_mach(M1=1.25, gas='argon')
 >>> M2
 0.8184295177443512
->>> M2 = gd.shock_mach(M2=1.25, gas='custom')   #get the mach number for a 'custom' fluid
-gamma: 1.1                                      #input gamma
-R (J/kg K): 400                                 #input R
+>>> 
+#Mach number for a user-defined fluid
+>>> M2 = gd.shock_mach(M2=1.25, gas='$1.1,400')
 >>> M2
 0.803783189504693
 >>>
@@ -68,7 +81,7 @@ Return the area ratio required to accelerate a flow to M = 3 and the correspondi
 
 ```
 >>> import gas_dynamics as gd
->>> A_Astar =gd.mach_area_choked_ratio(M=3)
+>>> A_Astar =gd.mach_area_ratio_choked(M=3)
 >>> A_Astar
 4.23456790123457
 >>> p_pt = gd.stagnation_pressure_ratio(M=3)
@@ -120,7 +133,7 @@ Determine the Mach # before and after a normal shock
 >>> M2 = gd.shock_mach(M1=1.5) 
 >>> M2
 0.7010887416930995
->>> M1 = gd.shock_mach(M2)
+>>> M1 = gd.shock_mach_before(M2)
 >>> M1
 1.4999999999999998
 >>>
