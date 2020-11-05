@@ -8,10 +8,10 @@ To install with pip, use
 py -m pip install gas_dynamics
 ```
 
-Equatons, plots, and tables for solving compresible flow problems. Included are functions to solve problems relating to compressible flow, from stagnation relations to determining the mach number from changes in
+Equations, plots, and tables for solving compresible flow problems. Included are functions to solve problems relating to compressible flow, from stagnation relations to determining the mach number from changes in
 local properties. Tables can be made for any gas and its respective ratio of specific heats, as well as plots and charts of relationships. 
 
-All functions contains an argument to specify the fluid so as to obtain the appropriate ratio of specific heats and gas constant. If the fluid is not specified, the default argument is for air with a ratio of specific heats of 1.4 and a gas constant of 287 J / Kg K. Alternatively, if you want to specify the ratio of specific heats and gas constant directly, enter the values as a string preceded by a $. 
+All functions contain an argument to specify the fluid so as to obtain the appropriate ratio of specific heats and gas constant. If the fluid is not specified, the default argument is for air with a ratio of specific heats of 1.4 and a gas constant of 287 J / Kg K. Alternatively, if you want to specify the ratio of specific heats and gas constant directly, enter the values as a string preceded by a $. 
 
 ```
 >>> import gas_dynamics as gd
