@@ -3,7 +3,7 @@
 Included are functions to solve problems relating to compressible flow,
 from stagnation relations to determining the mach number from changes in
 local properties. Tables can be made for any gas and its respective 
-ratio of specific heats, as well as plots and charts of relationships
+ratio of specific heats, as well as plots and charts of relationships.
 
   Typical usage example:
   Generate isentropic flow stagnation relations for methane
