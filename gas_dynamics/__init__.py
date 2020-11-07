@@ -27,6 +27,7 @@ from gas_dynamics.shocks.shocks import (
   shock_mach,
   shock_mach_before,
   shock_pressure_ratio,
+  shock_mach_from_pressure_ratio,
   shock_temperature_ratio,
   shock_dv_a, 
   shock_stagnation_ratio, 
@@ -39,7 +40,7 @@ from gas_dynamics.shocks.shocks import (
   shock_tables, 
   dirac_from_machs)
 
-from gas_dynamics.extra import fluid
+from gas_dynamics.fluids import fluid
 
 #from .fanno import func1,
 #from .rayleigh func 1

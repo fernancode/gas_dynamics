@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(name="gas_dynamics",
-      version="0.2.3",
+      version="0.2.4",
       author="Fernando de la Fuente",
       author_email="FernandoAdelaFuente@gmail.com",
       description="Package containing functions for working with compressible flow",
