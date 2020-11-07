@@ -618,7 +618,7 @@ def shock_oblique_charts(Mach_max=6, gas=air, lite=True, dark=True):
     ax2.set(ylabel = 'Mach # After')
 
     #plot title stuff
-    string = 'Oblique Shock and Flow Deflection Angle for ' + gas.name
+    string = 'Oblique Shock and Flow Deflection Angles for ' + gas.name
     fig.suptitle(string)
     fig.tight_layout(pad=2.0)
     plt.show()

@@ -11,7 +11,7 @@ py -m pip install gas_dynamics
 Included are functions to solve problems relating to compressible flow, from stagnation relations to determining the mach number from changes in
 local properties. Tables can be made for any gas and its respective ratio of specific heats, as well as plots and charts of relationships. 
 
-All functions contain an argument to specify the fluid so as to obtain the appropriate ratio of specific heats and gas constant. If the fluid is not specified, the default argument is for air with a ratio of specific heats of 1.4 and a gas constant of 286.9 J / Kg K. Alternatively, if you want to specify the ratio of specific heats and gas constant directly, a class for fluids exists to initialize a fluid and its properties, as well as keep track of units. 
+All functions contain an argument to specify the fluid so as to obtain the appropriate ratio of specific heats and gas constant. If the fluid is not specified, the default argument is for air with a ratio of specific heats of 1.4 and a gas constant of 286.9 J / kg K. Alternatively, if you want to specify the ratio of specific heats and gas constant directly, a class for fluids exists to initialize a fluid and its properties, as well as keep track of units. 
 
 ```
 >>> import gas_dynamics as gd
@@ -23,7 +23,7 @@ Mach number after a normal shock for air
 >>>
 
 Mach number after a normal shock for argon
->>> 
+>>> from gas_dynamics.fluids import argon
 >>> M2 = gd.shock_mach(M1=1.25, gas=argon)
 >>> M2
 0.8184295177443512
@@ -33,9 +33,9 @@ Mach number for a user-defined fluid
 >>> methane = gd.fluid(name='methane', gamma=1.33, R=96.4, units='ft-lbf/lbm-R') 
 >>> methane.name, methane.gamma, methane.R, methane.units
 ('methane', 1.33, 96.4, 'ft-lbf/lbm-R')
->>> M2 = gd.shock_mach(M=2, gas=methane)
+>>> M2 = gd.shock_mach(M=1.25, gas=methane)
 >>> M2
-0.5674658216825799
+0.810574008582977
 >>>
 ```
 
@@ -74,7 +74,7 @@ M: 5.100   |   P/Pt: 0.002    |    T/Tt: 0.161    |    A/A*: 27.070    |   rho/r
 ```
 
 
-Plotting Stagnation relations versus mach number for different gammas. Arguments are the mach number range, increment, and a list of gasses. Default valules are range = [.01, 5], step=.1, and gasses = [air,methane,argon]
+Plotting Stagnation relations versus mach number for different gammas. Arguments are the mach number range, increment, and a list of gasses. 
 
 ```
 plot_stagnation_ratios(dark=False)
