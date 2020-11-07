@@ -10,6 +10,11 @@
 /*.egg
 /*.eggs
 
+#commit only source files for readthedocs
+/docs/_build
+/docs/_static
+/docs/_templates
+
 # random notes
 z_notes.txt
 .vscode
