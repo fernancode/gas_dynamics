@@ -6,102 +6,113 @@ Extra functions for random stuff
 import numpy as np
 
 
-
 #==================================================
 #fluid
-#remove custom feature
-# add doc for '$1.4,286'
 #==================================================
-def fluid(fluid=[], metric=True, R=[], gamma=[]):
-    """Return the ratio of specific heats and gas constant for the fluid
-    Description
-    -----------
-    Return the ratio of specific heats and gas constant for the fluid
-    Parameters
+class fluid:
+    """A class to represent the fluid and its properties
+
+    Attributes
     ----------
-    fluid : `string`
-        The fluid\n
-    metric : `bool`
-        Use Metric or US Standard \n
+    gamma : `float`
+        The ratio of specific heats \n
     R : `float`
-        Gas constant, if known \n
-    gamma : `gamma`
-        Ratio of specific heats, if known \n
+        The gas constant for the fluid \n
+    units : `str`
+        The unit system defining the gas constant \n
+
+    Methods
+    -------
+    No methods at this time
+
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> R, gamma = gd.fluid(fluid='Nitrogen') 
-    >>> R, gamma
-    (1.4, 296)
-    >>>       
+    >>> methane = gd.fluid('methane', 1.3, 518.2)
+    >>> methane.gamma
+    1.3
+    >>> methane.R
+    518.2
+    >>> methane.units
+    'metric'
+    
+    Conversely we can set the units
+    >>> methane = fluid('methane', 1.3, 0.1238, units = 'btu / lbm-R')
+    >>> methane.gamma
+    1.3
+    >>> methane.R
+    0.1238
+    >>> methane.units
+    'btu / lbm-R'
+
     """
 
-    if R or gamma != []:
-        return gamma, R
-    
-    if fluid == []:
-        gamma, R = 1.4, 287
-        return gamma, R
+    def __init__(self, name: str, gamma: float, R: float, units='metric'):
+        """Construct the necessary attributes for the fluid object
 
-    fluid = fluid.lower()
-    if metric == True:
-        #N m / kg K
-        if fluid == 'air':
-            gamma, R = 1.4, 287
-        elif fluid == 'argon':
-            gamma, R = 1.67, 208
-        elif fluid == 'carbon dioxide':
-            gamma, R = 1.29, 189
-        elif fluid == 'carbon monoxide':
-            gamma, R = 1.4, 297
-        elif fluid == 'helium':
-            gamma, R = 1.67, 2080
-        elif fluid == 'hydrogen':
-            gamma, R = 1.41, 4120
-        elif fluid == 'methane':
-            gamma, R = 1.32, 519
-        elif fluid == 'nitrogen':
-            gamma, R = 1.4, 296
-        elif fluid == 'oxygen':
-            gamma, R = 1.4, 260
-        elif fluid == 'water' or fluid == 'steam':
-            gamma, R = 1.33, 461
-        elif fluid == 'custom':
-            gamma = float(input('gamma: '))
-            R = float(input('R (J/kg K): '))
-        elif fluid[0] == '$':
-            new_fluid = fluid[1:]
-            gamma = float(new_fluid.split(',')[0])
-            R = float(new_fluid.split(',')[1])            
-        else:
-            gamma, R = 1.4, 287
-        return gamma, R
+        Parameters
+        ----------
+        name : `str`
+            The name of the fluid\n
+        gamma : `float`
+            The ratio of specific heats \n
+        R : `flaot`
+            The gas constant for the fluid \n
+        units : `str`
+            The units being used for the gas constant. Default is metric \n
 
-    if metric == False:
-        # ft lbf / lbm R
-        if fluid == 'air':
-            gamma, R = 1.4, 53.3
-        elif fluid == 'argon':
-            gamma, R = 1.67, 38.7
-        elif fluid == 'carbon dioxide':
-            gamma, R = 1.29, 35.1
-        elif fluid == 'carbon monoxide':
-            gamma, R = 1.4, 55.2
-        elif fluid == 'helium':
-            gamma, R = 1.67, 386
-        elif fluid == 'hydrogen':
-            gamma, R = 1.41, 766
-        elif fluid == 'methane':
-            gamma, R = 1.32, 96.4
-        elif fluid == 'nitrogen':
-            gamma, R = 1.4, 55.1
-        elif fluid == 'oxygen':
-            gamma, R = 1.4, 48.3
-        elif fluid == 'water' or fluid == 'steam':
-            gamma, R = 133, 85.7
-        else:
-            gamma, R = 1.4, 55.3
-        return gamma, R
+        """
+        self.name = name
+        self.gamma = gamma
+        self.R = R
+        self.units = units
+
+
+
+#Initialize some fluids in the metric system
+#==================================================
+air = fluid(name='Air', gamma=1.4, R=286.9, units='J / kg-K')
+
+argon = fluid(name='Argon', gamma=1.67, R=208, units='J / kg-K')
+
+CO2 = fluid(name='Carbon Dioxide', gamma=1.29, R=189, units='J / kg-K')
+
+CO = fluid(name='Carbon Monoxide', gamma=1.4, R=297, units='J / kg-K')
+
+hydrogen = fluid(name='Hydrogen', gamma=1.41, R=4120, units='J / kg-K')
+
+helium = fluid(name='Helium', gamma=1.67, R=2080, units='J / kg-K')
+
+methane = fluid(name='Methane', gamma=1.32, R=519, units='J / kg-K')
+
+nitrogen = fluid(name='Nitrogen', gamma=1.4, R=296, units='J / kg-K')
+
+O2 = fluid(name='Oxygen', gamma=1.4, R=260, units='J / kg-K')
+
+water = fluid(name='water', gamma=1.33, R=461, units='J / kg-K')
+
+
+#and in the british standard (Btu / lbm-R)
+#============================================================
+air_us = fluid(name='Air', gamma=1.4, R=53.3, units='Btu / lbm-R')
+
+argon_us = fluid(name='Argon', gamma=1.67, R=38.7, units='Btu / lbm-R')
+
+CO2_us = fluid(name='Carbon Dioxide', gamma=1.29, R=35.1, units='Btu / lbm-R')
+
+CO_us = fluid(name='Carbon Monoxide', gamma=1.4, R=55.2, units='Btu / lbm-R')
+
+hydrogen_us = fluid(name='Hydrogen', gamma=1.41, R=766, units='Btu / lbm-R')
+
+helium_us = fluid(name='Helium', gamma=1.67, R=386, units='Btu / lbm-R')
+
+methane_us = fluid(name='Methane', gamma=1.32, R=96.4, units='Btu / lbm-R')
+
+nitrogen_us = fluid(name='Nitrogen', gamma=1.4, R=55.1, units='Btu / lbm-R')
+
+O2_us = fluid(name='Oxygen', gamma=1.4, R=48.3, units='Btu / lbm-R')
+
+water_us = fluid(name='water', gamma=1.33, R=85.7, units='Btu / lbm-R')
 
 
 

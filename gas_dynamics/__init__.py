@@ -8,7 +8,8 @@ from gas_dynamics.isentropic.isentropic import (
   stagnation_pressure_ratio,
   stagnation_temperature_ratio,
   stagnation_density_ratio,
-  stagnation_ratios,
+  stagnation_ratio,
+  stagnation_ratio_table,
   mach_from_pressure_ratio,
   mach_from_temperature_ratio,
   pressure_from_mach_ratio,
@@ -17,7 +18,8 @@ from gas_dynamics.isentropic.isentropic import (
   mach_area_ratio_choked,
   mach_area_ratio,
   mach_from_area_ratio,
-  choked_mdot,
+  mass_flux_max,
+  mass_flux,
   plot_stagnation_ratios )
 
 #import shock functions
@@ -41,4 +43,3 @@ from gas_dynamics.extra import fluid
 
 #from .fanno import func1,
 #from .rayleigh func 1
-#from .

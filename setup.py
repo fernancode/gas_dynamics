@@ -18,7 +18,7 @@ setuptools.setup(name="gas_dynamics",
           "Operating System :: OS Independent"
       ],
       license="MIT",
-      python_requires=">=3.5",
+      python_requires=">=3.8",
       test_suite='nose.collector',
       tests_require=['nose'],
       setup_requires=["numpy==1.19.3"],

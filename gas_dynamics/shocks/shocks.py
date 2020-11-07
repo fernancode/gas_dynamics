@@ -6,7 +6,7 @@ conditions to flow deflections. Tables can be made for any gas and its respectiv
 ratio of specific heats, as well as plots and charts of relationships.
 
   Typical usage example:
-  Generate a shock tabgle for methane (two columns omitted for readability)
+  Generate a shock tabgle for argon (two columns omitted for readability)
   >>> gd.shock_tables(range=[1,2], inc=.1, gas='argon') 
   Normal Shock Parameters for γ = 1.67
   M: 1.00   |   M2: 1.0000   |    p2/p1: 1.0000   |    T2/T1: 1.0000   |   
@@ -29,7 +29,7 @@ import numpy as np
 from scipy.optimize import fsolve
 import matplotlib.pyplot as plt
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,AutoMinorLocator)
-from gas_dynamics.extra import ( fluid, radians, degrees, sind, arcsind, cosd, arccosd, tand, arctand, lin_interpolate )
+from gas_dynamics.extra import ( fluid, air ,radians, degrees, sind, arcsind, cosd, arccosd, tand, arctand, lin_interpolate )
 
 
 
@@ -65,7 +65,7 @@ def shock_mach(M: float, gas='air', metric=True) -> float:
     """
 
     gamma, R = fluid(gas, metric)
-    #TODO: keep getting runtime double scalars warning what is this
+    #TODO: keep getting runtime double scalars because of div/0
     M2 = ((M**2 + 2/(gamma-1)) / ((2*gamma / (gamma-1)) * M**2 - 1))**.5
     return M2
 
