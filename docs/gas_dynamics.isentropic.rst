@@ -1,3 +1,7 @@
+####################
+Isentropic Functions
+####################
+
 gas\_dynamics.isentropic module
 ===============================
 

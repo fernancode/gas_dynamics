@@ -1,5 +1,5 @@
 ########
-About me
+About Me
 ########
 
 I'm Fernando de la Fuente, a mechanical engineer deeply invested in the aerospace sector and an enthusiast of writing code and tools to help me solve problems.

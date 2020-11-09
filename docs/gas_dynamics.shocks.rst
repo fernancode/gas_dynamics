@@ -1,3 +1,7 @@
+###############
+Shock Functions
+###############
+
 gas\_dynamics.shocks module
 ===========================
 
