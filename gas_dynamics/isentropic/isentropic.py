@@ -24,6 +24,10 @@
 #Copyright 2020 by Fernando A de la Fuente
 #All rights reserved
 
+#TODO: everything needs a 
+#returns
+#   `type`
+
 
 import numpy as np
 from scipy.optimize import fsolve
@@ -39,8 +43,8 @@ from gas_dynamics.fluids import fluid, air, methane, argon
 def sonic_velocity(gas=air ,metric=True, T=273.15) -> float:
     """Returns the local speed of sound.
     
-    Description
-    -----------
+    Notes
+    -----
     Given a ratio of specific heats, gas constant, and temperature
     this function returns the locoal speed of sound. Default fluid is air.
     
@@ -78,8 +82,9 @@ def sonic_velocity(gas=air ,metric=True, T=273.15) -> float:
 #==================================================    
 def stagnation_pressure(pt=None, M=None, p=None, gas=air, output=False) -> float:
     """Returns the stagnation pressure given pressure and Mach number.
-    Description
-    -----------
+
+    Notes
+    -----
     Given a pressure, Mach number, and a ratio of specific heats return
     the stagnation pressure. Alternatively, provided two arguments
     the function will return the missing one. Default fluid is air.
@@ -137,8 +142,8 @@ def stagnation_pressure(pt=None, M=None, p=None, gas=air, output=False) -> float
 def stagnation_temperature(T=None, Tt=None , M=None, gas=air, output=False) -> float :
     """Returns the stagnation temperature given temperature and Mach number.
     
-    Description
-    -----------
+    Notes
+    -----
     Given a temperature, Mach number, and a ratio of specific heats 
     this function returns the stagnation temperature. Alternatively,
     provided two arguments the function will return the missing one.
@@ -196,8 +201,8 @@ def stagnation_temperature(T=None, Tt=None , M=None, gas=air, output=False) -> f
 def stagnation_pressure_ratio(M: float, gas=air) -> float:
     """Returns the pressure ratio of p / p_t
     
-    Description
-    -----------
+    Notes
+    -----
     Given a Mach number and ratio of specific heats return the relation of
     pressure over stagnation pressure. Default fluid is air.
     
@@ -231,8 +236,8 @@ def stagnation_pressure_ratio(M: float, gas=air) -> float:
 def stagnation_temperature_ratio(M: float, gas=air) -> float:
     """Returns the temperature ratio of T / T_t
     
-    Description
-    -----------
+    Notes
+    -----
     Given a Mach number and ratio of specific heats return the relation of
     temperature over stagnation temperature.  Default fluid is air.
     
@@ -265,8 +270,8 @@ def stagnation_temperature_ratio(M: float, gas=air) -> float:
 def stagnation_density_ratio(M: float, gas=air) -> float:
     """Returns the density ratio rho / rho_t
     
-    Description
-    -----------
+    Notes
+    -----
     Given a Mach number and ratio of specific heats, return the relation
     of density over stagnation density. Default fluid is air.
     
@@ -299,8 +304,8 @@ def stagnation_density_ratio(M: float, gas=air) -> float:
 def stagnation_ratio(M: float, gas=air) -> list:
     """Return stagnation pressure, temperature, density, and choked area ratio for a mach number
         
-    Description
-    -----------
+    Notes
+    -----
     Given a mach number and the fluid, return the three stagnation ratios
     and the ratio of the area to the choked area. Default fluid is air
 
@@ -328,8 +333,8 @@ def stagnation_ratio(M: float, gas=air) -> list:
 def stagnation_ratio_table(range=[0,5], step=.1, gas=air) -> str:
     """Returns the isentropic flow tables in the given range.
     
-    Description
-    -----------
+    Notes
+    -----
     Given a ratio of specific heats, print out the stagnation
     temperature ratio, stagnation pressure ratio, the area to 
     choked area ratio, and the stagnation density ratio for every
@@ -388,8 +393,8 @@ def stagnation_ratio_table(range=[0,5], step=.1, gas=air) -> str:
 def mach_from_pressure_ratio(p1: float, p2: float, M1: float, ds=0, gas=air) -> float:
     """Return the Mach number given a Mach number and the local pressures
     
-    Description
-    -----------
+    Notes
+    -----
     Given the local pressure in two regions and the Mach number in one,
     return the Mach number in the second region. Default arguments
     are for air and isentropic flow.
@@ -429,8 +434,8 @@ def mach_from_pressure_ratio(p1: float, p2: float, M1: float, ds=0, gas=air) -> 
 def mach_from_temperature_ratio(T1: float, T2: float, M1: float, gas=air) -> float:
     """Return the Mach number given a Mach number and two local temperatures
     
-    Description
-    -----------
+    Notes
+    -----
     Given the local temperatures in two regions and the mach number in one,
     return the Mach number in the second region. Default fluid is air.
     
@@ -467,8 +472,8 @@ def mach_from_temperature_ratio(T1: float, T2: float, M1: float, gas=air) -> flo
 def pressure_from_mach_ratio(M1: float, M2: float, p1: float, ds=0, gas=air) -> float:
     """Return the pressure given a pressure in one region and the two Mach numbers
     
-    Description
-    -----------
+    Notes
+    -----
     Given the Mach numbers in two regions and the pressure in one,
     return the missing pressure from the second region. Default arguments
     are for air and isentropic flow.
@@ -508,8 +513,8 @@ def pressure_from_mach_ratio(M1: float, M2: float, p1: float, ds=0, gas=air) -> 
 def temperature_from_mach_ratio(M1: float, M2: float, T1: float, gas=air) -> float:
     """Return the temperature given a temperature in one region and the two Mach numbers
     
-    Description
-    -----------
+    Notes
+    -----
     Given the local Mach number in two regions and the temperature in one,
     return the missing temperature from the second region. Default fluid
     is air.
@@ -548,8 +553,8 @@ def temperature_from_mach_ratio(M1: float, M2: float, T1: float, gas=air) -> flo
 def entropy_produced(pt1: float, pt2: float, gas=air) -> float:
     """Return the change in specific entropy from the stagnation pressure ratio
     
-    Description
-    -----------
+    Notes
+    -----
     Given two stagnation pressures and the fluid, determine the entropy
     produced per unit mass
     
@@ -583,8 +588,8 @@ def entropy_produced(pt1: float, pt2: float, gas=air) -> float:
 def mach_area_ratio_choked(M: float, gas=air) -> float:
     """Returns the ratio of A / A* given the Mach number.
     
-    Description
-    -----------
+    Notes
+    -----
     Given the Mach number and the ratio of specific heats, return the area
     ratio of the Mach number given to the area where Mach number is equal 
     to 1. Default fluid is air.
@@ -620,8 +625,8 @@ def mach_area_ratio_choked(M: float, gas=air) -> float:
 def mach_area_ratio(M1: float, M2: float, gas=air, ds=0) -> float:
     """Return the area ratio given the two Mach numbers
 
-    Description
-    -----------
+    Notes
+    -----
     Given two mach numbers, return the area ratio required to accelerate
     or deaccelerate the flow accordingly. Default fluid is air.
     
@@ -658,8 +663,8 @@ def mach_area_ratio(M1: float, M2: float, gas=air, ds=0) -> float:
 def  mach_from_area_ratio(a_ratio: float, gas=air):
     """Return the possible mach numbers given a choked area ratio A / A*
     
-    Description
-    -----------
+    Notes
+    -----
     Given a ratio of area over an area where Mach = 1, return the subsonic and supersonic
     Mach numbers for the change area. 
 
@@ -695,8 +700,8 @@ def  mach_from_area_ratio(a_ratio: float, gas=air):
 def mass_flux_max(pt: float, Tt: float, gas=air, metric=True) -> float:
     """Returns the maximum flow rate per unit choked area
     
-    Description
-    -----------
+    Notes
+    -----
     Given stagnation pressure, stagnation temperature, and the fluid, 
     return the flow rate for a Mach number equal to 1. Default fluid 
     is air.
@@ -757,8 +762,8 @@ def mass_flux_max(pt: float, Tt: float, gas=air, metric=True) -> float:
 def mass_flux(M: float, pt: float, Tt: float, gas = air, metric = True) -> float:
     """Determine mass flow rate for a mach number up to 1
 
-    Description
-    -----------
+    Notes
+    -----
     Given stagnation pressure, stagnation temperature, and the fluid, 
     return the flow rate per unit area for the given Mach number. Default
     fluid is air. 
@@ -817,8 +822,8 @@ def mass_flux(M: float, pt: float, Tt: float, gas = air, metric = True) -> float
 def plot_stagnation_ratios(range=[.1,5], step=.01, gasses=[air, methane, argon], dark=True):
     """Plot the isentropic stagnation relationships for different gasses
     
-    Description
-    -----------
+    Notes
+    -----
     Plots Mach number vs T/T, P/Pt, A/A*, rho/rho_t, for a list of
     specific heat ratios.
     

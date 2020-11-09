@@ -24,6 +24,10 @@
 #Copyright 2020 by Fernando A de la Fuente
 #All rights reserved
 
+#TODO: everything needs a 
+#returns
+#   `type`
+
 
 import numpy as np
 from scipy.optimize import fsolve
@@ -37,23 +41,34 @@ from gas_dynamics.fluids import fluid, air
 #==================================================
 #shock_mach
 #fix runtime double scalars warning
+#TODO: maybe add a "returns" for all functions
+#FIXME: the desriptions sound wordy but i think it makes sense to be like that:/
 #==================================================
 def shock_mach(M: float, gas=air) -> float:
     """Returns the Mach number after a standing normal shock
-    
-    Description
-    -----------
+
+
+    Notes
+    -----
     Given a starting Mach number M1 and the ratio of specific heats,
     return the Mach number M2 that immediately follows the shock.
-    Default fluid is air.
-    
+    The default fluid is air.
+
+
     Parameters
     ----------
     M : `float`
         The Mach number before the shock\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
-    
+
+
+    Returns
+    -------
+    float
+        The Mach number after the shock
+
+
     Examples
     --------
     >>> M2 = gd.shock_mach(M1=1.5) 
@@ -76,8 +91,8 @@ def shock_mach(M: float, gas=air) -> float:
 def shock_mach_before(M: float, gas=air) -> float:
     """Returns the Mach number before a standing normal shock
     
-    Description
-    -----------
+    Notes
+    -----
     Given the Mach number after the shock and the ratio of specific heats,
     return the Mach number that immediately precedes the shock.
     Default fluid is air.
@@ -112,8 +127,8 @@ def shock_mach_before(M: float, gas=air) -> float:
 def shock_pressure_ratio(M: float, gas=air) -> float:
     """Returns the pressure ratio after a standing normal shock for a given Mach number
     
-    Description
-    -----------
+    Notes
+    -----
     Given a starting Mach number and a ratio of specific heats, this
     function returns the ratio of pressure 2 over pressure 1 across a
     standing normal shock. 
@@ -146,8 +161,8 @@ def shock_pressure_ratio(M: float, gas=air) -> float:
 def shock_mach_from_pressure_ratio(p2_p1: float, gas=air) -> float:
     """Returns the mach number across a standing normal shock given a pressure ratio
     
-    Description
-    -----------
+    Notes
+    -----
     Given the ratio of pressure behind the shock over pressure before
     the shock and the ratio of specific heats, this function returns the 
     Mach number before the shock. Default fluid is air.
@@ -181,8 +196,8 @@ def shock_mach_from_pressure_ratio(p2_p1: float, gas=air) -> float:
 def shock_temperature_ratio(M: float, gas=air) -> float:
     """Returns the temperature ratio after a standing normal shock for a given Mach number
     
-    Description
-    -----------
+    Notes
+    -----
     Given a starting Mach number and a ratio of specific heats, this function
     returns the ratio of temperature 2 over temperature 1 across a standing normal
     shock. Default fluid is air.
@@ -220,8 +235,8 @@ def shock_temperature_ratio(M: float, gas=air) -> float:
 def shock_dv_a(M: float, gas=air) -> float:
     """Returns change in velocity over the local speed of sound after a normal shock.
     
-    Description
-    -----------
+    Notes
+    -----
     Given a starting Mach number and a ratio of specific heats, this function
     returns the velocity change across a standing normal shock divided by the
     local speed of sound. Default fluid is air
@@ -250,8 +265,8 @@ def shock_dv_a(M: float, gas=air) -> float:
 def shock_stagnation_ratio(M: float, gas=air) -> float:
     """Returns stagnation pressure ratio after a normal shock.
     
-    Description
-    -----------
+    Notes
+    -----
     Given a starting Mach number and a ratio of specific heats, this function
     returns the ratio of stagnation presure 2 over stagnation pressure 1
     across a standing normal shock. Default fluid is air.
@@ -288,8 +303,8 @@ def shock_stagnation_ratio(M: float, gas=air) -> float:
 def shock_tables(range=[1,5], step=.01, gas=air) -> str:
     """Returns shock tables for a range of Mach numbers.
     
-    Description
-    -----------
+    Notes
+    -----
     Given a range of Mach numbers and a ratio of specific heats, generate
     the standing normal shock tables for every incremental Mach number
     in between.
@@ -349,8 +364,8 @@ def shock_tables(range=[1,5], step=.01, gas=air) -> str:
 def shock_flow_deflection(M: float, theta: float, gas=air) -> float:
     """Returns flow deflection angle from Mach number and oblique shock angle
     
-    Description
-    -----------
+    Notes
+    -----
     Given the Mach number prior to the oblique shock, the angle of the oblique
     shock in degrees, and the ratio of specific heats, this function returns
     the angle that the flow is turned. Default fluid is air.
@@ -386,8 +401,8 @@ def shock_flow_deflection(M: float, theta: float, gas=air) -> float:
 def shock_angle(M: float, dirac: float, gas=air) -> float:
     """Return the shock angle given the Mach number prior to the shock and the deflection angle
     
-    Description
-    -----------
+    Notes
+    -----
     Given the Mach number prior to the oblique shock, the angle of the flow
     deflection, and the ratio of specific heats, this functions returns the
     angle that is formed by the shock. Default ratio of specific heats is
@@ -429,8 +444,8 @@ def shock_angle(M: float, dirac: float, gas=air) -> float:
 def shock_mach_given_angles(theta: float, dirac: float, gas=air) -> float:
     """Return the Mach number given the shock angle and flow deflection
     
-    Description
-    -----------
+    Notes
+    -----
     Given the angle of the shock and the angle that the flow has turned,
     return the mach number that preceded the shock.
 
@@ -472,8 +487,8 @@ def shock_mach_given_angles(theta: float, dirac: float, gas=air) -> float:
 def prandtl_meyer_turn(M: float, gas=air) -> float:
     """Returns the angle through which a flow has turned to reach a Mach number
     
-    Description
-    -----------
+    Notes
+    -----
     Given a Mach number and ratio of specific heats, calculate the angle of a turn
     through which a flow has turned to reach the Mach number given, from a starting
     Mach number of 1. Also known as the Prandtl-Meyer function. Default fluid
@@ -504,8 +519,8 @@ def prandtl_meyer_turn(M: float, gas=air) -> float:
 def prandtl_meyer_mach(nu: float, gas=air) -> float:
     """Returns the Mach number given an angle through which the flow has turned
     
-    Description
-    -----------
+    Notes
+    -----
     Given a smooth turn through which a flow has turned and the ratio of specific
     heats, return the Mach number after the turn.
 
@@ -537,8 +552,8 @@ def prandtl_meyer_mach(nu: float, gas=air) -> float:
 def shock_oblique_charts(Mach_max=6, gas=air, lite=True, dark=True):
     """Generate 2-D Oblique Shock Charts
     
-    Description
-    -----------
+    Notes
+    -----
     Displays two plots,
     1) Mach number versus oblique shock wave angle and the corresponding
     deflection angles for each case. 2) Mach number versus resulting Mach
@@ -634,8 +649,8 @@ def dirac_from_machs(M1: float, M2: float, gas=air) -> float:
     """Return the flow deflection angle and the shock angle
     required to go from one Mach number to a second Mach number
     
-    Description
-    -----------
+    Notes
+    -----
     Given two mach numbers, iteratively solve for the shock angle and
     flow deflection to satisfy the system.
 

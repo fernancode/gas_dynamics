@@ -2,6 +2,9 @@
 ###
 #Extra functions for random things
 ###
+#TODO: everything needs a 
+#returns
+#   `type`
 
 import numpy as np
 
@@ -36,10 +39,12 @@ def degrees(theta: float) -> float:
 #==================================================
 def radians(theta: float) -> float:
     """Convert from degrees to radians
+    
     Parameters
     ----------
     theta : `float`
         The angle in degrees\n
+    
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -58,10 +63,12 @@ def radians(theta: float) -> float:
 #==================================================
 def sind(theta: float) -> float:
     """Sine given degrees
+    
     Parameters
     ----------
     theta : `float`
         The angle in degrees
+    
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -81,10 +88,12 @@ def sind(theta: float) -> float:
 #==================================================
 def arcsind(sin: float) -> float:
     """Return the arcsine in degrees
+    
     Parameters
     ----------
     sin : `float`
         The sine of theta
+    
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -105,10 +114,12 @@ def arcsind(sin: float) -> float:
 #==================================================
 def cosd(theta: float) -> float:
     """Cosine given degrees
+    
     Parameters
     ----------
     theta : `float`
         The angle in degrees
+    
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -128,10 +139,12 @@ def cosd(theta: float) -> float:
 #==================================================
 def arccosd(cos: float) -> float:
     """Return the arccosine in degrees
+    
     Parameters
     ----------
     cos : `float`
         The cosine of theta
+    
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -152,10 +165,12 @@ def arccosd(cos: float) -> float:
 #==================================================
 def tand(theta: float) -> float:
     """Tangent given degrees
+    
     Parameters
     ----------
     theta : `float`
         The angle in degrees
+    
     Examples
     --------
     >>> tan = gd.tand(theta=45)
@@ -174,10 +189,12 @@ def tand(theta: float) -> float:
 #==================================================
 def arctand(tan: float) -> float:
     """Return the arctangent in degrees
+    
     Parameters
     ----------
     tan : `float`
         The tangent of theta
+    
     Examples
     --------
     >>> theta = gd.arctand(1)
@@ -198,13 +215,16 @@ def arctand(tan: float) -> float:
 #==================================================
 def area_dia(dia=[], area=[]):
     """
-    Description
-    -----------
+    Notes
+    -----
+    
     Given area or diameter, return the unknown
+    
     Parameters
     ----------
     dia: Diameter \n
     area: Area \n
+    
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -232,8 +252,8 @@ def area_dia(dia=[], area=[]):
 def lin_interpolate(x, x0, x1, y0, y1):
     """Linear interpolation formula
     
-    Description
-    -----------
+    Notes
+    -----
     Given two x values and their corresponding y values, interpolate for
     an unknown y value at x
     
