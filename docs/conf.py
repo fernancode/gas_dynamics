@@ -12,7 +12,6 @@
 #
 import os
 import sys
-from datetime import date
 
 file_loc = os.path.split(__file__)[0]
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(file_loc), '.')))
