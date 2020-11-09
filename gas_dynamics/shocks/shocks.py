@@ -1,29 +1,29 @@
 #!usr/bin/env
-"""Equatons, plots, and tables for working with shocks.
-Included are functions for solving problems related to properties across
-normal and oblique shocks, from stagnation relations and changes to
-conditions to flow deflections. Tables can be made for any gas and its respective 
-ratio of specific heats, as well as plots and charts of relationships.
+#Equations, plots, and tables for working with shocks.
+#Included are functions for solving problems related to properties across
+#normal and oblique shocks, from stagnation relations and changes to
+#conditions to flow deflections. Tables can be made for any gas and its respective 
+#ratio of specific heats, as well as plots and charts of relationships.
+#
+#  Typical usage example:
+#  Generate a shock tabgle for argon (two columns omitted for readability)
+#  >>> gd.shock_tables(range=[1,2], step=.1, gas=argon) 
+#  Normal Shock Parameters for γ = 1.67
+#  M: 1.00   |   M2: 1.0000   |    p2/p1: 1.0000   |    T2/T1: 1.0000   |   
+#  M: 1.10   |   M2: 0.9131   |    p2/p1: 1.2627   |    T2/T1: 1.0985   |  
+#  M: 1.20   |   M2: 0.8463   |    p2/p1: 1.5504   |    T2/T1: 1.1956   |  
+#  M: 1.30   |   M2: 0.7935   |    p2/p1: 1.8631   |    T2/T1: 1.2933   |   
+#  M: 1.40   |   M2: 0.7509   |    p2/p1: 2.2009   |    T2/T1: 1.3934   |  
+#  M: 1.50   |   M2: 0.7158   |    p2/p1: 2.5637   |    T2/T1: 1.4968   |   
+#  M: 1.60   |   M2: 0.6866   |    p2/p1: 2.9515   |    T2/T1: 1.6042   |  
+#  M: 1.70   |   M2: 0.6620   |    p2/p1: 3.3643   |    T2/T1: 1.7162   |  
+#  M: 1.80   |   M2: 0.6410   |    p2/p1: 3.8021   |    T2/T1: 1.8331   |   
+#  M: 1.90   |   M2: 0.6229   |    p2/p1: 4.2649   |    T2/T1: 1.9552   |   
+#  M: 2.00   |   M2: 0.6073   |    p2/p1: 4.7528   |    T2/T1: 2.0827   |  
+#
+#Copyright 2020 by Fernando A de la Fuente
+#All rights reserved
 
-  Typical usage example:
-  Generate a shock tabgle for argon (two columns omitted for readability)
-  >>> gd.shock_tables(range=[1,2], step=.1, gas=argon) 
-  Normal Shock Parameters for γ = 1.67
-  M: 1.00   |   M2: 1.0000   |    p2/p1: 1.0000   |    T2/T1: 1.0000   |   
-  M: 1.10   |   M2: 0.9131   |    p2/p1: 1.2627   |    T2/T1: 1.0985   |  
-  M: 1.20   |   M2: 0.8463   |    p2/p1: 1.5504   |    T2/T1: 1.1956   |  
-  M: 1.30   |   M2: 0.7935   |    p2/p1: 1.8631   |    T2/T1: 1.2933   |   
-  M: 1.40   |   M2: 0.7509   |    p2/p1: 2.2009   |    T2/T1: 1.3934   |  
-  M: 1.50   |   M2: 0.7158   |    p2/p1: 2.5637   |    T2/T1: 1.4968   |   
-  M: 1.60   |   M2: 0.6866   |    p2/p1: 2.9515   |    T2/T1: 1.6042   |  
-  M: 1.70   |   M2: 0.6620   |    p2/p1: 3.3643   |    T2/T1: 1.7162   |  
-  M: 1.80   |   M2: 0.6410   |    p2/p1: 3.8021   |    T2/T1: 1.8331   |   
-  M: 1.90   |   M2: 0.6229   |    p2/p1: 4.2649   |    T2/T1: 1.9552   |   
-  M: 2.00   |   M2: 0.6073   |    p2/p1: 4.7528   |    T2/T1: 2.0827   |  
-
-Copyright 2020 by Fernando A de la Fuente
-All rights reserved
-"""
 
 import numpy as np
 from scipy.optimize import fsolve

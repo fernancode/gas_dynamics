@@ -13,8 +13,14 @@ Release v\ |version|
    :maxdepth: 2
    :caption: Contents:
 
-   gas_dynamics
-   functions
+   gas_dynamics.isentropic
+
+   gas_dynamics.shocks
+
+   gas_dynamics.extra
+
+   gas_dynamics.fluid
+   
    About_me
    
 
@@ -24,11 +30,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-
-This is the first chapter
-=========================
-
-.. math::
-    DividendYield &=& \frac{DVT(t)}{CurrentMarketCap} \\
-    Avg_Assets &=& \biggl( A/B \biggr) \textrm { when B is not zero...}

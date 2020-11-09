@@ -17,17 +17,17 @@ from datetime import date
 file_loc = os.path.split(__file__)[0]
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(file_loc), '.')))
 
-import gas_dynamics
+from gas_dynamics import __about__
 
 
 # -- Project information -----------------------------------------------------
 
-project = gas_dynamics.__about__.__project__
+project = __about__.__project__
 copyright = '2020, Fernando de la Fuente'
-author = gas_dynamics.__about__.__author__
+author = __about__.__author__
 
 # The full version, including alpha/beta/rc tags
-version = gas_dynamics.__about__.__version__
+version = __about__.__version__
 release = version
 
 

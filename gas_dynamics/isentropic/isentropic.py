@@ -1,29 +1,29 @@
 #!usr/bin/env
-"""Equations, plots, and tables for solving compresible flow problems.
-Functions range from stagnation relations to determining the mach
-number from changes in local properties to determining the maximum mass
-flux. Tables can be made for any gas and its respective ratio of specific
-heats, as well as plots and charts of relationships.
+#Equations, plots, and tables for solving compresible flow problems.
+#Functions range from stagnation relations to determining the mach
+#number from changes in local properties to determining the maximum mass
+#flux. Tables can be made for any gas and its respective ratio of specific
+#heats, as well as plots and charts of relationships.
 
-  Typical usage example:
-  Generate isentropic flow stagnation relations for methane
-  >>> import gas_dynamics as gd
-  >>> gd.stagnation_ratio_table(range=[0,2], step=.2, gas=methane)
-  M: 0.000   |   P/Pt: 1.000    |    T/Tt: 1.000    |    A/A*: inf    |   rho/rho_t: 1.000
-  M: 0.200   |   P/Pt: 0.974    |    T/Tt: 0.994    |    A/A*: 2.988    |   rho/rho_t: 0.980
-  M: 0.400   |   P/Pt: 0.901    |    T/Tt: 0.975    |    A/A*: 1.600    |   rho/rho_t: 0.924
-  M: 0.600   |   P/Pt: 0.794    |    T/Tt: 0.946    |    A/A*: 1.192    |   rho/rho_t: 0.839
-  M: 0.800   |   P/Pt: 0.669    |    T/Tt: 0.907    |    A/A*: 1.039    |   rho/rho_t: 0.737
-  M: 1.000   |   P/Pt: 0.542    |    T/Tt: 0.862    |    A/A*: 1.000    |   rho/rho_t: 0.629
-  M: 1.200   |   P/Pt: 0.425    |    T/Tt: 0.813    |    A/A*: 1.032    |   rho/rho_t: 0.523
-  M: 1.400   |   P/Pt: 0.325    |    T/Tt: 0.761    |    A/A*: 1.121    |   rho/rho_t: 0.426
-  M: 1.600   |   P/Pt: 0.243    |    T/Tt: 0.709    |    A/A*: 1.267    |   rho/rho_t: 0.342
-  M: 1.800   |   P/Pt: 0.179    |    T/Tt: 0.659    |    A/A*: 1.474    |   rho/rho_t: 0.271
-  M: 2.000   |   P/Pt: 0.130    |    T/Tt: 0.610    |    A/A*: 1.754    |   rho/rho_t: 0.213
+#  Typical usage example:
+#  Generate isentropic flow stagnation relations for methane
+#  >>> import gas_dynamics as gd
+#  >>> gd.stagnation_ratio_table(range=[0,2], step=.2, gas=methane)
+#  M: 0.000   |   P/Pt: 1.000    |    T/Tt: 1.000    |    A/A*: inf    |   rho/rho_t: 1.000
+#  M: 0.200   |   P/Pt: 0.974    |    T/Tt: 0.994    |    A/A*: 2.988    |   rho/rho_t: 0.980
+#  M: 0.400   |   P/Pt: 0.901    |    T/Tt: 0.975    |    A/A*: 1.600    |   rho/rho_t: 0.924
+#  M: 0.600   |   P/Pt: 0.794    |    T/Tt: 0.946    |    A/A*: 1.192    |   rho/rho_t: 0.839
+#  M: 0.800   |   P/Pt: 0.669    |    T/Tt: 0.907    |    A/A*: 1.039    |   rho/rho_t: 0.737
+#  M: 1.000   |   P/Pt: 0.542    |    T/Tt: 0.862    |    A/A*: 1.000    |   rho/rho_t: 0.629
+#  M: 1.200   |   P/Pt: 0.425    |    T/Tt: 0.813    |    A/A*: 1.032    |   rho/rho_t: 0.523
+#  M: 1.400   |   P/Pt: 0.325    |    T/Tt: 0.761    |    A/A*: 1.121    |   rho/rho_t: 0.426
+#  M: 1.600   |   P/Pt: 0.243    |    T/Tt: 0.709    |    A/A*: 1.267    |   rho/rho_t: 0.342
+#  M: 1.800   |   P/Pt: 0.179    |    T/Tt: 0.659    |    A/A*: 1.474    |   rho/rho_t: 0.271
+#  M: 2.000   |   P/Pt: 0.130    |    T/Tt: 0.610    |    A/A*: 1.754    |   rho/rho_t: 0.213
+#
+#Copyright 2020 by Fernando A de la Fuente
+#All rights reserved
 
-Copyright 2020 by Fernando A de la Fuente
-All rights reserved
-"""
 
 import numpy as np
 from scipy.optimize import fsolve

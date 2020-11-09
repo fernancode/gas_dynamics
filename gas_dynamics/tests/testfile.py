@@ -1,6 +1,5 @@
 from unittest import TestCase
 import gas_dynamics as gd
-from gas_dynamics.extra import methane
 
 
 #==================================================
@@ -56,16 +55,3 @@ class test_stagnation_temperature(TestCase):
         self.assertNotEqual(T,Tt)
         self.assertNotEqual(T,M)
         self.assertNotEqual(Tt,M)        
-        
-
-#==================================================
-#stagnation pressure ratio
-#==================================================
-class test_stagnation_pressure_ratio(TestCase):
-    #test we get a number
-
-
-class test_shock_mach(TestCase):
-    def test_is_float(self):
-        M2 = gd.shock_mach(M1=1)
-        self.assertTrue(isinstance(M2, float))

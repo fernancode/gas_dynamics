@@ -1,7 +1,7 @@
 #!usr/bin/env
-"""
-Extra functions for random stuff
-"""
+###
+#Extra functions for random things
+###
 
 import numpy as np
 

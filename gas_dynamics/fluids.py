@@ -1,8 +1,7 @@
 #!usr/bin/env
-"""
-The fluid class and some common fluids and their properties in metric and standard
-
-"""
+###
+#The fluid class and some common fluids and their properties in metric and standard
+###
 
 #==================================================
 #fluid
@@ -33,7 +32,6 @@ class fluid:
     518.2
     >>> methane.units
     'metric'
-    
     Conversely we can set the units
     >>> methane = fluid('methane', 1.3, 0.1238, units = 'btu / lbm-R')
     >>> methane.gamma
