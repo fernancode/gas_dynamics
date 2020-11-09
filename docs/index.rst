@@ -6,23 +6,19 @@
 gas_dynamics python package
 ========================================
 
-
 Release v\ |version|
+
+Package containing functions for working with compressible flow.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    gas_dynamics.isentropic
-
    gas_dynamics.shocks
-
    gas_dynamics.extra
-
    gas_dynamics.fluid
-   
    About_me
-   
+   License
 
 Indices and tables
 ==================

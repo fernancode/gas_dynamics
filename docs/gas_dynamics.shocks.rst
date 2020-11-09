@@ -1,9 +1,6 @@
 ###############
-Shock Functions
+Shock functions
 ###############
-
-gas\_dynamics.shocks module
-===========================
 
 .. automodule:: gas_dynamics.shocks.shocks
    :members:

@@ -1,9 +1,6 @@
-###########
-Fluid Class
-###########
-
-gas\_dynamics.fluid module
-==========================
+###############
+The fluid class
+###############
 
 .. automodule:: gas_dynamics.fluid
    :members:

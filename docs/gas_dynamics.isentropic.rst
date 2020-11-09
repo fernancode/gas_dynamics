@@ -1,9 +1,6 @@
 ####################
-Isentropic Functions
+Isentropic functions
 ####################
-
-gas\_dynamics.isentropic module
-===============================
 
 .. automodule:: gas_dynamics.isentropic.isentropic
    :members:

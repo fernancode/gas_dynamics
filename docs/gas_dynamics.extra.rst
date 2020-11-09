@@ -1,9 +1,6 @@
 ###############
-Extra Functions
+Extra functions
 ###############
-
-gas\_dynamics.extra module
-==========================
 
 .. automodule:: gas_dynamics.extra
    :members:
