@@ -394,7 +394,7 @@ def mach_from_pressure_ratio(p1: float, p2: float, M1: float, ds=0, gas=air) -> 
     return the Mach number in the second region. Default arguments
     are for air and isentropic flow.
     
-    Parameters:
+    Parameters
     ----------
     p1 : `float`
         Pressure in region 1 \n
@@ -473,7 +473,7 @@ def pressure_from_mach_ratio(M1: float, M2: float, p1: float, ds=0, gas=air) -> 
     return the missing pressure from the second region. Default arguments
     are for air and isentropic flow.
     
-    Parameters:
+    Parameters
     ----------
     M1 : `float`
         Mach number in region 1 \n
@@ -783,12 +783,11 @@ def mass_flux(M: float, pt: float, Tt: float, gas = air, metric = True) -> float
 
     Examples
     --------
-    #metric, input units are Pa, K, output is kg/s/m^2
+    >>> #metric, input units are Pa, K, output is kg/s/m^2
     >>> flux = gd.mass_flux(M=.8, pt=1e6, Tt=500) 
     >>> flux
     1741.3113452036841
-    >>>
-    #us standard, input units are psi and Rankine, output units are lbm/s/in^2
+    >>> #us standard, input units are psi and Rankine, output units are lbm/s/in^2
     >>> from gas_dynamics.extra import air_us  
     >>> air_us.units
     'Btu / lbm-R'
@@ -796,7 +795,6 @@ def mass_flux(M: float, pt: float, Tt: float, gas = air, metric = True) -> float
     >>> flux
     2.01998480961849
     >>>
-    
     """
 
     gamma, R = gas.gamma, gas.R

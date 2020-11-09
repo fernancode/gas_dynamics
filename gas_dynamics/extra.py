@@ -239,11 +239,11 @@ def lin_interpolate(x, x0, x1, y0, y1):
     
     Parameters
     ----------
-    x : `float
+    x : `float`
         The x value at which the y value is unknown \n
     x0 : `float`
         The x value of the first known pair \n
-    x1 : `float
+    x1 : `float`
         The x value of the second known pair \n
     y0 : `float`
         The y value of the first known pair \n

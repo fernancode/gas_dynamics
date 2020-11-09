@@ -221,7 +221,7 @@ def shock_dv_a(M: float, gas=air) -> float:
     """Returns change in velocity over the local speed of sound after a normal shock.
     
     Description
-    ----------
+    -----------
     Given a starting Mach number and a ratio of specific heats, this function
     returns the velocity change across a standing normal shock divided by the
     local speed of sound. Default fluid is air
@@ -509,7 +509,7 @@ def prandtl_meyer_mach(nu: float, gas=air) -> float:
     Given a smooth turn through which a flow has turned and the ratio of specific
     heats, return the Mach number after the turn.
 
-    Parameters:
+    Parameters
     ----------
     nu : `float`
         The turn angle \n    
