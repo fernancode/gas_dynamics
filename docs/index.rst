@@ -3,16 +3,20 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to gas_dynamics's documentation!
+gas_dynamics python package
 ========================================
+
+
+Release v\ |version|
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   about_me
-
-
+   gas_dynamics
+   functions
+   About_me
+   
 
 Indices and tables
 ==================
@@ -20,3 +24,11 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+This is the first chapter
+=========================
+
+.. math::
+    DividendYield &=& \frac{DVT(t)}{CurrentMarketCap} \\
+    Avg_Assets &=& \biggl( A/B \biggr) \textrm { when B is not zero...}

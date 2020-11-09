@@ -10,19 +10,25 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+from datetime import date
+
+file_loc = os.path.split(__file__)[0]
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(file_loc), '.')))
+
+import gas_dynamics
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'gas_dynamics'
+project = gas_dynamics.__about__.__project__
 copyright = '2020, Fernando de la Fuente'
-author = 'Fernando de la Fuente'
+author = gas_dynamics.__about__.__author__
 
 # The full version, including alpha/beta/rc tags
-release = '0.2.4'
+version = gas_dynamics.__about__.__version__
+release = version
 
 
 # -- General configuration ---------------------------------------------------
@@ -32,7 +38,7 @@ release = '0.2.4'
 # ones.
 import sphinx_rtd_theme
 
-extensions = ["sphinx_rtd_theme"]
+extensions = ["sphinx_rtd_theme", "sphinx.ext.imgmath", "sphinx.ext.napoleon"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

@@ -1,10 +1,12 @@
 import setuptools
+from gas_dynamics.__about__ import __version__
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+
 setuptools.setup(name="gas_dynamics",
-      version="0.2.4",
+      version=__version__,
       author="Fernando de la Fuente",
       author_email="FernandoAdelaFuente@gmail.com",
       description="Package containing functions for working with compressible flow",
