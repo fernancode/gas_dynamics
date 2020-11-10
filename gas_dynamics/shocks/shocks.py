@@ -24,10 +24,6 @@
 #Copyright 2020 by Fernando A de la Fuente
 #All rights reserved
 
-#TODO: everything needs a 
-#returns
-#   `type`
-
 
 import numpy as np
 from scipy.optimize import fsolve
@@ -41,19 +37,15 @@ from gas_dynamics.fluids import fluid, air
 #==================================================
 #shock_mach
 #fix runtime double scalars warning
-#TODO: maybe add a "returns" for all functions
-#FIXME: the desriptions sound wordy but i think it makes sense to be like that:/
 #==================================================
 def shock_mach(M: float, gas=air) -> float:
     """Returns the Mach number after a standing normal shock
-
 
     Notes
     -----
     Given a starting Mach number M1 and the ratio of specific heats,
     return the Mach number M2 that immediately follows the shock.
     The default fluid is air.
-
 
     Parameters
     ----------
@@ -608,7 +600,7 @@ def prandtl_meyer_mach(nu: float, gas=air) -> float:
 #shock_oblique_charts
 #need to add examples, parameters, descriptions
 #==================================================
-def shock_oblique_charts(Mach_max=6, gas=air, lite=True, dark=True):
+def shock_oblique_charts(Mach_max=6, gas=air, points=40000, dark=True):
     """Generate 2-D Oblique Shock Charts
     
     Notes
@@ -625,10 +617,10 @@ def shock_oblique_charts(Mach_max=6, gas=air, lite=True, dark=True):
         The upper limit Mach number for the chart \n
     gas : `fluid`
         A user defined fluid object. Default is air \n    
-    lite : `bool`
-        Calculate 40,000 pts in the mesh vs 562,500
+    points : `int`
+        The number of points to evaluate on the mesh\n
     dark : `bool`
-        Dark mode for the plots. Default is true.
+        Dark mode for the plots. Default is true.\n
     
     Examples
     --------
@@ -664,10 +656,8 @@ def shock_oblique_charts(Mach_max=6, gas=air, lite=True, dark=True):
     ax1.set(xlabel = 'Mach #')
     ax1.set(ylabel = 'Oblique Shock Wave Angle')
 
-    if lite == True:
-        n = 200
-    else:
-        n = 750
+    n = round(points**.5)
+    n = 750
 
     total, counter = n**2, 0 
     mach_before = np.linspace(1,Mach_max, n)
@@ -729,19 +719,23 @@ def dirac_from_machs(M1: float, M2: float, gas=air) -> float:
 
     Examples
     --------
-    
+    >>> import gas_dynamics as gd
+    >>> flow_deflect = gd.dirac_from_machs(M1=3, M2=1.5)
+    >>> flow_deflect
+    28.589471710648365 
+    >>>
     """   
     
-    #get rid of the out of domain answers, if m2 >m1, throw it out.
     if M2 >= M1:
         return 0
     if shock_mach(M1) > M2:
         return 0
 
-    def zero(theta, M1=[], M2=[], gas=gas):
+    def zero(theta: float, M1:float, M2:float, gas=gas) -> float:
         """Local function for testing different shock angles to see if they work.
         
         """
+
         M1n = M1 * sind(theta)
         M2n = shock_mach(M1n)
         dirac = shock_flow_deflection(M=M1, theta=theta, gas=gas)
@@ -749,10 +743,11 @@ def dirac_from_machs(M1: float, M2: float, gas=air) -> float:
         zero = M2_prime - M2
         return zero
 
-    thetas = np.linspace(0, 90, 90)
+    thetas = np.linspace(0, 90, 100)
     for num, theta in enumerate(thetas[:-1]):
         zero1 = zero(thetas[num], M1=M1, M2=M2, gas=gas)
-        zero2 = zero(thetas[num+1], M1=M1, M2=M2, gas=gas)
-        if zero2 < 0:
-            theta = lin_interpolate(0, zero1, zero2, thetas[num], thetas[num+1])
+        #zerolist.append(zero1)
+        if zero1 < 0:
+            zero2 = zero(thetas[num-1], M1=M1, M2=M2, gas=gas)
+            theta = lin_interpolate(0, zero1, zero2, thetas[num], thetas[num-1])
             return shock_flow_deflection(M=M1, theta=theta, gas=gas)

@@ -10,6 +10,12 @@ Release v\ |version|
 
 Package containing functions for working with compressible flow.
 
+.. figure:: README_images/shockwave.png
+   :width: 800
+   :alt: Shock waves forming across a T-38 Talon 
+
+   Credits NASA Photo
+
 .. toctree::
    :maxdepth: 2
 
