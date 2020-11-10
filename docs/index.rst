@@ -13,12 +13,14 @@ Package containing functions for working with compressible flow.
 .. toctree::
    :maxdepth: 2
 
+   gettingstarted
    gas_dynamics.isentropic
    gas_dynamics.shocks
    gas_dynamics.extra
    gas_dynamics.fluid
-   About_me
    License
+   Aboutme
+
 
 Indices and tables
 ==================
