@@ -20,35 +20,33 @@ from gas_dynamics import __about__
 project = __about__.__project__
 copyright = '2020, Fernando de la Fuente'
 author = __about__.__author__
-
 # The full version, including alpha/beta/rc tags
 version = __about__.__version__
 release = version
 license = __about__.__license__
 
-# -- General configuration ---------------------------------------------------
 
+
+# -- General configuration ---------------------------------------------------
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 import sphinx_rtd_theme
-
 extensions = ["sphinx_rtd_theme", "sphinx.ext.imgmath", "sphinx.ext.napoleon"]
-
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
-
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+#preserve the order of the functions as they are in the source
+autodoc_member_order = 'bysource'
+
 
 
 # -- Options for HTML output -------------------------------------------------
-
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-
 html_theme = "sphinx_rtd_theme"
 
 # Add any paths that contain custom static files (such as style sheets) here,

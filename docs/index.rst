@@ -14,7 +14,7 @@ Package containing functions for working with compressible flow.
    :maxdepth: 2
 
    gettingstarted
-   gas_dynamics.isentropic
+   gas_dynamics.standard
    gas_dynamics.shocks
    gas_dynamics.extra
    gas_dynamics.fluid

@@ -1,7 +1,7 @@
 #!usr/bin/env
 
 #import isentropic functions and stagnation relations
-from gas_dynamics.isentropic.isentropic import ( 
+from gas_dynamics.standard.standard import ( 
   sonic_velocity,
   stagnation_pressure,
   stagnation_temperature,
