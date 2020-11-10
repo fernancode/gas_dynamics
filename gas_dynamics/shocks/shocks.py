@@ -62,12 +62,10 @@ def shock_mach(M: float, gas=air) -> float:
     gas : `fluid`
         A user defined fluid object. Default is air \n
 
-
     Returns
     -------
     float
-        The Mach number after the shock
-
+        The Mach number after the shock\n
 
     Examples
     --------
@@ -104,6 +102,11 @@ def shock_mach_before(M: float, gas=air) -> float:
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
+    Returns
+    -------
+    float
+        The mach number before the shock\n
+    
     Examples
     --------
     >>> import gas_dynamics as gd 
@@ -139,6 +142,11 @@ def shock_pressure_ratio(M: float, gas=air) -> float:
         The starting Mach number \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
+    
+    Returns
+    -------
+    float
+        The pressure ratio p2/p1\n
 
     Examples
     --------
@@ -173,6 +181,11 @@ def shock_mach_from_pressure_ratio(p2_p1: float, gas=air) -> float:
         The pressure ratio\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
+    
+    Returns
+    -------
+    float
+        The mach number prior the shock\n
     
     Examples
     --------
@@ -209,6 +222,11 @@ def shock_temperature_ratio(M: float, gas=air) -> float:
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
+    Returns
+    -------
+    float
+        The temperature ratio T2/T1\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -248,6 +266,11 @@ def shock_dv_a(M: float, gas=air) -> float:
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
+    Returns
+    -------
+    float
+        The change in Mach number\n
+
     Examples
     --------
 
@@ -277,6 +300,11 @@ def shock_stagnation_ratio(M: float, gas=air) -> float:
         The starting Mach number \n
     gas : `fluid`
         A user defined fluid object. Default is air \n    
+
+    Returns
+    -------
+    float
+        The stagnation pressure ratio pt2/pt1\n
 
     Examples
     --------
@@ -318,6 +346,11 @@ def shock_tables(range=[1,5], step=.01, gas=air) -> str:
     gas : `fluid`
         A user defined fluid object. Default is air \n    
     
+    Returns
+    -------
+    str
+        The shock table\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -338,6 +371,9 @@ def shock_tables(range=[1,5], step=.01, gas=air) -> str:
     """
 
     Mach_min = range[0]
+    if Mach_min < 1:
+        Mach_min = 1
+
     Mach_max = range[1]
 
     mach_nums = [i for i in np.arange(Mach_min,Mach_max+step,step)]
@@ -346,7 +382,6 @@ def shock_tables(range=[1,5], step=.01, gas=air) -> str:
     T2_T1 = [shock_temperature_ratio(M=i, gas=gas) for i in mach_nums]
     dv_a = [shock_dv_a(M=i, gas=gas) for i in mach_nums]
     pt2_pt1 = [shock_stagnation_ratio(M=i, gas=gas) for i in mach_nums]
-    
     gamma = gas.gamma
 
     labl = '\u03B3 = ' + str(gamma)
@@ -379,6 +414,11 @@ def shock_flow_deflection(M: float, theta: float, gas=air) -> float:
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
+    Returns
+    -------
+    float
+        The deflection angle\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -417,6 +457,11 @@ def shock_angle(M: float, dirac: float, gas=air) -> float:
     gas : `fluid`
         A user defined fluid object. Default is air \n    
     
+    Returns
+    -------
+    float
+        The shock angle\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -458,6 +503,11 @@ def shock_mach_given_angles(theta: float, dirac: float, gas=air) -> float:
     gas : `fluid`
         A user defined fluid object. Default is air \n    
     
+    Returns
+    -------
+    float
+        The mach number\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -490,9 +540,8 @@ def prandtl_meyer_turn(M: float, gas=air) -> float:
     Notes
     -----
     Given a Mach number and ratio of specific heats, calculate the angle of a turn
-    through which a flow has turned to reach the Mach number given, from a starting
-    Mach number of 1. Also known as the Prandtl-Meyer function. Default fluid
-    is air.
+    through which a flow has traversed to reach the Mach number given, from a  Mach number
+    of 1. Also known as the Prandtl-Meyer function. Default fluid is air.
     
     Parameters
     ----------
@@ -501,6 +550,11 @@ def prandtl_meyer_turn(M: float, gas=air) -> float:
     gas : `fluid`
         A user defined fluid object. Default is air \n    
     
+    Returns
+    -------
+    float
+        The angle through which the flow has turned\n
+
     Examples
     --------
 
@@ -530,6 +584,11 @@ def prandtl_meyer_mach(nu: float, gas=air) -> float:
         The turn angle \n    
     gas : `fluid`
         A user defined fluid object. Default is air \n    
+
+    Returns
+    -------
+    float
+        The mach number\n
 
     Examples
     --------
@@ -646,8 +705,8 @@ def shock_oblique_charts(Mach_max=6, gas=air, lite=True, dark=True):
 ##TODO: examples
 #==================================================
 def dirac_from_machs(M1: float, M2: float, gas=air) -> float:
-    """Return the flow deflection angle and the shock angle
-    required to go from one Mach number to a second Mach number
+    """Return the flow deflection angle given the mach number before
+    and after the oblique shock
     
     Notes
     -----
@@ -662,6 +721,11 @@ def dirac_from_machs(M1: float, M2: float, gas=air) -> float:
         The mach number after the event \n
     gas : `fluid`
         A user defined fluid object. Default is air \n 
+
+    Returns
+    -------
+    float
+        The flow deflection angle\n
 
     Examples
     --------

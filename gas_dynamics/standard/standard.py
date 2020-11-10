@@ -56,6 +56,11 @@ def sonic_velocity(gas=air ,metric=True, T=273.15) -> float:
         Use metric or US standard \n
     T : `float`
         The temperature \n
+
+    Returns
+    -------
+    float
+        The local speed of sound\n
     
     Examples
     --------
@@ -102,6 +107,11 @@ def stagnation_pressure(pt=None, M=None, p=None, gas=air, output=False) -> float
     output : `bool`
         Print out a string to verify the output is the parameter desired \n
     
+    Returns
+    -------
+    float
+        The stagnation pressure, static pressure, or mach number\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -162,6 +172,11 @@ def stagnation_temperature(T=None, Tt=None , M=None, gas=air, output=False) -> f
     output : `bool`
         Print out a string to verify the output is the parameter desired \n
     
+    Returns
+    -------
+    float
+        The stagnation temperature, temperature, or mach number\n
+
     Examples
     --------
     >>> Tt = gd.stagnation_temperature(T=300, M=1)
@@ -213,6 +228,11 @@ def stagnation_pressure_ratio(M: float, gas=air) -> float:
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
+    Returns
+    -------
+    float
+        The stagnation pressure ratio\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -248,6 +268,11 @@ def stagnation_temperature_ratio(M: float, gas=air) -> float:
     gas : `fluid`
         A user defined fluid object. Default is air\n
     
+    Returns
+    -------
+    float
+        The stagnation temperature ratio\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -282,6 +307,11 @@ def stagnation_density_ratio(M: float, gas=air) -> float:
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
+    Returns
+    -------
+    float
+        The stagnation density ratio\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -299,6 +329,7 @@ def stagnation_density_ratio(M: float, gas=air) -> float:
 
 #==================================================
 #stagnation ratio 
+#TODO: make me
 #added fluid object
 #==================================================
 def stagnation_ratio(M: float, gas=air) -> list:
@@ -316,10 +347,15 @@ def stagnation_ratio(M: float, gas=air) -> list:
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
+    Returns
+    -------
+    list
+        The stagnation pressure, stagnation temperature, stagnation
+        density ratio, and choked area ratio.\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
-
 
     """
 
@@ -349,6 +385,11 @@ def stagnation_ratio_table(range=[0,5], step=.1, gas=air) -> str:
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
+    Returns
+    -------
+    str
+        The isentropic flow table\n
+        
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -412,6 +453,11 @@ def mach_from_pressure_ratio(p1: float, p2: float, M1: float, ds=0, gas=air) -> 
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
+    Returns
+    -------
+    float
+        The Mach number\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -450,6 +496,11 @@ def mach_from_temperature_ratio(T1: float, T2: float, M1: float, gas=air) -> flo
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
+    Returns
+    -------
+    float
+        The mach number\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -491,6 +542,11 @@ def pressure_from_mach_ratio(M1: float, M2: float, p1: float, ds=0, gas=air) -> 
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
+    Returns
+    -------
+    float
+        The local pressure\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -529,6 +585,11 @@ def temperature_from_mach_ratio(M1: float, M2: float, T1: float, gas=air) -> flo
         Temperature in region 1 \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
+
+    Returns
+    -------
+    float
+        The local temperature\n
     
     Examples
     --------
@@ -567,6 +628,11 @@ def entropy_produced(pt1: float, pt2: float, gas=air) -> float:
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
+    Returns
+    -------
+    float
+        The specific entropy\n
+    
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -600,6 +666,11 @@ def mach_area_ratio_choked(M: float, gas=air) -> float:
         Mach Number \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
+    
+    Returns
+    -------
+    float
+        The ratio of area over choked area\n
     
     Examples
     --------
@@ -641,6 +712,11 @@ def mach_area_ratio(M1: float, M2: float, gas=air, ds=0) -> float:
     ds : `float`
         Entropy produced, if any \n
     
+    Returns
+    -------
+    float
+        The area ratio\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -660,7 +736,7 @@ def mach_area_ratio(M1: float, M2: float, gas=air, ds=0) -> float:
 #mach_from_area_ratio
 
 #==================================================    
-def  mach_from_area_ratio(a_ratio: float, gas=air):
+def  mach_from_area_ratio(a_ratio: float, gas=air) ->list:
     """Return the possible mach numbers given a choked area ratio A / A*
     
     Notes
@@ -675,6 +751,11 @@ def  mach_from_area_ratio(a_ratio: float, gas=air):
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
+    Returns
+    -------
+    list
+        The subsonic and supersonic mach numbers for the area ratio\n
+
     Examples
     --------
     >>> import gas_dynamics as gd
@@ -722,6 +803,11 @@ def mass_flux_max(pt: float, Tt: float, gas=air, metric=True) -> float:
         A user defined fluid object. Default is air \n
     metric : `bool`
         Use metric or US standard.\n
+    
+    Returns
+    -------
+    float
+        The mass flux\n
     
     Examples
     --------
@@ -785,6 +871,11 @@ def mass_flux(M: float, pt: float, Tt: float, gas = air, metric = True) -> float
         The stagnation temperature \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
+    
+    Returns
+    -------
+    float
+        The mass flux\n
 
     Examples
     --------
@@ -844,6 +935,7 @@ def plot_stagnation_ratios(range=[.1,5], step=.01, gasses=[air, methane, argon],
     >>> import gas_dynamics as gd
     >>> gd.plot_stagnation_ratios()
     """
+
     if dark == True:
         plt.style.use('dark_background')
         gridcolor = 'w'
