@@ -1,8 +1,7 @@
 # gas_dynamics
 
-Gas dynamics equations, table generators, oblique shock chart generators and more.
+Gas dynamics equations, table generators, oblique shock chart generators and more. Please visit https://gas-dynamics.readthedocs.io/en/latest/gettingstarted.html# to get started.
 
-To install with pip, use 
 
 ```
 py -m pip install gas_dynamics
