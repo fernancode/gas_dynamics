@@ -15,7 +15,10 @@ setuptools.setup(name="gas_dynamics",
       url="http://github.com/fernancode/gas_dynamics",
       packages=setuptools.find_packages(),
       classifiers=[
-          "Programming Language :: Python :: 3",
+          "Development Status :: 3 - Alpha",
+          "Programming Language :: Python :: 3.6",
+          "Programming Language :: Python :: 3.7",
+          "Programming Language :: Python :: 3.8",
           "License :: OSI Approved :: MIT License",
           "Operating System :: OS Independent"
       ],

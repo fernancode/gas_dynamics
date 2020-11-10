@@ -14,7 +14,7 @@ Package containing functions for working with compressible flow.
    :width: 800
    :alt: Shock waves forming across a T-38 Talon 
 
-   Credits NASA Photo
+   Credits: NASA Images
 
 .. toctree::
    :maxdepth: 2

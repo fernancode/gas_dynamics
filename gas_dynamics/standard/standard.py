@@ -787,9 +787,8 @@ def mass_flux_max(pt: float, Tt: float, gas=air, metric=True) -> float:
     return the flow rate for a Mach number equal to 1. Default fluid 
     is air.
 
-    Units
-    -----
-    J / kg-K and Pascals return kg/m^2 \n    
+    **Units**:\n
+    J / kg-K and Pa return kg/m^2 \n    
     kJ / kg-K and kPa returns kg/m^2 \n  
     ft-lbf / lbm-R and psi returns lbm/in^2 \n  
         
@@ -854,9 +853,8 @@ def mass_flux(M: float, pt: float, Tt: float, gas = air, metric = True) -> float
     return the flow rate per unit area for the given Mach number. Default
     fluid is air. 
     
-    Units
-    -----
-    J / kg-K and Pascals return kg/s/m^2 \n    
+    **Units**:\n
+    J / kg-K and Pa return kg/s/m^2 \n    
     kJ / kg-K and kPa returns kg/s/m^2 \n  
     ft-lbf / lbm-R and psi returns lbm/s/in^2 \n  
     Btu / lbm-R and psi returns lbm/s/in^2 \n  
