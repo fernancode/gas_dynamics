@@ -79,14 +79,14 @@ Plotting Stagnation relations versus mach number for different gammas. Arguments
 plot_stagnation_ratios(dark=False)
 ```
 
-![Stagnation_plots](.docs/README_images/plot_ratios.png)
+![Stagnation_plots](docs/README_images/plot_ratios.png)
 
 Additionally, plots are available in dark mode.
 
 ```
 plot_stagnation_ratios(dark=True)
 ```
-![Stagnation_plots_dark](.docs/README_images/plot_ratios_dark.png)
+![Stagnation_plots_dark](docs/README_images/plot_ratios_dark.png)
 
 All of the stagnation ratios are available, for example:
 Return the area ratio required to accelerate a flow to M = 3 and the corresponding stagnation pressure and temperature ratio
@@ -176,7 +176,7 @@ Extremely useful in solving flow deflection problems are the oblique shock chart
 gd.shock_oblique_charts()
 ```
 
-![Oblique_Charts](.docs/README_images/Oblique_Charts_dark.png)
+![Oblique_Charts](docs/README_images/Oblique_Charts_dark.png)
 
 
 ```
