@@ -479,7 +479,7 @@ def shock_angle(M: float, dirac: float, gas=air) -> float:
 #shock_mach_given angles
 #==================================================
 def shock_mach_given_angles(theta: float, dirac: float, gas=air) -> float:
-    """Return the Mach number given the shock angle and flow deflection
+    """Return the Mach number before a shock given shock angle and flow deflection
     
     Notes
     -----
@@ -552,7 +552,7 @@ def prandtl_meyer_turn(M: float, gas=air) -> float:
 
     """
 
-    gamma = gas.R
+    gamma = gas.gamma
     nu = ((gamma+1)/(gamma-1))**.5 * arctand(((M**2-1)*(gamma-1)/(gamma+1))**.5) - arctand((M**2-1)**.5)
     return nu
 

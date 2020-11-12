@@ -93,7 +93,7 @@ def stagnation_pressure(pt=None, M=None, p=None, gas=air, output=False) -> float
     Given a pressure, Mach number, and a ratio of specific heats return
     the stagnation pressure. Alternatively, provided two arguments
     the function will return the missing one. Default fluid is air.
-    
+
     Parameters
     ----------
     pt : `float`
@@ -158,7 +158,7 @@ def stagnation_temperature(T=None, Tt=None , M=None, gas=air, output=False) -> f
     this function returns the stagnation temperature. Alternatively,
     provided two arguments the function will return the missing one.
     Default fluid is air.
-    
+
     Parameters
     ----------
     Tt : `float`
@@ -220,7 +220,7 @@ def stagnation_pressure_ratio(M: float, gas=air) -> float:
     -----
     Given a Mach number and ratio of specific heats return the relation of
     pressure over stagnation pressure. Default fluid is air.
-    
+
     Parameters
     ----------
     M : `float`
@@ -260,7 +260,7 @@ def stagnation_temperature_ratio(M: float, gas=air) -> float:
     -----
     Given a Mach number and ratio of specific heats return the relation of
     temperature over stagnation temperature.  Default fluid is air.
-    
+
     Parameters
     ----------
     M : `float`
@@ -338,7 +338,7 @@ def stagnation_ratio(M: float, gas=air) -> list:
     Notes
     -----
     Given a mach number and the fluid, return the three stagnation ratios
-    and the ratio of the area to the choked area. Default fluid is air
+    and the ratio of the area to the choked area. Default fluid is air.
 
     Parameters
     ----------
@@ -439,7 +439,7 @@ def mach_from_pressure_ratio(p1: float, p2: float, M1: float, ds=0, gas=air) -> 
     Given the local pressure in two regions and the Mach number in one,
     return the Mach number in the second region. Default arguments
     are for air and isentropic flow.
-    
+
     Parameters
     ----------
     p1 : `float`
@@ -484,7 +484,7 @@ def mach_from_temperature_ratio(T1: float, T2: float, M1: float, gas=air) -> flo
     -----
     Given the local temperatures in two regions and the mach number in one,
     return the Mach number in the second region. Default fluid is air.
-    
+
     Parameters
     ----------
     T1 : `float`
@@ -574,7 +574,7 @@ def temperature_from_mach_ratio(M1: float, M2: float, T1: float, gas=air) -> flo
     Given the local Mach number in two regions and the temperature in one,
     return the missing temperature from the second region. Default fluid
     is air.
-    
+
     Parameters
     ----------
     M1 : `float`
@@ -617,8 +617,8 @@ def entropy_produced(pt1: float, pt2: float, gas=air) -> float:
     Notes
     -----
     Given two stagnation pressures and the fluid, determine the entropy
-    produced per unit mass
-    
+    produced per unit mass.
+
     Parameters
     ----------
     pt1 : `float`
@@ -700,7 +700,7 @@ def mach_area_ratio(M1: float, M2: float, gas=air, ds=0) -> float:
     -----
     Given two mach numbers, return the area ratio required to accelerate
     or deaccelerate the flow accordingly. Default fluid is air.
-    
+
     Parameters
     ----------
     M1 : `float` 
@@ -742,7 +742,7 @@ def  mach_from_area_ratio(a_ratio: float, gas=air) ->list:
     Notes
     -----
     Given a ratio of area over an area where Mach = 1, return the subsonic and supersonic
-    Mach numbers for the change area. 
+    Mach numbers for the change area.
 
     Parameters
     ----------
@@ -851,7 +851,7 @@ def mass_flux(M: float, pt: float, Tt: float, gas = air, metric = True) -> float
     -----
     Given stagnation pressure, stagnation temperature, and the fluid, 
     return the flow rate per unit area for the given Mach number. Default
-    fluid is air. 
+    fluid is air.
     
     **Units**:\n
     J / kg-K and Pa return kg/s/m^2 \n    

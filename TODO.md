@@ -13,4 +13,4 @@ Try to remove scipy.optimize and replace with own function, so entire scipy pack
 
 Add page to docs with latex formatted equations that represent each function
 
-Need to cite matplotplib, numpy, and scicpi!!!
+Need to cite matplotplib, numpy, and scipi!!!

@@ -1,0 +1,99 @@
+########################
+Equation Representations
+########################
+
+:py:func:`gas_dynamics.sonic_velocity <gas_dynamics.standard.standard.sonic_velocity>`
+
+.. math::
+
+   a = \sqrt{\gamma R T}
+
+
+:py:func:`gas_dynamics.stagnation_pressure <gas_dynamics.standard.standard.stagnation_pressure>` will return :math:`P`, :math:`P_{t}`, or :math:`M` depending on parameters given .
+
+.. math::
+
+   p_{t} = p\left(1+\frac{\gamma-1}{2} M^{2}\right)^{\frac{\gamma}{\gamma-1}}
+
+
+:py:func:`gas_dynamics.stagnation_temperature <gas_dynamics.standard.standard.stagnation_temperature>` will return :math:`T`, :math:`T_{t}`, or :math:`M` depending on parameters given.
+
+.. math::
+
+   T_{t} = T\left(1 + \frac{\gamma-1}{2} M^{2}\right)
+
+
+:py:func:`gas_dynamics.stagnation_pressure_ratio <gas_dynamics.standard.standard.stagnation_pressure_ratio>` returns :math:`\frac{P}{P_{t}}`
+
+.. math::
+   \frac{p}{p_{t}} = \frac{1}{\left(1 + \frac{\gamma-1}{2}M^2 \right)^\frac{\gamma}{\gamma-1}}
+
+
+
+:py:func:`gas_dynamics.stagnation_temperature_ratio <gas_dynamics.standard.standard.stagnation_temperature_ratio>` returns :math:`\frac{T}{T_{t}}`
+
+.. math::
+
+   \frac{T}{T_{t}} = \frac{1}{\left(1 + \frac{\gamma-1}{2} M^{2}\right)}
+
+
+:py:func:`gas_dynamics.stagnation_density_ratio <gas_dynamics.standard.standard.stagnation_density_ratio>` returns :math:`\frac{\rho}{\rho_{t}}`
+
+.. math::
+
+   \frac{\rho}{\rho_{t}} = \left( \frac{1}{1+\frac{\gamma-1}{2} M^{2}} \right)^{\frac{1}{\gamma-1}}
+
+
+:py:func:`gas_dynamics.mach_from_pressure_ratio <gas_dynamics.standard.standard.mach_from_pressure_ratio>` solves for :math:`M_{2}` from the following equation:
+
+.. math::
+
+   \frac{p_{2}}{p_{1}} = \left( \frac{ 1 + \frac{\gamma-1}{2}M_{1}^2}{1 + \frac{\gamma-1}{2}M_{2}^2} \right)^{\frac{\gamma}{\gamma-1}}e^{\frac{-\Delta s}{R}}
+
+
+:py:func:`gas_dynamics.mach_from_temperature_ratio <gas_dynamics.standard.standard.mach_from_temperature_ratio>` will return :math:`\frac{T_{2}}{T_{1}}`
+
+.. math::
+
+   \frac{T_{2}}{T_{1}} = \frac{1 + \frac{\gamma-1}{2}M_{1}^2}{1 + \frac{\gamma-1}{2}M_{2}^2}
+
+
+mach from pressure ratio
+
+.. math::
+
+   \frac{\dot{m}}{A}=M\left(1+\frac{\gamma-1}{2}M^2\right)^{\frac{-(\gamma+1)}{2(\gamma-1)}}\sqrt{\left(\frac{\gamma}{R}\right)}\frac{p_{t}}{\sqrt{T_{t}}}
+
+
+.. math::
+
+   \frac{T_{2}}{T_{1}} = \frac{1 + \frac{\gamma-1}{2}M_{1}^2}{1 + \frac{\gamma-1}{2}M_{2}^2}
+    
+
+.. math::
+
+   \frac{p_{t2}}{p_{t1}} = e^{\frac{-\Delta s}{R}}
+    
+.. math::
+
+   \frac{A}{A^*} = 
+
+
+.. math::
+
+   \frac{A_{2}}{A_{1}} = \frac{M_{1}}{M_{2}} \left( \frac{1+\frac{\gamma-1}{2}M_{2}^2}{1+\frac{\gamma-1}{2}M_{1}^2}\right)^{\frac{\gamma+1}{2(\gamma-1)}}
+
+
+.. math::
+    
+   \frac{A}{A^*} =
+
+
+.. math::
+
+   \frac{\dot{m}}{A^*} = \sqrt{\left(\frac{\gamma}{R}\frac{2}{\gamma+1}^{\frac{\gamma+1}{\gamma-1}} \right)}\frac{p_{t}}{\sqrt{T_{t}}}
+
+
+.. math::
+
+   \frac{\dot{m}}{A}=M\left(1+\frac{\gamma-1}{2}M^2\right)^{\frac{-(\gamma+1)}{2(\gamma-1)}}\sqrt{\left(\frac{\gamma}{R}\right)}\frac{p_{t}}{\sqrt{T_{t}}}
