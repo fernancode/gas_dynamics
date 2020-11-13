@@ -60,6 +60,8 @@ class fluid:
         """
         self.name = name
         self.gamma = gamma
+        self.cp = None
+        self.cv = None
         self.R = R
         self.gc = 1 #the gravitational constant. default 1 for metric
         self.units = units

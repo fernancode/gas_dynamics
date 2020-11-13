@@ -15,7 +15,7 @@ from gas_dynamics.standard.standard import (
   pressure_from_mach_ratio,
   temperature_from_mach_ratio,
   entropy_produced,
-  mach_area_ratio_choked,
+  mach_area_star_ratio,
   mach_area_ratio,
   mach_from_area_ratio,
   mass_flux_max,
@@ -46,15 +46,30 @@ from gas_dynamics.fanno.fanno import (
   fanno_pressure_ratio,
   fanno_density_ratio,
   fanno_stagnation_pressure_ratio,
-  fanno_temperature_choked_ratio,
-  fanno_pressure_choked_ratio,
-  fanno_density_choked_ratio,
-  fanno_velocity_choked_ratio,
+  fanno_temperature_star_ratio,
+  fanno_pressure_star_ratio,
+  fanno_density_star_ratio,
+  fanno_velocity_star_ratio,
   fanno_parameter,
   fanno_parameter_max,
   mach_from_fanno)
 
-
+from gas_dynamics.rayleigh.rayleigh import(
+  rayleigh_pressure_ratio,
+  rayleigh_temperature_ratio,
+  rayleigh_density_ratio,
+  rayleigh_stagnation_temperature_ratio,
+  rayleigh_stagnation_pressure_ratio,
+  rayleigh_mach_from_pressure_ratio,
+  rayleigh_mach_from_temperature_ratio,
+  rayleigh_mach_from_stagnation_temperature_ratio,
+  rayleigh_mach_from_stagnation_pressure_ratio,
+  rayleigh_pressure_star_ratio,
+  rayleigh_temperature_star_ratio,
+  rayleigh_density_star_ratio,
+  rayleigh_stagnation_pressure_star_ratio,
+  rayleigh_stagnation_temperature_star_ratio,
+  rayleigh_heat_flux)
 
 from gas_dynamics.fluids import fluid
 

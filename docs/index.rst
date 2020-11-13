@@ -23,10 +23,12 @@ Package containing functions for working with compressible flow.
    gas_dynamics.standard
    gas_dynamics.shocks
    gas_dynamics.fanno
+   gas_dynamics.rayleigh
    gas_dynamics.fluid
    gas_dynamics.extra
-   License
-   Aboutme
+   license
+   credits
+   aboutme
 
 
 Indices and tables

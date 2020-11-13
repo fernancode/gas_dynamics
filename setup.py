@@ -12,7 +12,7 @@ setuptools.setup(name="gas_dynamics",
       description="Package containing functions for working with compressible flow",
       long_description=long_description,
       long_description_content_type="text/markdown",
-      project_urls = {"Link 1" : "http://gas-dynamics.readthedocs.io", "Link 2" : "http://github.com/fernancode/gas_dynamics"},
+      project_urls = {"ReadtheDocs" : "http://gas-dynamics.readthedocs.io", "Github" : "http://github.com/fernancode/gas_dynamics"},
       packages=setuptools.find_packages(),
       classifiers=[
           "Development Status :: 3 - Alpha",

@@ -416,7 +416,7 @@ def stagnation_ratio_table(range=[0,5], step=.1, gas=air) -> str:
     mach_nums = [i for i in np.arange(Mach_min,Mach_max+step,step)]
     t_list = [stagnation_temperature_ratio(M=i, gas=gas)for i in mach_nums]
     p_list = [stagnation_pressure_ratio(M=i, gas=gas) for i in mach_nums]
-    a_list = [mach_area_ratio_choked(M=i, gas=gas) for i in mach_nums]
+    a_list = [mach_area_star_ratio(M=i, gas=gas) for i in mach_nums]
     rho_list = [stagnation_density_ratio(M=i, gas=gas) for i in mach_nums]
 
     labl = '\u03B3 = ' + str(gamma)
@@ -651,7 +651,7 @@ def entropy_produced(pt1: float, pt2: float, gas=air) -> float:
 #mach_area_ratio_choked
 #added fluid class 
 #==================================================
-def mach_area_ratio_choked(M: float, gas=air) -> float:
+def mach_area_star_ratio(M: float, gas=air) -> float:
     """Returns the ratio of A / A* given the Mach number.
     
     Notes
@@ -765,7 +765,7 @@ def  mach_from_area_ratio(a_ratio: float, gas=air) ->list:
     """
 
     def zero(M, gas):
-        return mach_area_ratio_choked(M=M, gas=gas) - a_ratio
+        return mach_area_star_ratio(M=M, gas=gas) - a_ratio
 
     subsonic = fsolve(zero, args=(gas), x0=0.5)
     supersonic = fsolve(zero, args=(gas), x0=5)
@@ -954,7 +954,7 @@ def plot_stagnation_ratios(range=[.1,5], step=.01, gasses=[air, methane, argon],
         mach_nums = [i for i in np.arange(Mach_min,Mach_max+step,step)]
         t_list = [stagnation_temperature_ratio(M=i, gas=f) for i in mach_nums]
         p_list = [stagnation_pressure_ratio(M=i, gas=f) for i in mach_nums]
-        a_list = [mach_area_ratio_choked(M=i, gas=f) for i in mach_nums]
+        a_list = [mach_area_star_ratio(M=i, gas=f) for i in mach_nums]
         rho_list = [stagnation_density_ratio(M=i, gas=f) for i in mach_nums]
         labl = '\u03B3 ' + f.name 
 

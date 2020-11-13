@@ -5,6 +5,7 @@
 #
 #Copyright 2020 by Fernando A de la Fuente
 #All rights reserved
+
 from gas_dynamics.fluids import fluid, air
 from numpy import log
 from scipy.optimize import fsolve
@@ -175,7 +176,7 @@ def fanno_stagnation_pressure_ratio(M1: float, M2: float, gas=air) -> float:
 #==================================================
 #fanno temperature choked ratio
 #==================================================
-def fanno_temperature_choked_ratio(M: float, gas=air) -> float:
+def fanno_temperature_star_ratio(M: float, gas=air) -> float:
     """Return the ratio of temperature over temperature where Mach equals one
 
     Notes
@@ -204,7 +205,7 @@ def fanno_temperature_choked_ratio(M: float, gas=air) -> float:
 #==================================================
 #fanno pressure choked ratio
 #==================================================
-def fanno_pressure_choked_ratio(M: float, gas=air) -> float:
+def fanno_pressure_star_ratio(M: float, gas=air) -> float:
     """Return the ratio of pressure over pressure where Mach equals one
 
     Notes
@@ -233,7 +234,7 @@ def fanno_pressure_choked_ratio(M: float, gas=air) -> float:
 #==================================================
 #fanno density choked ratio
 #==================================================
-def fanno_density_choked_ratio(M: float, gas=air) -> float:
+def fanno_density_star_ratio(M: float, gas=air) -> float:
     """Return the ratio of density over density where Mach equals one
 
     Notes
@@ -262,7 +263,7 @@ def fanno_density_choked_ratio(M: float, gas=air) -> float:
 #==================================================
 #fanno velocity choked ratio
 #==================================================
-def fanno_velocity_choked_ratio(M: float, gas=air) -> float:
+def fanno_velocity_star_ratio(M: float, gas=air) -> float:
     """Return the ratio of velocity where Mach equals one over velocity
 
     Notes
