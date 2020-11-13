@@ -69,7 +69,8 @@ def fanno_temperature_ratio(M1: float, M2: float, gas=air) -> float:
 
     Notes
     -----
-
+    Given the two Mach numbers of a system return the temperature ratio of
+    region two over region one. Default fluid is air.
 
     Parameters
     ----------
@@ -96,7 +97,8 @@ def fanno_pressure_ratio(M1: float, M2: float, gas=air) -> float:
 
     Notes
     -----
-
+    Given the two Mach numbers of a system return the pressure ratio of
+    region two over region one. Default fluid is air.
 
     Parameters
     ----------
@@ -122,7 +124,8 @@ def fanno_density_ratio(M1: float, M2: float, gas=air) -> float:
 
     Notes
     -----
-
+    Given the two Mach numbers of a system return the density ratio of
+    region two over region one. Default fluid is air.
 
     Parameters
     ----------
@@ -149,7 +152,8 @@ def fanno_stagnation_pressure_ratio(M1: float, M2: float, gas=air) -> float:
 
     Notes
     -----
-
+    Given the two Mach numbers of a system return the stagnation pressure ratio of
+    region two over region one. Default fluid is air.
 
     Parameters
     ----------
@@ -172,10 +176,13 @@ def fanno_stagnation_pressure_ratio(M1: float, M2: float, gas=air) -> float:
 #fanno temperature choked ratio
 #==================================================
 def fanno_temperature_choked_ratio(M: float, gas=air) -> float:
-    """Return the ratio of temperature over temperature where Mach equals 1
+    """Return the ratio of temperature over temperature where Mach equals one
 
     Notes
     -----
+    Given a Mach number return the temperature ratio of region two over 
+    region one where mach in region one equals one. 
+    Default fluid is air.
 
     Parameters
     ----------
@@ -198,10 +205,13 @@ def fanno_temperature_choked_ratio(M: float, gas=air) -> float:
 #fanno pressure choked ratio
 #==================================================
 def fanno_pressure_choked_ratio(M: float, gas=air) -> float:
-    """Return the ratio of pressure over pressure where Mach equals 1
+    """Return the ratio of pressure over pressure where Mach equals one
 
     Notes
     -----
+    Given a Mach number return the pressure ratio of region two over 
+    region one where mach in region one equals one. 
+    Default fluid is air.
 
     Parameters
     ----------
@@ -224,10 +234,13 @@ def fanno_pressure_choked_ratio(M: float, gas=air) -> float:
 #fanno density choked ratio
 #==================================================
 def fanno_density_choked_ratio(M: float, gas=air) -> float:
-    """Return the ratio of density over density where Mach equals 1
+    """Return the ratio of density over density where Mach equals one
 
     Notes
     -----
+    Given a Mach number return the density ratio of region two over 
+    region one where mach in region one equals one. 
+    Default fluid is air.
 
     Parameters
     ----------
@@ -250,10 +263,12 @@ def fanno_density_choked_ratio(M: float, gas=air) -> float:
 #fanno velocity choked ratio
 #==================================================
 def fanno_velocity_choked_ratio(M: float, gas=air) -> float:
-    """Return the ratio of velocity where Mach equals 1 over velocity
+    """Return the ratio of velocity where Mach equals one over velocity
 
     Notes
     -----
+    Given a Mach number return the ratio of velocity at Mach equal to one
+    over velocity in region two. Default fluid is air.
 
     Parameters
     ----------
@@ -267,8 +282,8 @@ def fanno_velocity_choked_ratio(M: float, gas=air) -> float:
 
     """
     gamma = gas.gamma
-    v_vstar = 1/M * ((1 + (gamma-1)/2 * M**2)/((gamma+1)/2))**.5
-    return v_vstar
+    vstar_v = 1/M * ((1 + (gamma-1)/2 * M**2)/((gamma+1)/2))**.5
+    return vstar_v
 
 
 
@@ -280,7 +295,9 @@ def fanno_parameter(M1: float, M2: float, gas=air) -> float:
 
     Notes
     -----
-
+    Given the two Mach numbers, return the fanno parameter that describes that system,
+    where fanno parameter is the product of friction factor and length over diameter.
+    Default fluid is air. 
 
     Parameters
     ----------
@@ -307,7 +324,7 @@ def fanno_parameter_max(M: float, gas=air) -> float:
 
     Notes
     -----
-    Given a mach number and a fluid, determine the maximum length to diameter ratio
+    Given a Mach number and a fluid, determine the maximum length to diameter ratio
     for a fluid to reach a Mach number of 1, or a condition of maximum entropy.
 
     Parameters
@@ -336,6 +353,10 @@ def mach_from_fanno(fanno: float, M1: float, gas=air) -> float:
 
     Notes
     -----
+    Given the two Mach number, return the maximum fanno parameter that describes that system,
+    where fanno parameter is the product of friction factor and length over diameter, and the final
+    Mach number is equal to one.
+    Default fluid is air.
 
 
     Parameters

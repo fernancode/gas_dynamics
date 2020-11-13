@@ -1,16 +1,16 @@
 # TODO
 
-Add Fanno flow functions
-
-Add Rayleigh flow functions
-
-Research and add hypersonic information
-
 Setup continuous integration and add unittests
 
-Try to remove scipy.optimize and replace with own function, so entire scipy package doesnt need to be installed.
-    but people probably will already have scipy?
+Add Fanno flow functions
+    Check equations, create examples, and expand docstrings
+
+Add Rayleigh flow functions
+    Add equations, create examples, and expand docstrings
+
+Research and begin foray into hypersonic
 
 Add page to docs with latex formatted equations that represent each function
 
 Need to cite matplotplib, numpy, and scipi!!!
+    *Important*
