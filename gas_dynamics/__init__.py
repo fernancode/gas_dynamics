@@ -40,6 +40,22 @@ from gas_dynamics.shocks.shocks import (
   shock_tables, 
   dirac_from_machs)
 
+from gas_dynamics.fanno.fanno import (
+  stagnation_enthalpy,
+  fanno_temperature_ratio,
+  fanno_pressure_ratio,
+  fanno_density_ratio,
+  fanno_stagnation_pressure_ratio,
+  fanno_temperature_choked_ratio,
+  fanno_pressure_choked_ratio,
+  fanno_density_choked_ratio,
+  fanno_velocity_choked_ratio,
+  fanno_parameter,
+  fanno_parameter_max,
+  mach_from_fanno)
+
+
+
 from gas_dynamics.fluids import fluid
 
 #from .fanno import func1,

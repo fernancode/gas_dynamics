@@ -61,9 +61,38 @@ class fluid:
         self.name = name
         self.gamma = gamma
         self.R = R
+        self.gc = 1 #the gravitational constant. default 1 for metric
         self.units = units
+        self.rho = None
+        self.temperature = None 
+        self.velocity = None 
+        self.a = None #speed of sound
+        self.mach = None
+        self.mass_veolcity = None #rho * velocity
+        self.a = None #speed of sound
 
+    def set_a(self):
+        """Set the local speed of sound for the fluid given its state
 
+        """
+        
+        self.a = (self.temperature * self.R * self.gamma * self.gc)**.5
+
+    def set_mach(self):
+        """Set the mach number for the fluid given its velocity and speed of sound
+
+        """
+        self.set_a()
+        self.mach = self.velocity / self.a
+        
+    def set_mass_velocity(self):
+        """Set the mass velocity for the fluid given its state
+
+        """
+
+        self.mass_velocity = self.velocity * self.rho
+
+    
 
 #Initialize some fluids in the metric system
 #==================================================

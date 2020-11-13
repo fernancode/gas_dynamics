@@ -22,8 +22,9 @@ Package containing functions for working with compressible flow.
    gettingstarted
    gas_dynamics.standard
    gas_dynamics.shocks
-   gas_dynamics.extra
+   gas_dynamics.fanno
    gas_dynamics.fluid
+   gas_dynamics.extra
    License
    Aboutme
 
