@@ -1,0 +1,24 @@
+{% set data = load_setup_py_data() %}
+
+package: 
+  name: {{ data.get('name') }}
+  version: {{ data.get('version') }}
+
+source:
+  git_rev: {{ data.get('version') }}
+  git_url: http://github.com/fernancode/gas_dynamics
+
+requirements:
+  build:
+    - python
+    - setuptools
+
+  run:
+    - python
+
+test:
+  imports:
+    -
+
+about:
+  home: https://gas-dynamics.readthedocs.io/en/latest/
