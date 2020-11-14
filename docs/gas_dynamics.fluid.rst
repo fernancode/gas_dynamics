@@ -48,7 +48,7 @@ When creating your own fluid, the properties that must be set when initiated are
 
     >>> foobar = fluid(name='foobar', gamma=1.4, R=53.3, units='Btu / lbm-R')
 
-If we run out of the gates and immediately try and calculate the speed of sound of this fluid (which is remarkably similar to air) at standard temperature) 491.67 Rankine, we notice the answer is considerably off from what we expect, ~~1100 ft/s.
+If we run out of the gates and immediately try and calculate the speed of sound of this fluid (which is remarkably similar to air) at standard temperature 491.67 Rankine, we notice the answer is considerably off from what we expect, ~~1100 ft/s.
 
 .. code-block:: python
 
