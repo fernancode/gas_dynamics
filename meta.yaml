@@ -12,7 +12,7 @@ requirements:
   build:
     - python
     - setuptools
-    - numpy>=1.19.3
+    - numpy==1.18.3
     - matplotlib
     - scipy
 
