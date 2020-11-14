@@ -1,17 +1,20 @@
 {% set data = load_setup_py_data() %}
 
 package: 
-  name: {{ data.get('name') }}
-  version: {{ data.get('version') }}
+  name: gas_dynamics
+  version: 0.3.4a
 
 source:
-  git_rev: {{ data.get('version') }}
+  git_rev: 
   git_url: http://github.com/fernancode/gas_dynamics
 
 requirements:
   build:
     - python
     - setuptools
+    - numpy >= 1.19.3
+    - matplotlib
+    - scipy
 
   run:
     - python
