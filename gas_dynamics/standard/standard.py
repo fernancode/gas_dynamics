@@ -806,7 +806,7 @@ def mass_flux_max(pt: float, Tt: float, gas=air, metric=True) -> float:
     Returns
     -------
     float
-        The mass flux\n
+        The maximum mass flux\n
     
     Examples
     --------
@@ -926,12 +926,13 @@ def plot_stagnation_ratios(range=[.1,5], step=.01, gasses=[air, methane, argon],
         A list of the user defined gas objects to be plotted \n
         ex: gasses = [air, methane, argon] \n
     dark : `bool`
-        Use a dark mode plot. Default true.
+        Use a dark mode plot. Default true.\n
     
     Examples
     --------
     >>> import gas_dynamics as gd
     >>> gd.plot_stagnation_ratios()
+    >>>
     """
 
     if dark == True:
