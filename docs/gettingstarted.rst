@@ -88,11 +88,15 @@ Plotting Stagnation relations versus mach number for different gammas. Arguments
 .. image:: README_images/plot_ratios.png
    :width: 800
 
+
 Additionally, plots are available in dark mode.
 
-```
-plot_stagnation_ratios(dark=True)
-```
+
+.. code-block:: python
+
+    plot_stagnation_ratios(dark=True)
+
+
 
 .. image:: README_images/plot_ratios_dark.png
    :width: 800

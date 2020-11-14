@@ -28,7 +28,7 @@ Package containing functions for working with compressible flow.
    gas_dynamics.extra
    license
    credits
-   aboutme
+   Aboutme
 
 
 Indices and tables
