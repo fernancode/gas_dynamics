@@ -43,7 +43,7 @@ class fluid:
 
     """
 
-    def __init__(self, name: str, gamma: float, R: float, units='metric'):
+    def __init__(self, name: str, gamma: float, R: float, units='J / kg K'):
         """Construct the necessary attributes for the fluid object
 
         Parameters

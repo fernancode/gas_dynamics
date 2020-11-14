@@ -71,11 +71,7 @@ def sonic_velocity(gas=air ,metric=True, T=273.15) -> float:
 
     """
 
-    if metric == False:
-        gc = 32.174
-    else:
-        gc = 1
-    gamma, R = gas.gamma, gas.R
+    gamma, R, gc = gas.gamma, gas.R, gas.gc
     a = ( gc * gamma * R *T )**.5
     return a
 
