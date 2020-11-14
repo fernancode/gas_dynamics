@@ -81,12 +81,16 @@ plot_stagnation_ratios(dark=False)
 
 ![Stagnation_plots](docs/README_images/plot_ratios.png)
 
+
 Additionally, plots are available in dark mode.
+
 
 ```
 plot_stagnation_ratios(dark=True)
 ```
+
 ![Stagnation_plots_dark](docs/README_images/plot_ratios_dark.png)
+
 
 All of the stagnation ratios are available, for example:
 Return the area ratio required to accelerate a flow to M = 3 and the corresponding stagnation pressure and temperature ratio
@@ -203,6 +207,8 @@ Solve for the Mach number
 >>>
 ```
 
+
+##### Some acknowledgements
 
 I would like to thank the developers of Numpy, Scipy, and Matplotlib for their invaluable contributions to scientific computing in Python. 
 

@@ -168,11 +168,14 @@ def rayleigh_stagnation_pressure_ratio(M1: float, M2: float, gas=air) -> float:
 #TODO: docstring and examples
 #TODO: verify
 #==================================================
-def rayleigh_mach_from_pressure_ratio(M: float, p1: float, p2: float, gas=air) -> float:
+def rayleigh_mach_from_pressure_ratio(M1: float, p1: float, p2: float, gas=air) -> float:
     """Return the mach number given the Mach number and two pressures
 
     Notes
     -----
+    Given the initial Mach number, initial pressure, and final pressure, determine
+    the resulting Mach number in a constant area frictionless flow with heat transfer. 
+    Default fluid is air.
 
     Parameters
     ----------
@@ -187,11 +190,15 @@ def rayleigh_mach_from_pressure_ratio(M: float, p1: float, p2: float, gas=air) -
     
     Examples
     --------
-
+    >>> import gas_dynamics as gd                                        
+    >>> M2 = gd.rayleigh_mach_from_pressure_ratio(M1=.8, p1=1.5, p2=2.5) 
+    >>> M2
+    0.31350552512789054
+    >>>
     """
 
     gamma = gas.gamma
-    M2 = (((p2*(1+gamma*M**2))/p2 -1)/gamma)**.5
+    M2 = (((p1*(1+gamma*M1**2))/p2 -1)/gamma)**.5
     return M2
 
 
@@ -206,6 +213,9 @@ def rayleigh_mach_from_temperature_ratio(M: float, T1: float, T2: float, gas=air
 
     Notes
     -----
+    Given the initial Mach number, initial temperature, and final temperature, determine
+    the resulting Mach number in a constant area frictionless flow with heat transfer. 
+    Default fluid is air.
 
     Parameters
     ----------
@@ -430,7 +440,7 @@ def rayleigh_stagnation_pressure_star_ratio(M: float, gas=air) -> float:
 #TODO: verify
 #==================================================
 def rayleigh_stagnation_temperature_star_ratio(M: float, gas=air) -> float:
-    """
+    """  
 
     Notes
     -----
@@ -455,28 +465,36 @@ def rayleigh_stagnation_temperature_star_ratio(M: float, gas=air) -> float:
 
 #==================================================
 #rayleigh heat flux
-#TODO: docstring and examples
-#TODO: verify
+#GOOD
 #==================================================
 def rayleigh_heat_flux(Tt1: float, Tt2: float, gas=air) -> float:
     """Return the heat per unit mass in our out given the two stagnation temperatures and the fluid
 
     Notes
     -----
+    Given the initial and final stagnation temperatures, determine the specific heat
+    flux to satisfy the constant area frictionless flow system. 
+    Default fluid is air.
 
     Parameters
     ----------
-    Tt1 : `flaot`
-        The stagnation temperature at region 1
+    Tt1 : `float`
+        The stagnation temperature at region 1\n
     Tt2 : `float`
-        The stagnation temperature at region 2
+        The stagnation temperature at region 2\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
     Examples
     --------
-
+    >>> from gas_dynamics.fluids import air 
+    >>> air.cp = 1000
+    >>> Tt1, Tt2 = 280, 107.9
+    >>> gd.rayleigh_heat_flux(Tt1=Tt1, Tt2=Tt2, ,air) 
+    -172100.0
+    >>>
     """
+
     cp = gas.cp
     q = cp*(Tt2-Tt1)
     return q
