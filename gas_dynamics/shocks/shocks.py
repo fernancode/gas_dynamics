@@ -545,11 +545,11 @@ def prandtl_meyer_turn(M: float, gas=air) -> float:
     Returns
     -------
     float
-        The angle through which the flow has turned\n
+        The angle in degrees through which the flow has turned\n
 
     Examples
     --------
-
+    #TODO: ADD EXAMPLE
     """
 
     gamma = gas.gamma
@@ -573,7 +573,7 @@ def prandtl_meyer_mach(nu: float, gas=air) -> float:
     Parameters
     ----------
     nu : `float`
-        The turn angle \n    
+        The turn angle in degrees \n    
     gas : `fluid`
         A user defined fluid object. Default is air \n    
 
@@ -584,7 +584,7 @@ def prandtl_meyer_mach(nu: float, gas=air) -> float:
 
     Examples
     --------
-    >>> 
+    >>> #TODO: ADD EXAMPLE
     >>> 
     """
     

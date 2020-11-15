@@ -21,14 +21,14 @@ All functions contain an argument to specify the fluid so as to obtain the appro
     >>> import gas_dynamics as gd
  
     Mach number after a normal shock for air
-    >>> M2 = gd.shock_mach(M1=1.25)
+    >>> M2 = gd.shock_mach(M=1.25)
     >>> M2
     0.8126360553720011
     >>>
 
     Mach number after a normal shock for argon
     >>> from gas_dynamics.fluids import argon
-    >>> M2 = gd.shock_mach(M1=1.25, gas=argon)
+    >>> M2 = gd.shock_mach(M=1.25, gas=argon)
     >>> M2
     0.8184295177443512
     >>>

@@ -12,7 +12,7 @@ Package containing functions for working with compressible flow.
 
 .. code-block:: python
 
-   py -m pip install gas-dynamics
+   pip install gas-dynamics
    
 
 .. figure:: README_images/shockwave.png

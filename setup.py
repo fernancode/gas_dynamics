@@ -26,6 +26,6 @@ setuptools.setup(name="gas_dynamics",
       python_requires=">=3.6",
       test_suite='nose.collector',
       tests_require=['nose'],
-      setup_requires=["numpy==1.19.3"],
-      install_requires=["numpy==1.19.3", "scipy", "matplotlib==3.3.2"]
+      setup_requires=["numpy>=1.18.3"],
+      install_requires=["numpy>=1.18.3", "scipy", "matplotlib==3.3.2"]
 )
