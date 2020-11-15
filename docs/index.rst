@@ -31,7 +31,7 @@ Package containing functions for working with compressible flow.
    gas_dynamics.rayleigh
    gas_dynamics.fluid
    gas_dynamics.extra
-   license
+   License
    credits
    Aboutme
 
