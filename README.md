@@ -1,5 +1,7 @@
 # gas_dynamics
 
+[![PyPI version](https://badge.fury.io/py/gas-dynamics.svg)](https://badge.fury.io/py/gas-dynamics)
+
 Gas dynamics equations, table generators, oblique shock chart generators and more. Please visit https://gas-dynamics.readthedocs.io/en/latest/gettingstarted.html# to get started.
 
 
