@@ -2,7 +2,7 @@
 Shock functions
 ###############
 
-.. automodule:: gas_dynamics.shocks.shocks
+.. automodule:: gas_dynamics.shocks
    :members:
    :undoc-members:
    :show-inheritance:

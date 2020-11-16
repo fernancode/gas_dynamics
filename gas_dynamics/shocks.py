@@ -421,8 +421,8 @@ def shock_flow_deflection(M: float, theta: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    dirac = arctand( 2 * 1/tand(theta) * (M**2 * sind(theta)**2 - 1 ) / (M**2 * (gamma + cosd(2*theta)) + 2 ))    
-    return dirac
+    delta = arctand( 2 * 1/tand(theta) * (M**2 * sind(theta)**2 - 1 ) / (M**2 * (gamma + cosd(2*theta)) + 2 ))    
+    return delta
 
 
 
@@ -430,7 +430,7 @@ def shock_flow_deflection(M: float, theta: float, gas=air) -> float:
 #shock_angle
 # good! added fluid class
 #==================================================
-def shock_angle(M: float, dirac: float, gas=air) -> float:
+def shock_angle(M: float, delta: float, gas=air) -> float:
     """Return the shock angle given the Mach number prior to the shock and the deflection angle
     
     Notes
@@ -444,7 +444,7 @@ def shock_angle(M: float, dirac: float, gas=air) -> float:
     ----------
     M : `float`
         The Mach number before the shock \n
-    dirac : `float`
+    delta : `float`
         The flow deflection angle in degrees\n
     gas : `fluid`
         A user defined fluid object. Default is air \n    
@@ -457,19 +457,19 @@ def shock_angle(M: float, dirac: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> shocks = gd.shock_angle(M=2, dirac = -10) 
+    >>> shocks = gd.shock_angle(M=2, delta = -10) 
     >>> shocks
     [23.014012220565785, 96.29991962425305]
     >>> 
     """
 
     gamma = gas.gamma
-    def func(theta, M=M, dirac=dirac, gamma=gamma):
-        zero = 2 * 1/tand(theta) * (M**2 * sind(theta)**2 - 1 ) / (M**2 * (gamma + cosd(2*theta)) + 2 ) - tand(dirac)
+    def func(theta, M=M, delta=delta, gamma=gamma):
+        zero = 2 * 1/tand(theta) * (M**2 * sind(theta)**2 - 1 ) / (M**2 * (gamma + cosd(2*theta)) + 2 ) - tand(delta)
         return zero
 
-    weak = fsolve(func, x0=0.001, args=(M, dirac, gamma))
-    strong = fsolve(func, x0=90, args=(M, dirac, gamma))
+    weak = fsolve(func, x0=0.001, args=(M, delta, gamma))
+    strong = fsolve(func, x0=90, args=(M, delta, gamma))
     shock_angles = [weak[0], strong[0]]
     return shock_angles
 
@@ -478,7 +478,7 @@ def shock_angle(M: float, dirac: float, gas=air) -> float:
 #==================================================
 #shock_mach_given angles
 #==================================================
-def shock_mach_given_angles(theta: float, dirac: float, gas=air) -> float:
+def shock_mach_given_angles(theta: float, delta: float, gas=air) -> float:
     """Return the Mach number before a shock given shock angle and flow deflection
     
     Notes
@@ -490,7 +490,7 @@ def shock_mach_given_angles(theta: float, dirac: float, gas=air) -> float:
     ----------
     theta : `float`
         The shock angle in degrees \n
-    dirac : `float`
+    delta : `float`
         The flow deflection angle in degrees \n
     gas : `fluid`
         A user defined fluid object. Default is air \n    
@@ -503,95 +503,21 @@ def shock_mach_given_angles(theta: float, dirac: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M = gd.shock_mach_given_angles(theta=22.5, dirac=10) 
+    >>> M = gd.shock_mach_given_angles(theta=22.5, delta=10) 
     >>> M
     3.9293486839798955
     >>>
     """
 
     gamma = gas.gamma
-    def func(M, theta=theta, dirac=dirac, gamma=gamma):
+    def func(M, theta=theta, delta=delta, gamma=gamma):
         '''
         Zero function for solving for the mach number
         '''
-        zero = 2 * 1/tand(theta) * (M**2 * sind(theta)**2 - 1 ) / (M**2 * (gamma + cosd(2*theta)) + 2 ) - tand(dirac)
+        zero = 2 * 1/tand(theta) * (M**2 * sind(theta)**2 - 1 ) / (M**2 * (gamma + cosd(2*theta)) + 2 ) - tand(delta)
         return zero
 
-    sol = fsolve(func, x0=0.001, args=(theta, dirac, gamma))
-    return sol[0]
-
-
-
-#==================================================
-#prandtl_meyer_turn
-#need to add examples
-#==================================================
-def prandtl_meyer_turn(M: float, gas=air) -> float:
-    """Returns the angle through which a flow has turned to reach a Mach number
-    
-    Notes
-    -----
-    Given a Mach number and ratio of specific heats, calculate the angle of a turn
-    through which a flow has traversed to reach the Mach number given, from a  Mach number
-    of 1. Also known as the Prandtl-Meyer function. Default fluid is air.
-    
-    Parameters
-    ----------
-    M : `float`
-        The Mach number \n
-    gas : `fluid`
-        A user defined fluid object. Default is air \n    
-    
-    Returns
-    -------
-    float
-        The angle in degrees through which the flow has turned\n
-
-    Examples
-    --------
-    #TODO: ADD EXAMPLE
-    """
-
-    gamma = gas.gamma
-    nu = ((gamma+1)/(gamma-1))**.5 * arctand(((M**2-1)*(gamma-1)/(gamma+1))**.5) - arctand((M**2-1)**.5)
-    return nu
-
-
-
-#==================================================
-#prandtl_meyer_mach
-#need to add examples
-#==================================================
-def prandtl_meyer_mach(nu: float, gas=air) -> float:
-    """Returns the Mach number given an angle through which the flow has turned
-    
-    Notes
-    -----
-    Given a smooth turn through which a flow has turned and the ratio of specific
-    heats, return the Mach number after the turn.
-
-    Parameters
-    ----------
-    nu : `float`
-        The turn angle in degrees \n    
-    gas : `fluid`
-        A user defined fluid object. Default is air \n    
-
-    Returns
-    -------
-    float
-        The mach number\n
-
-    Examples
-    --------
-    >>> #TODO: ADD EXAMPLE
-    >>> 
-    """
-    
-    def get_mach(M: float, nu=nu, gas=gas) -> float:
-        return prandtl_meyer_turn(M, gas=gas) - nu
-    
-    sol = fsolve(get_mach, x0=1.5, args=(nu, gas))
+    sol = fsolve(func, x0=0.001, args=(theta, delta, gamma))
     return sol[0]
 
 
@@ -642,10 +568,10 @@ def shock_oblique_charts(Mach_max=6, gas=air, points=40000, dark=True):
     theta = np.linspace(.001,90, n)
     mach = np.linspace(1,Mach_max,n)
     MACH,THETA = np.meshgrid(mach,theta)
-    dirac = shock_flow_deflection(M=MACH, theta=THETA, gas=gas)
+    delta = shock_flow_deflection(M=MACH, theta=THETA, gas=gas)
     fig, (ax1,ax2) = plt.subplots(1,2)
     levels=[0, 5,10,15,20,25,30,35,40]
-    h = ax1.contour(mach,theta,dirac,levels=levels,cmap='tab10')
+    h = ax1.contour(mach,theta,delta,levels=levels,cmap='tab10')
     ax1.clabel(h, inline =1, fontsize=10)
     minor_ticks_mach = np.arange(1,Mach_max+.1,.1)
     minor_ticks_theta = np.arange(0,91,1)
@@ -662,15 +588,15 @@ def shock_oblique_charts(Mach_max=6, gas=air, points=40000, dark=True):
     total, counter = n**2, 0 
     mach_before = np.linspace(1,Mach_max, n)
     mach_after = np.linspace(.001,Mach_max, n)
-    dirac = np.zeros((n,n))
+    delta = np.zeros((n,n))
     for row, m1 in enumerate(mach_before):
         percent =counter / total * 100
         print(' %0.1f%% complete' %percent)
         for col, m2 in enumerate(mach_after):
-            dirac[col][row] = dirac_from_machs(M1=m1, M2=m2, gas=gas)
+            delta[col][row] = dirac_from_machs(M1=m1, M2=m2, gas=gas)
             counter += 1
 
-    h = ax2.contour(mach_before, mach_after, dirac , levels=levels, cmap='tab10')
+    h = ax2.contour(mach_before, mach_after, delta , levels=levels, cmap='tab10')
     ax2.clabel(h, inline = 1, fontsize=10)
     minor_ticks_mach_before = np.arange(0,Mach_max+.1,.1)
     minor_ticks_mach_after = np.arange(0,Mach_max,.1)
@@ -690,7 +616,7 @@ def shock_oblique_charts(Mach_max=6, gas=air, points=40000, dark=True):
 
 
 #==================================================
-#dirac from machs
+#delta from machs
 ##TODO: better numerical method for this
 ##TODO: examples
 #==================================================
@@ -738,8 +664,8 @@ def dirac_from_machs(M1: float, M2: float, gas=air) -> float:
 
         M1n = M1 * sind(theta)
         M2n = shock_mach(M1n)
-        dirac = shock_flow_deflection(M=M1, theta=theta, gas=gas)
-        M2_prime = M2n / sind(theta-dirac)
+        delta = shock_flow_deflection(M=M1, theta=theta, gas=gas)
+        M2_prime = M2n / sind(theta-delta)
         zero = M2_prime - M2
         return zero
 

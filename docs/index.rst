@@ -1,12 +1,11 @@
 .. gas_dynamics documentation master file, created by
    sphinx-quickstart on Sat Nov  7 14:41:31 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
 gas_dynamics python package
 ========================================
 
-Release v\ |version|
+.. image:: https://badge.fury.io/py/gas-dynamics.svg
+    :target: https://badge.fury.io/py/gas-dynamics
 
 Package containing functions for working with compressible flow.
 
@@ -21,24 +20,33 @@ Package containing functions for working with compressible flow.
 
    Credits: NASA Images
 
+
 .. toctree::
    :maxdepth: 2
+   :caption: gas_dynamics
+   :hidden:
 
    gettingstarted
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Functions
+   :hidden:
+
    gas_dynamics.standard
    gas_dynamics.shocks
+   gas_dynamics.prandtl_meyer
    gas_dynamics.fanno
    gas_dynamics.rayleigh
    gas_dynamics.fluid
    gas_dynamics.extra
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Misc
+   :hidden:
+
+   indices
    License
    credits
    Aboutme
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

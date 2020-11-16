@@ -1,6 +1,6 @@
-#################################
-A few notes about the fluid class
-#################################
+###########################
+Notes about the fluid class
+###########################
 
 The fluid class is used to hold all the information about a fluid. Importing air from the fluids module, we can see some of the built in properties.
 
@@ -66,6 +66,23 @@ The reason for this is we have yet to set the proportionality factor for our flu
     >>> a
     1086.4681666204492
     >>>
+
+Currently supported fluids in metric and standard are
+
+* Air
+* Argon
+* Carbon Dioxide
+* Carbon Monoxide
+* Helium
+* Hydrogen
+* Methane
+* Nitrogen
+* Oxygen
+* Water Vapor
+
+.. code-block:: python
+
+    >>> from gas_dynamics import nitrogen, nitrogen_us
 
 
 .. automodule:: gas_dynamics.fluid

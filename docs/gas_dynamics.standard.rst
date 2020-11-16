@@ -2,7 +2,7 @@
 Standard functions
 ##################
 
-.. automodule:: gas_dynamics.standard.standard
+.. automodule:: gas_dynamics.standard
    :members:
    :undoc-members:
    :show-inheritance:
