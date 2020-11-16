@@ -1,6 +1,6 @@
-####################
-Fanno flow functions
-####################
+##########
+Fanno Flow
+##########
 
 .. automodule:: gas_dynamics.fanno
    :members:

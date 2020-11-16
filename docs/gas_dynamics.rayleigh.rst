@@ -1,6 +1,6 @@
-#######################
-Rayleigh flow functions
-#######################
+#############
+Rayleigh Flow
+#############
 
 .. automodule:: gas_dynamics.rayleigh
    :members:

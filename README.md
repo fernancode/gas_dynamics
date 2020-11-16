@@ -6,7 +6,7 @@ Gas dynamics equations, table generators, oblique shock chart generators and mor
 
 
 ```
-py -m pip install gas_dynamics
+pip install gas_dynamics
 ```
 
 Included are functions to solve problems relating to compressible flow, from stagnation relations to determining the mach number from changes in

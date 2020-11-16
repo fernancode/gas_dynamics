@@ -1,6 +1,6 @@
-##################
-Standard functions
-##################
+########
+Standard
+########
 
 .. automodule:: gas_dynamics.standard
    :members:

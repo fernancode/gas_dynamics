@@ -1,6 +1,6 @@
-#######################
-Prandtl-Meyer functions
-#######################
+#############
+Prandtl-Meyer
+#############
 
 .. automodule:: gas_dynamics.prandtl_meyer
    :members:
