@@ -1,7 +1,7 @@
 #!usr/bin/env
 
 #import isentropic functions and stagnation relations
-from gas_dynamics.standard import ( 
+from gas_dynamics.standard.standard import ( 
   sonic_velocity,
   stagnation_pressure,
   stagnation_temperature,
@@ -23,7 +23,7 @@ from gas_dynamics.standard import (
   plot_stagnation_ratios )
 
 #import shock functions
-from gas_dynamics.shocks import (
+from gas_dynamics.shocks.shocks import (
   shock_mach,
   shock_mach_before,
   shock_pressure_ratio,
@@ -38,11 +38,11 @@ from gas_dynamics.shocks import (
   shock_tables, 
   dirac_from_machs)
 
-from gas_dynamics.prandtl_meyer import (
+from gas_dynamics.prandtl_meyer.prandtl_meyer import (
   prandtl_meyer_turn, 
   prandtl_meyer_mach )
 
-from gas_dynamics.fanno import (
+from gas_dynamics.fanno.fanno import (
   stagnation_enthalpy,
   fanno_temperature_ratio,
   fanno_pressure_ratio,
@@ -56,7 +56,7 @@ from gas_dynamics.fanno import (
   fanno_parameter_max,
   mach_from_fanno)
 
-from gas_dynamics.rayleigh import(
+from gas_dynamics.rayleigh.rayleigh import(
   rayleigh_pressure_ratio,
   rayleigh_temperature_ratio,
   rayleigh_density_ratio,
