@@ -70,7 +70,7 @@ def stagnation_enthalpy(enthalpy: float, gas=air) -> float:
 #==================================================
 #fanno temperature ratio
 #==================================================
-def fanno_temperature_ratio(M1: float, M2: float, gas=air) -> float:
+def fanno_temperature_ratio(mach_initial: float, mach_final: float, gas=air) -> float:
     """Return the temperature ratio for a fanno flow given two Mach numbers
 
     Notes
@@ -81,9 +81,9 @@ def fanno_temperature_ratio(M1: float, M2: float, gas=air) -> float:
 
     Parameters
     ----------
-    M1 : `flaot`
+    mach_initial : `flaot`
         The mach number at region 1 \n
-    M2 : `float`
+    mach_final : `float`
         The mach number at region 2 \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -96,15 +96,15 @@ def fanno_temperature_ratio(M1: float, M2: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M1, M2 = 1.2, 1
-    >>> T2_T1 = gd.fanno_temperature_ratio(M2,M1)
+    >>> mach_initial, mach_final = 1.2, 1
+    >>> T2_T1 = gd.fanno_temperature_ratio(mach_final,mach_initial)
     >>> T2_T1
     0.9316770186335405
     >>>
     """
 
     gamma = gas.gamma
-    T2_T1 = ( 1+ (gamma-1)/2 * M1**2)/( 1+ (gamma-1)/2 * M2**2)
+    T2_T1 = ( 1+ (gamma-1)/2 * mach_initial**2)/( 1+ (gamma-1)/2 * mach_final**2)
     return T2_T1
 
 
@@ -112,7 +112,7 @@ def fanno_temperature_ratio(M1: float, M2: float, gas=air) -> float:
 #==================================================
 #fanno pressure ratio
 #==================================================
-def fanno_pressure_ratio(M1: float, M2: float, gas=air) -> float:
+def fanno_pressure_ratio(mach_initial: float, mach_final: float, gas=air) -> float:
     """Return the pressure ratio for a fanno flow given two Mach numbers
 
     Notes
@@ -123,9 +123,9 @@ def fanno_pressure_ratio(M1: float, M2: float, gas=air) -> float:
 
     Parameters
     ----------
-    M1 : `flaot`
+    mach_initial : `flaot`
         The mach number at region 1 \n
-    M2 : `float`
+    mach_final : `float`
         The mach number at region 2 \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -138,15 +138,15 @@ def fanno_pressure_ratio(M1: float, M2: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M1, M2 = 1.2, 1
-    >>> p2_p1 = gd.fanno_pressure_ratio(M1,M2)
+    >>> mach_initial, mach_final = 1.2, 1
+    >>> p2_p1 = gd.fanno_pressure_ratio(mach_initial,mach_final)
     >>> p2_p1
     1.243221621433604
     >>>
     """
 
     gamma = gas.gamma
-    p2_p1 = M1/M2 * (( 1+ (gamma-1)/2 * M1**2)/( 1+ (gamma-1)/2 * M2**2))**.5
+    p2_p1 = mach_initial/mach_final * (( 1+ (gamma-1)/2 * mach_initial**2)/( 1+ (gamma-1)/2 * mach_final**2))**.5
     return p2_p1
 
 
@@ -154,7 +154,7 @@ def fanno_pressure_ratio(M1: float, M2: float, gas=air) -> float:
 #==================================================
 #fanno density ratio
 #==================================================
-def fanno_density_ratio(M1: float, M2: float, gas=air) -> float:
+def fanno_density_ratio(mach_initial: float, mach_final: float, gas=air) -> float:
     """Return the density ratio for a fanno flow given two Mach numbers
 
     Notes
@@ -165,9 +165,9 @@ def fanno_density_ratio(M1: float, M2: float, gas=air) -> float:
 
     Parameters
     ----------
-    M1 : `flaot`
+    mach_initial : `flaot`
         The mach number at region 1 \n
-    M2 : `float`
+    mach_final : `float`
         The mach number at region 2 \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -180,15 +180,15 @@ def fanno_density_ratio(M1: float, M2: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M1, M2 = 1.2, 1
-    >>> rho2_rho1 = gd.fanno_density_ratio(M2,M1)
+    >>> mach_initial, mach_final = 1.2, 1
+    >>> rho2_rho1 = gd.fanno_density_ratio(mach_final,mach_initial)
     >>> rho2_rho1
     0.8633483482177806
     >>>
     """
 
     gamma = gas.gamma
-    rho2_rho1 = M1/M2 * ((1+(gamma-1)/2*M2**2)/(1+(gamma-1)/2*M1**2))**.5
+    rho2_rho1 = mach_initial/mach_final * ((1+(gamma-1)/2*mach_final**2)/(1+(gamma-1)/2*mach_initial**2))**.5
     return rho2_rho1
 
 
@@ -196,7 +196,7 @@ def fanno_density_ratio(M1: float, M2: float, gas=air) -> float:
 #==================================================
 #fanno stagnation star ratio
 #==================================================
-def fanno_stagnation_pressure_ratio(M1: float, M2: float, gas=air) -> float:
+def fanno_stagnation_pressure_ratio(mach_initial: float, mach_final: float, gas=air) -> float:
     """Return the stagnation pressure ratio pt2/pt1 for a fanno flow given two mach numbers
 
     Notes
@@ -207,9 +207,9 @@ def fanno_stagnation_pressure_ratio(M1: float, M2: float, gas=air) -> float:
 
     Parameters
     ----------
-    M1 : `flaot`
+    mach_initial : `flaot`
         The mach number at region 1 \n
-    M2 : `float`
+    mach_final : `float`
         The mach number at region 2 \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -222,15 +222,15 @@ def fanno_stagnation_pressure_ratio(M1: float, M2: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M1, M2 = 1.2, 1
-    >>> pt2_pt1 = gd.fanno_stagnation_pressure_ratio(M2,M1)
+    >>> mach_initial, mach_final = 1.2, 1
+    >>> pt2_pt1 = gd.fanno_stagnation_pressure_ratio(mach_final,mach_initial)
     >>> pt2_pt1
     1.0304397530864196
     >>>
     """
     
     gamma = gas.gamma
-    pt2_pt1 = M1/M2 * (( 1+ (gamma-1)/2 * M2**2)/( 1+ (gamma-1)/2 * M1**2))**((gamma+1)/(2*(gamma-1)))
+    pt2_pt1 = mach_initial/mach_final * (( 1+ (gamma-1)/2 * mach_final**2)/( 1+ (gamma-1)/2 * mach_initial**2))**((gamma+1)/(2*(gamma-1)))
     return pt2_pt1
 
 
@@ -238,7 +238,7 @@ def fanno_stagnation_pressure_ratio(M1: float, M2: float, gas=air) -> float:
 #==================================================
 #fanno temperature star ratio
 #==================================================
-def fanno_temperature_star_ratio(M: float, gas=air) -> float:
+def fanno_temperature_star_ratio(mach: float, gas=air) -> float:
     """Return the ratio of temperature over temperature where Mach equals one
 
     Notes
@@ -249,7 +249,7 @@ def fanno_temperature_star_ratio(M: float, gas=air) -> float:
 
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The mach number\n
     gas : `fluid`
         The user defined fluid object\n
@@ -269,7 +269,7 @@ def fanno_temperature_star_ratio(M: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    T_Tstar = ((gamma+1)/2)/(1 + (gamma-1)/2 * M**2)
+    T_Tstar = ((gamma+1)/2)/(1 + (gamma-1)/2 * mach**2)
     return T_Tstar
 
 
@@ -277,7 +277,7 @@ def fanno_temperature_star_ratio(M: float, gas=air) -> float:
 #==================================================
 #fanno pressure star ratio
 #==================================================
-def fanno_pressure_star_ratio(M: float, gas=air) -> float:
+def fanno_pressure_star_ratio(mach: float, gas=air) -> float:
     """Return the ratio of pressure over pressure where Mach equals one
 
     Notes
@@ -288,7 +288,7 @@ def fanno_pressure_star_ratio(M: float, gas=air) -> float:
 
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The mach number\n
     gas : `fluid`
         The user defined fluid object \n
@@ -308,7 +308,7 @@ def fanno_pressure_star_ratio(M: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    p_pstar = 1/M * (((gamma+1)/2)/(1 + (gamma-1)/2 * M**2))**.5
+    p_pstar = 1/mach * (((gamma+1)/2)/(1 + (gamma-1)/2 * mach**2))**.5
     return p_pstar
 
 
@@ -316,7 +316,7 @@ def fanno_pressure_star_ratio(M: float, gas=air) -> float:
 #==================================================
 #fanno density star ratio
 #==================================================
-def fanno_density_star_ratio(M: float, gas=air) -> float:
+def fanno_density_star_ratio(mach: float, gas=air) -> float:
     """Return the ratio of density over density where Mach equals one
 
     Notes
@@ -327,7 +327,7 @@ def fanno_density_star_ratio(M: float, gas=air) -> float:
 
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The mach number\n
     gas : `fluid`
         The user defined fluid object \n
@@ -347,7 +347,7 @@ def fanno_density_star_ratio(M: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    rho_rhostar = 1/M * ((1 + (gamma-1)/2 * M**2)/((gamma+1)/2))**.5
+    rho_rhostar = 1/mach * ((1 + (gamma-1)/2 * mach**2)/((gamma+1)/2))**.5
     return rho_rhostar
 
 
@@ -355,7 +355,7 @@ def fanno_density_star_ratio(M: float, gas=air) -> float:
 #==================================================
 #fanno velocity choked ratio
 #==================================================
-def fanno_velocity_star_ratio(M: float, gas=air) -> float:
+def fanno_velocity_star_ratio(mach: float, gas=air) -> float:
     """Return the ratio of velocity over velocity where Mach equals one
 
     Notes
@@ -366,7 +366,7 @@ def fanno_velocity_star_ratio(M: float, gas=air) -> float:
 
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The mach number\n
     gas : `fluid`
         The user defined fluid object\n
@@ -387,7 +387,7 @@ def fanno_velocity_star_ratio(M: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    v_vstar = M/1 * (((gamma+1)/2)/(1 + (gamma-1)/2 * M**2))**.5
+    v_vstar = mach/1 * (((gamma+1)/2)/(1 + (gamma-1)/2 * mach**2))**.5
     return v_vstar
 
 
@@ -395,7 +395,7 @@ def fanno_velocity_star_ratio(M: float, gas=air) -> float:
 #==================================================
 #fanno
 #==================================================
-def fanno_parameter(M1: float, M2: float, gas=air) -> float:
+def fanno_parameter(mach_initial: float, mach_final: float, gas=air) -> float:
     """Return the product of friction factor and length divided by diameter for two Mach numbers
 
     Notes
@@ -407,9 +407,9 @@ def fanno_parameter(M1: float, M2: float, gas=air) -> float:
 
     Parameters
     ----------
-    M1 : `flaot`
+    mach_initial : `flaot`
         The mach number at region 1\n
-    M2 : `float`
+    mach_final : `float`
         The mach number at region 2\n
     gas : `fluid`
         The user defined fluid object\n
@@ -422,15 +422,15 @@ def fanno_parameter(M1: float, M2: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M1, M2 = 3, 2 
-    >>> fanno = gd.fanno_parameter(M1, M2)
+    >>> mach_initial, mach_final = 3, 2 
+    >>> fanno = gd.fanno_parameter(mach_initial, mach_final)
     >>> fanno
     0.21716290559704166
     >>>
     """
 
     gamma = gas.gamma
-    fanno = (gamma+1)/(2*gamma) * log((( 1+ (gamma-1)/2 * M2**2)/( 1+ (gamma-1)/2 * M1**2))) - 1/gamma * (1/(M2**2) - 1/(M1**2)) - (gamma+1)/(2*gamma) * log((M2**2)/(M1**2))
+    fanno = (gamma+1)/(2*gamma) * log((( 1+ (gamma-1)/2 * mach_final**2)/( 1+ (gamma-1)/2 * mach_initial**2))) - 1/gamma * (1/(mach_final**2) - 1/(mach_initial**2)) - (gamma+1)/(2*gamma) * log((mach_final**2)/(mach_initial**2))
     return fanno
 
 
@@ -438,7 +438,7 @@ def fanno_parameter(M1: float, M2: float, gas=air) -> float:
 #==================================================
 #fanno parameter max
 #==================================================
-def fanno_parameter_max(M: float, gas=air) -> float:
+def fanno_parameter_max(mach: float, gas=air) -> float:
     """Return the maximum product of friction factor and length divided by diameter
 
     Notes
@@ -470,7 +470,7 @@ def fanno_parameter_max(M: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    fanno_ratio_max = (gamma + 1)/(2*gamma) * log(((gamma+1)/2 * M**2) / (1 + (gamma-1)/2 * M**2)) + 1/gamma * (1/(M**2)-1)
+    fanno_ratio_max = (gamma + 1)/(2*gamma) * log(((gamma+1)/2 * mach*2) / (1 + (gamma-1)/2 * mach**2)) + 1/gamma * (1/(mach**2)-1)
     return fanno_ratio_max
 
 
@@ -478,7 +478,7 @@ def fanno_parameter_max(M: float, gas=air) -> float:
 #==================================================
 #mach from fanno parameter
 #==================================================
-def mach_from_fanno(fanno: float, M1: float, gas=air) -> float:
+def mach_from_fanno(fanno: float, mach_initial: float, gas=air) -> float:
     """Return the Mach number that would result from the fanno parameter and initial mach number
 
     Notes
@@ -490,7 +490,7 @@ def mach_from_fanno(fanno: float, M1: float, gas=air) -> float:
     ----------
     fanno : `float`
         The fanno parameter for the system \n
-    M : `float`
+    mach_initial : `float`
         The starting Mach number \n
     gas : `fluid`
         The user defined fluid object \n
@@ -503,23 +503,23 @@ def mach_from_fanno(fanno: float, M1: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> fanno, M1 = .3, 2.64
-    >>> M2 = gd.mach_from_fanno(fanno=fanno, M1=M1)
-    >>> M2
+    >>> fanno, mach_initial = .3, 2.64
+    >>> mach_final = gd.mach_from_fanno(fanno=fanno, mach_initial=mach_initial)
+    >>> mach_final
     1.567008305615555
     >>>
     """
 
-    def mach_solve(M, M1=M1, fanno=fanno, gas=gas):
-        zero = fanno_parameter(M1=M1, M2=M, gas=gas) - fanno
+    def mach_solve(M, mach_initial=mach_initial, fanno=fanno, gas=gas):
+        zero = fanno_parameter(mach_initial=mach_initial, mach_final=M, gas=gas) - fanno
         return zero
 
-    if M1 < 1:
+    if mach_initial < 1:
         x0 = .5
-    elif M1 > 1:
+    elif mach_initial > 1:
         x0 = 1.5
     else:
         x0=1
 
-    sol = fsolve(mach_solve, args=(M1, fanno, gas), x0=x0)
+    sol = fsolve(mach_solve, args=(mach_initial, fanno, gas), x0=x0)
     return sol[0]

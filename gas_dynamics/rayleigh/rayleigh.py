@@ -13,8 +13,8 @@ from scipy.optimize import fsolve
 #==================================================
 #rayleigh pressure ratio
 #==================================================
-def rayleigh_pressure_ratio(M1: float, M2:float, gas=air) -> float:
-    """Return the pressure ratio p2 / p1 given the two Mach numbers
+def rayleigh_pressure_ratio(mach_initial: float, mach_final:float, gas=air) -> float:
+    """Return the pressure ratio pressure_final / pressure_initial given the two Mach numbers
 
     Notes
     -----
@@ -24,9 +24,9 @@ def rayleigh_pressure_ratio(M1: float, M2:float, gas=air) -> float:
 
     Parameters
     ----------
-    M1 : `flaot`
+    mach_initial : `flaot`
         The Mach number at region 1\n
-    M2 : `float`
+    mach_final : `float`
         The Mach number at region 2\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -34,19 +34,19 @@ def rayleigh_pressure_ratio(M1: float, M2:float, gas=air) -> float:
     Returns
     -------
     float
-        The rayleigh pressure ratio p2 / p1 \n
+        The rayleigh pressure ratio pressure_final / pressure_initial \n
     
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M1, M2 = 3, 2
-    >>> p2_p1 = gd.rayleigh_pressure_ratio(M1, M2)
+    >>> mach_initial, mach_final = 3, 2
+    >>> p2_p1 = gd.rayleigh_pressure_ratio(mach_initial, mach_final)
     >>> p2_p1
     2.0606060606060606
     >>>
     """
     gamma = gas.gamma
-    p2_p1 = (1 + gamma * M1**2)/(1 + gamma *  M2**2)
+    p2_p1 = (1 + gamma * mach_initial**2)/(1 + gamma *  mach_final**2)
     return p2_p1
 
 
@@ -54,7 +54,7 @@ def rayleigh_pressure_ratio(M1: float, M2:float, gas=air) -> float:
 #==================================================
 #rayleigh temperature ratio
 #==================================================
-def rayleigh_temperature_ratio(M1: float, M2: float, gas=air) -> float:
+def rayleigh_temperature_ratio(mach_initial: float, mach_final: float, gas=air) -> float:
     """Return the temperature ratio T2/T1 given the two Mach numbers
 
     Notes
@@ -65,9 +65,9 @@ def rayleigh_temperature_ratio(M1: float, M2: float, gas=air) -> float:
 
     Parameters
     ----------
-    M1 : `flaot`
+    mach_initial : `flaot`
         The Mach number at region 1\n
-    M2 : `float`
+    mach_final : `float`
         The Mach number at region 2\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -80,15 +80,15 @@ def rayleigh_temperature_ratio(M1: float, M2: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M1, M2 = .8, .3
-    >>> T2_T1 = gd.rayleigh_temperature_ratio(M1, M2)
+    >>> mach_initial, mach_final = .8, .3
+    >>> T2_T1 = gd.rayleigh_temperature_ratio(mach_initial, mach_final)
     >>> T2_T1
     0.39871485855083627
     >>>
     """
 
     gamma = gas.gamma
-    T2_T1 = ((1 + gamma * M1**2)/(1 + gamma *  M2**2))**2 * (M2**2)/(M1**2)
+    T2_T1 = ((1 + gamma * mach_initial**2)/(1 + gamma *  mach_final**2))**2 * (mach_final**2)/(mach_initial**2)
     return T2_T1
 
 
@@ -98,7 +98,7 @@ def rayleigh_temperature_ratio(M1: float, M2: float, gas=air) -> float:
 #TODO: docstring and examples
 #TODO: verify
 #==================================================
-def rayleigh_density_ratio(M1: float, M2: float, gas=air) -> float:
+def rayleigh_density_ratio(mach_initial: float, mach_final: float, gas=air) -> float:
     """Return the density ratio rho2/rho1 given the two Mach numbers
 
     Notes
@@ -109,9 +109,9 @@ def rayleigh_density_ratio(M1: float, M2: float, gas=air) -> float:
 
     Parameters
     ----------
-    M1 : `flaot`
+    mach_initial : `flaot`
         The Mach number at region 1\n
-    M2 : `float`
+    mach_final : `float`
         The Mach number at region 2\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -127,7 +127,7 @@ def rayleigh_density_ratio(M1: float, M2: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    rho2_rho1 = (1 + gamma * M2**2)/(1 + gamma *  M1**2) * (M1**2)/(M2**2)
+    rho2_rho1 = (1 + gamma * mach_final**2)/(1 + gamma *  mach_initial**2) * (mach_initial**2)/(mach_final**2)
     return rho2_rho1
 
 
@@ -135,7 +135,7 @@ def rayleigh_density_ratio(M1: float, M2: float, gas=air) -> float:
 #==================================================
 #rayleigh stagnation temperature ratio
 #==================================================
-def rayleigh_stagnation_temperature_ratio(M1: float, M2: float, gas=air) -> float:
+def rayleigh_stagnation_temperature_ratio(mach_initial: float, mach_final: float, gas=air) -> float:
     """Return the stagnation temperature ratio Tt2/Tt1 given the two Mach numbers
 
     Notes
@@ -146,9 +146,9 @@ def rayleigh_stagnation_temperature_ratio(M1: float, M2: float, gas=air) -> floa
 
     Parameters
     ----------
-    M1 : `flaot`
+    mach_initial : `flaot`
         The Mach number at region 1\n
-    M2 : `float`
+    mach_final : `float`
         The Mach number at region 2\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -161,14 +161,14 @@ def rayleigh_stagnation_temperature_ratio(M1: float, M2: float, gas=air) -> floa
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M1, M2 = .8, .3
-    >>> Tt2_Tt1 = gd.rayleigh_stagnation_temperature_ratio(M1, M2)
+    >>> mach_initial, mach_final = .8, .3
+    >>> Tt2_Tt1 = gd.rayleigh_stagnation_temperature_ratio(mach_initial, mach_final)
     >>> Tt2_Tt1
     0.35983309042974404
     >>>
     """
     gamma = gas.gamma
-    Tt2_Tt1 = ((1+gamma*M1**2)/(1+gamma*M2**2))**2 * (M2**2)/(M1**2) * ((1+(gamma-1)/2*M2**2)/(1+(gamma-1)/2*M1**2))
+    Tt2_Tt1 = ((1+gamma*mach_initial**2)/(1+gamma*mach_final**2))**2 * (mach_final**2)/(mach_initial**2) * ((1+(gamma-1)/2*mach_final**2)/(1+(gamma-1)/2*mach_initial**2))
     return Tt2_Tt1
 
 
@@ -176,7 +176,7 @@ def rayleigh_stagnation_temperature_ratio(M1: float, M2: float, gas=air) -> floa
 #==================================================
 #rayleigh stagnation pressure ratio
 #==================================================
-def rayleigh_stagnation_pressure_ratio(M1: float, M2: float, gas=air) -> float:
+def rayleigh_stagnation_pressure_ratio(mach_initial: float, mach_final: float, gas=air) -> float:
     """Return the stagnation pressure ratio pt2/pt1 given the two Mach numbers
 
     Notes
@@ -187,9 +187,9 @@ def rayleigh_stagnation_pressure_ratio(M1: float, M2: float, gas=air) -> float:
 
     Parameters
     ----------
-    M1 : `flaot`
+    mach_initial : `flaot`
         The Mach number at region 1\n
-    M2 : `float`
+    mach_final : `float`
         The Mach number at region 2\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -202,15 +202,15 @@ def rayleigh_stagnation_pressure_ratio(M1: float, M2: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M1, M2 = .8, .3
-    >>> pt2_pt1 = gd.rayleigh_stagnation_pressure_ratio(M1, M2)
+    >>> mach_initial, mach_final = .8, .3
+    >>> pt2_pt1 = gd.rayleigh_stagnation_pressure_ratio(mach_initial, mach_final)
     >>> pt2_pt1
     1.1758050380938454
     >>>
     """
 
     gamma = gas.gamma
-    pt2_pt1 = (1+gamma*M1**2)/(1+gamma*M2**2) * ((1+(gamma-1)/2*M2**2)/(1+(gamma-1)/2*M1**2))**(gamma/(gamma-1))
+    pt2_pt1 = (1+gamma*mach_initial**2)/(1+gamma*mach_final**2) * ((1+(gamma-1)/2*mach_final**2)/(1+(gamma-1)/2*mach_initial**2))**(gamma/(gamma-1))
     return pt2_pt1
 
 
@@ -218,7 +218,7 @@ def rayleigh_stagnation_pressure_ratio(M1: float, M2: float, gas=air) -> float:
 #==================================================
 #rayleigh mach from pressure ratio
 #==================================================
-def rayleigh_mach_from_pressure_ratio(M1: float, p1: float, p2: float, gas=air) -> float:
+def rayleigh_mach_from_pressure_ratio(mach_initial: float, pressure_initial: float, pressure_final: float, gas=air) -> float:
     """Return the mach number given the Mach number and two pressures
 
     Notes
@@ -231,9 +231,9 @@ def rayleigh_mach_from_pressure_ratio(M1: float, p1: float, p2: float, gas=air) 
     ----------
     M : `float`
         The Mach number\n
-    p1 : `flaot`
+    pressure_initial : `flaot`
         pressure 1\n
-    p2 : `float`
+    pressure_final : `float`
         pressure 2\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -246,22 +246,22 @@ def rayleigh_mach_from_pressure_ratio(M1: float, p1: float, p2: float, gas=air) 
     Examples
     --------
     >>> import gas_dynamics as gd                                        
-    >>> M2 = gd.rayleigh_mach_from_pressure_ratio(M1=.8, p1=1.5, p2=2.5) 
-    >>> M2
+    >>> mach_final = gd.rayleigh_mach_from_pressure_ratio(mach_initial=.8, pressure_initial=1.5, pressure_final=2.5) 
+    >>> mach_final
     0.31350552512789054
     >>>
     """
 
     gamma = gas.gamma
-    M2 = (((p1*(1+gamma*M1**2))/p2 -1)/gamma)**.5
-    return M2
+    mach_final = (((pressure_initial*(1+gamma*mach_initial**2))/pressure_final -1)/gamma)**.5
+    return mach_final
 
 
 
 #==================================================
 #rayleigh mach from temperature ratio
 #==================================================
-def rayleigh_mach_from_temperature_ratio(M: float, T1: float, T2: float, gas=air) -> float:
+def rayleigh_mach_from_temperature_ratio(mach_initial: float, temperature_initial: float, temperature_final: float, gas=air) -> float:
     """Return the Mach number given the Mach number and two temperatures
 
     Notes
@@ -272,11 +272,11 @@ def rayleigh_mach_from_temperature_ratio(M: float, T1: float, T2: float, gas=air
 
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The Mach number\n
-    T1 : `flaot`
+    temperature_initial : `float`
         Temperature 1\n
-    T2 : `float`
+    temperature_final : `float`
         Temperature 2\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -289,26 +289,26 @@ def rayleigh_mach_from_temperature_ratio(M: float, T1: float, T2: float, gas=air
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M1, T1, T2 = .8, 250, 100
-    >>> M2 = gd.rayleigh_mach_from_temperature_ratio(M1, T1, T2)
-    >>> M2
+    >>> mach_initial, T1, T2 = .8, 250, 100
+    >>> mach_final = gd.rayleigh_mach_from_temperature_ratio(mach_initial, T1, T2)
+    >>> mach_final
     0.3006228581671002
     >>>
     """
 
     gamma = gas.gamma
-    T2_T1 = T2/T1
-    def zero(M2, M1, T2_T1,gas):
-        return rayleigh_temperature_ratio(M1=M1, M2=M2, gas=gas) - T2_T1
+    T2_T1 = temperature_final/temperature_initial
+    def zero(mach_final, mach_initial, T2_T1,gas):
+        return rayleigh_temperature_ratio(mach_initial=mach_initial, mach_final=mach_final, gas=gas) - T2_T1
     
-    if M < 1:
+    if mach_initial < 1:
         x0 = .5
-    elif M > 1:
+    elif mach_initial > 1:
         x0 = 1.5
     else:
         x0 = 1
 
-    sol = fsolve(zero, args=(M, T2_T1, gas), x0=x0)
+    sol = fsolve(zero, args=(mach_initial, T2_T1, gas), x0=x0)
     return sol[0]
 
 
@@ -316,7 +316,7 @@ def rayleigh_mach_from_temperature_ratio(M: float, T1: float, T2: float, gas=air
 #==================================================
 #rayleigh mach from stagnation temperature ratio
 #==================================================
-def rayleigh_mach_from_stagnation_temperature_ratio(M: float, Tt1: float, Tt2: float, gas=air) -> float:
+def rayleigh_mach_from_stagnation_temperature_ratio(mach_initial: float, stagnation_temperature_initial: float, stagnation_temperature_final: float, gas=air) -> float:
     """Return the Mach number given the Mach number and two stagnation temperatures
 
     Notes
@@ -327,11 +327,11 @@ def rayleigh_mach_from_stagnation_temperature_ratio(M: float, Tt1: float, Tt2: f
 
     Parameters
     ----------
-    M : `float`
+    mach_initial : `float`
         The Mach number\n
-    Tt1 : `float`
+    stagnation_temperature_initial : `float`
         Stagnation temperature 1\n
-    Tt2 : `float`
+    stagnation_temperature_final : `float`
         Stagnation temperature 2\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -345,26 +345,26 @@ def rayleigh_mach_from_stagnation_temperature_ratio(M: float, Tt1: float, Tt2: f
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M1, Tt1, Tt2 = .8, 250, 105
-    >>> M2 = gd.rayleigh_mach_from_stagnation_temperature_ratio(M1, Tt1, Tt2)
-    >>> M2
+    >>> mach_initial, Tt1, Tt2 = .8, 250, 105
+    >>> mach_final = gd.rayleigh_mach_from_stagnation_temperature_ratio(mach_initial, Tt1, Tt2)
+    >>> mach_final
     0.33147520792270446
     >>>
     """
 
     gamma = gas.gamma
-    Tt2_Tt1 = Tt2/Tt1
-    def zero(M2, M1, Tt2_Tt1, gas):
-        return rayleigh_stagnation_temperature_ratio(M1=M1, M2=M2, gas=gas) - Tt2_Tt1
+    Tt2_Tt1 = stagnation_temperature_final/stagnation_temperature_initial
+    def zero(mach_final, mach_initial, Tt2_Tt1, gas):
+        return rayleigh_stagnation_temperature_ratio(mach_initial=mach_initial, mach_final=mach_final, gas=gas) - Tt2_Tt1
     
-    if M < 1:
+    if mach_initial < 1:
         x0 = .5
-    elif M > 1:
+    elif mach_initial > 1:
         x0 = 1.5
     else:
         x0 = 1
 
-    sol = fsolve(zero, args=(M, Tt2_Tt1, gas), x0=x0)
+    sol = fsolve(zero, args=(mach_initial, Tt2_Tt1, gas), x0=x0)
     return sol[0]
 
 
@@ -372,7 +372,7 @@ def rayleigh_mach_from_stagnation_temperature_ratio(M: float, Tt1: float, Tt2: f
 #==================================================
 #rayleigh mach from stagnation pressure ratio
 #==================================================
-def rayleigh_mach_from_stagnation_pressure_ratio(M: float, pt1: float, pt2: float, gas=air) -> float:
+def rayleigh_mach_from_stagnation_pressure_ratio(mach_initial: float, stagnation_pressure_initial: float, stagnation_pressure_final: float, gas=air) -> float:
     """Return the Mach number given the Mach number and two stagnation pressures
 
     Notes
@@ -385,9 +385,9 @@ def rayleigh_mach_from_stagnation_pressure_ratio(M: float, pt1: float, pt2: floa
     ----------
     M : `float`
         The Mach number\n
-    pt1 : `float`
+    stagnation_pressure_initial : `float`
         Stagnation pressure 1\n
-    pt2 : `float`
+    stagnation_pressure_final : `float`
         Stagnation pressure 2\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -400,26 +400,26 @@ def rayleigh_mach_from_stagnation_pressure_ratio(M: float, pt1: float, pt2: floa
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M1, pt1, pt2 = .8, 2.3, 2.6
-    >>> M2 = gd.rayleigh_mach_from_stagnation_pressure_ratio(M1, pt1, pt2)
-    >>> M2
+    >>> mach_initial, pt1, pt2 = .8, 2.3, 2.6
+    >>> mach_final = gd.rayleigh_mach_from_stagnation_pressure_ratio(mach_initial, pt1, pt2)
+    >>> mach_final
     0.40992385119887326
     >>>
     """
 
     gamma = gas.gamma
-    pt2_pt1 = pt2/pt1
-    def zero(M2, M1, pt2_pt1, gas):
-        return rayleigh_stagnation_pressure_ratio(M1=M1, M2=M2, gas=gas) - pt2_pt1
+    pt2_pt1 = stagnation_pressure_final/stagnation_pressure_initial
+    def zero(mach_final, mach_initial, pt2_pt1, gas):
+        return rayleigh_stagnation_pressure_ratio(mach_initial=mach_initial, mach_final=mach_final, gas=gas) - pt2_pt1
 
-    if M < 1:
+    if mach_initial < 1:
         x0 = .5
-    elif M > 1:
+    elif mach_initial > 1:
         x0 = 1.5
     else:
         x0 = 1
 
-    sol = fsolve(zero, args=(M, pt2_pt1, gas), x0=x0)
+    sol = fsolve(zero, args=(mach_initial, pt2_pt1, gas), x0=x0)
     return sol[0]
 
 
@@ -427,7 +427,7 @@ def rayleigh_mach_from_stagnation_pressure_ratio(M: float, pt1: float, pt2: floa
 #==================================================
 #rayleigh pressure star ratio
 #==================================================
-def rayleigh_pressure_star_ratio(M: float, gas=air) -> float:
+def rayleigh_pressure_star_ratio(mach: float, gas=air) -> float:
     """Return the ratio of pressure over pressure where Mach is equal to one
 
     Notes
@@ -459,7 +459,7 @@ def rayleigh_pressure_star_ratio(M: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    p_pstar = (gamma+1)/(1+gamma*M**2)
+    p_pstar = (gamma+1)/(1+gamma*mach**2)
     return p_pstar
 
 
@@ -467,7 +467,7 @@ def rayleigh_pressure_star_ratio(M: float, gas=air) -> float:
 #==================================================
 #rayleigh temperature star ratio
 #==================================================
-def rayleigh_temperature_star_ratio(M: float, gas=air) -> float:
+def rayleigh_temperature_star_ratio(mach: float, gas=air) -> float:
     """Return the ratio of temperature over temperature where Mach is equal to one
 
     Notes
@@ -478,7 +478,7 @@ def rayleigh_temperature_star_ratio(M: float, gas=air) -> float:
 
     Parameters
     ----------
-    M : `flaot`
+    mach : `flaot`
         The Mach number\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -499,7 +499,7 @@ def rayleigh_temperature_star_ratio(M: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    T_Tstar = (M**2 * (1+gamma)**2) / (1+gamma*M**2)**2
+    T_Tstar = (mach**2 * (1+gamma)**2) / (1+gamma*mach**2)**2
     return T_Tstar
 
 
@@ -509,7 +509,7 @@ def rayleigh_temperature_star_ratio(M: float, gas=air) -> float:
 #TODO: docstring and examples
 #TODO: verify
 #==================================================
-def rayleigh_density_star_ratio(M: float, gas=air) -> float:
+def rayleigh_density_star_ratio(mach: float, gas=air) -> float:
     """Return the ratio of density over density where Mach is equal to one
 
     Notes
@@ -520,7 +520,7 @@ def rayleigh_density_star_ratio(M: float, gas=air) -> float:
 
     Parameters
     ----------
-    M : `flaot`
+    mach : `flaot`
         The Mach number\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -536,7 +536,7 @@ def rayleigh_density_star_ratio(M: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    rho_rhostar = (1+gamma*M**2)/((1+gamma)*M**2)
+    rho_rhostar = (1+gamma*mach**2)/((1+gamma)*mach**2)
     return rho_rhostar
 
 
@@ -544,7 +544,7 @@ def rayleigh_density_star_ratio(M: float, gas=air) -> float:
 #==================================================
 #rayleigh stagnation pressure star ratio
 #==================================================
-def rayleigh_stagnation_pressure_star_ratio(M: float, gas=air) -> float:
+def rayleigh_stagnation_pressure_star_ratio(mach: float, gas=air) -> float:
     """Return the ratio of stagnation pressure over stagnation pressure where 
     Mach is equal to one
 
@@ -556,7 +556,7 @@ def rayleigh_stagnation_pressure_star_ratio(M: float, gas=air) -> float:
 
     Parameters
     ----------
-    M : `flaot`
+    mach : `flaot`
         The Mach number\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -577,7 +577,7 @@ def rayleigh_stagnation_pressure_star_ratio(M: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    pt_ptstar = (1+gamma) / (1 + gamma*M**2) * ((1 + (gamma-1)/2 * M**2)/((gamma+1)/2))**(gamma/(gamma-1))
+    pt_ptstar = (1+gamma) / (1 + gamma*mach**2) * ((1 + (gamma-1)/2 * mach**2)/((gamma+1)/2))**(gamma/(gamma-1))
     return pt_ptstar
 
 
@@ -585,7 +585,7 @@ def rayleigh_stagnation_pressure_star_ratio(M: float, gas=air) -> float:
 #==================================================
 #rayleigh stagnation temperature star ratio
 #==================================================
-def rayleigh_stagnation_temperature_star_ratio(M: float, gas=air) -> float:
+def rayleigh_stagnation_temperature_star_ratio(mach: float, gas=air) -> float:
     """Return the ratio of stagnation temperature over stagnation temperature where 
     Mach is equal to one
 
@@ -597,7 +597,7 @@ def rayleigh_stagnation_temperature_star_ratio(M: float, gas=air) -> float:
 
     Parameters
     ----------
-    M : `flaot`
+    mach : `flaot`
         The Mach number\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -618,14 +618,14 @@ def rayleigh_stagnation_temperature_star_ratio(M: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    Tt_Ttstar = (2*(gamma+1)*M**2)/((1+gamma*M**2)**2) * (1 + (gamma-1)/2 * M**2)
+    Tt_Ttstar = (2*(gamma+1)*mach**2)/((1+gamma*mach**2)**2) * (1 + (gamma-1)/2 * mach**2)
     return Tt_Ttstar
 
 
 #==================================================
 #rayleigh heat flux
 #==================================================
-def rayleigh_heat_flux(Tt1: float, Tt2: float, gas=air) -> float:
+def rayleigh_heat_flux(stagnation_temperature_initial: float, stagnation_temperature_final: float, gas=air) -> float:
     """Return the heat per unit mass in our out given the two stagnation temperatures and the fluid
 
     Notes
@@ -658,5 +658,5 @@ def rayleigh_heat_flux(Tt1: float, Tt2: float, gas=air) -> float:
     """
 
     cp = gas.cp
-    q = cp*(Tt2-Tt1)
+    q = cp*(stagnation_temperature_final-stagnation_temperature_initial)
     return q
