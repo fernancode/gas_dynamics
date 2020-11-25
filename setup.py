@@ -4,7 +4,6 @@ from gas_dynamics.__about__ import __version__
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-
 setuptools.setup(name="gas_dynamics",
       version=__version__,
       author="Fernando de la Fuente",
@@ -24,8 +23,7 @@ setuptools.setup(name="gas_dynamics",
       ],
       license="MIT",
       python_requires=">=3.6",
-      test_suite='nose.collector',
-      tests_require=['nose'],
-      setup_requires=["numpy>=1.18.3"],
+      tests_require=['pytest'],
+      setup_requires=["numpy>=1.18.3", "pytest-runner"],
       install_requires=["numpy>=1.18.3", "scipy", "matplotlib==3.3.2"]
 )

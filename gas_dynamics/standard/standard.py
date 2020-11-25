@@ -40,7 +40,7 @@ from gas_dynamics.fluids import fluid, air, methane, argon
 #sonic_velocity
 #fluid class and us standard option 11/6/2020
 #==================================================    
-def sonic_velocity(gas=air ,metric=True, T=273.15) -> float:
+def sonic_velocity(temperature=273.15, gas=air) -> float:
     """Returns the local speed of sound.
     
     Notes
@@ -52,9 +52,7 @@ def sonic_velocity(gas=air ,metric=True, T=273.15) -> float:
     ----------
     gas : `fluid`
         A user defined fluid object. Default is air \n
-    metric : `bool`
-        Use metric or US standard \n
-    T : `float`
+    temperature : `float`
         The temperature \n
 
     Returns
@@ -65,14 +63,14 @@ def sonic_velocity(gas=air ,metric=True, T=273.15) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> gd.sonic_velocity(air,T=500)
+    >>> gd.sonic_velocity(air, temperature=500)
     448.2186966202994
-    >>> gd.sonic_velocity(gas=Argon, T=300)
+    >>> gd.sonic_velocity(gas=Argon, temperature=300)
 
     """
 
     gamma, R, gc = gas.gamma, gas.R, gas.gc
-    a = ( gc * gamma * R *T )**.5
+    a = ( gc*gamma*R*temperature)**.5
     return a
 
 
@@ -81,7 +79,7 @@ def sonic_velocity(gas=air ,metric=True, T=273.15) -> float:
 #stagnation_pressure
 #implemented fluid class and string for output returned
 #==================================================    
-def stagnation_pressure(pt=None, M=None, p=None, gas=air, output=False) -> float:
+def stagnation_pressure(stagnation_pressure=None, mach=None, pressure=None, gas=air, output=False) -> float:
     """Returns the stagnation pressure given pressure and Mach number.
 
     Notes
@@ -92,11 +90,11 @@ def stagnation_pressure(pt=None, M=None, p=None, gas=air, output=False) -> float
 
     Parameters
     ----------
-    pt : `float`
+    stagnation_pressure : `float`
         The stagnation pressure.\n
-    p : `float`
+    pressure : `float`
         The pressure.\n
-    M : `float`
+    mach : `float`
         The Mach number\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -111,30 +109,32 @@ def stagnation_pressure(pt=None, M=None, p=None, gas=air, output=False) -> float
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> pt = gd.stagnation_pressure(p=10, M=1)
+    >>> pt = gd.stagnation_pressure(pressure=10, mach=1)
     >>> pt
     18.92929158737854
-    >>> M = gd.stagnation_pressure(p=10, pt=pt)
+    >>> M = gd.stagnation_pressure(pressure=10, stagnation_pressure=pt)
     >>> M
     1.0
     >>>
     """
 
+    pt = stagnation_pressure
+    p = pressure
     gamma = gas.gamma
     if pt == None:
-        pt = p* ( 1 + (gamma-1)/2 * M**2)** (gamma/(gamma-1))
+        pt = p* ( 1 + (gamma-1)/2 * mach**2)** (gamma/(gamma-1))
         if output == True:
             print('Returned stagnation pressure')
         return pt
    
-    if M == None:
-        M = (((pt/p)**((gamma-1)/gamma) -1 ) * 2/(gamma-1) ) ** .5
+    if mach == None:
+        mach = (((pt/p)**((gamma-1)/gamma) -1 ) * 2/(gamma-1) ) ** .5
         if output == True:
             print('Returned Mach')
-        return M
+        return mach
 
     if p == None:
-        p = pt / ( 1 + (gamma-1)/2 * M**2)** (gamma/(gamma-1))
+        p = pt / ( 1 + (gamma-1)/2 * mach**2)** (gamma/(gamma-1))
         if output == True:
             print('Returned pressure')
         return p
@@ -145,7 +145,7 @@ def stagnation_pressure(pt=None, M=None, p=None, gas=air, output=False) -> float
 #stagnation_temperature
 #implemented output string, fluid class, 
 #==================================================    
-def stagnation_temperature(T=None, Tt=None , M=None, gas=air, output=False) -> float :
+def stagnation_temperature(temperature=None, stagnation_temperature=None , mach=None, gas=air, output=False) -> float :
     """Returns the stagnation temperature given temperature and Mach number.
     
     Notes
@@ -157,11 +157,11 @@ def stagnation_temperature(T=None, Tt=None , M=None, gas=air, output=False) -> f
 
     Parameters
     ----------
-    Tt : `float`
+    stagnation_temperature : `float`
         The stagnation temperature\n
-    T : `float`
+    temperature : `float`
         The temperature\n
-    M : `float`
+    mach : `float`
         The Mach number\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -175,30 +175,32 @@ def stagnation_temperature(T=None, Tt=None , M=None, gas=air, output=False) -> f
 
     Examples
     --------
-    >>> Tt = gd.stagnation_temperature(T=300, M=1)
+    >>> Tt = gd.stagnation_temperature(temperature=300, mach=1)
     >>> Tt
     360.0
-    >>> M = gd.stagnation_temperature(T=300, Tt=Tt)
+    >>> M = gd.stagnation_temperature(temperature=300, stagnation_temperature=Tt)
     >>> M 
     1.0
     >>>
     """
 
+    Tt = stagnation_temperature
+    T = temperature
     gamma = gas.gamma
     if Tt == None:
-        Tt = T * ( 1 + (gamma-1)/2 * M**2)
+        Tt = T * ( 1 + (gamma-1)/2 * mach**2)
         if output == True:
             print('Returned stagnation temperature')
         return Tt
 
-    if M == None:
-        M = ((Tt /T - 1) * 2/(gamma-1))**.5
+    if mach == None:
+        mach = ((Tt /T - 1) * 2/(gamma-1))**.5
         if output == True:
             print('Returned Mach')
-        return M
+        return mach
         
     if T == None:
-        T = Tt/( 1 + (gamma-1)/2 * M**2)
+        T = Tt/( 1 + (gamma-1)/2 * mach**2)
         if output == True:
             print('Returned temperature')
         return T
@@ -209,7 +211,7 @@ def stagnation_temperature(T=None, Tt=None , M=None, gas=air, output=False) -> f
 #stagnation_pressure_ratio
 #added fluid class, removed unnnecessary metric argument
 #==================================================
-def stagnation_pressure_ratio(M: float, gas=air) -> float:
+def stagnation_pressure_ratio(mach: float, gas=air) -> float:
     """Returns the pressure ratio of p / p_t
     
     Notes
@@ -219,7 +221,7 @@ def stagnation_pressure_ratio(M: float, gas=air) -> float:
 
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The Mach number \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -232,14 +234,14 @@ def stagnation_pressure_ratio(M: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> p_pt = gd.stagnation_pressure_ratio(M=3)
+    >>> p_pt = gd.stagnation_pressure_ratio(mach=3)
     >>> p_pt
     0.027223683703862817
     >>>
     """
 
     gamma = gas.gamma
-    denom = 1 + (gamma-1)/2 * M**2
+    denom = 1 + (gamma-1)/2 * mach**2
     Pt_ratio = (1 / denom ) ** (gamma/(gamma-1))
     return Pt_ratio
 
@@ -249,7 +251,7 @@ def stagnation_pressure_ratio(M: float, gas=air) -> float:
 #stagnation_temperature_ratio
 #added fluid class
 #==================================================
-def stagnation_temperature_ratio(M: float, gas=air) -> float:
+def stagnation_temperature_ratio(mach: float, gas=air) -> float:
     """Returns the temperature ratio of T / T_t
     
     Notes
@@ -259,7 +261,7 @@ def stagnation_temperature_ratio(M: float, gas=air) -> float:
 
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The Mach number\n
     gas : `fluid`
         A user defined fluid object. Default is air\n
@@ -272,14 +274,14 @@ def stagnation_temperature_ratio(M: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> T_Tt = gd.stagnation_temperature_ratio(M=1.5)
+    >>> T_Tt = gd.stagnation_temperature_ratio(mach=1.5)
     >>> T_Tt
     0.6896551724137931
     >>>
     """
 
     gamma = gas.gamma
-    Tt_ratio = 1 / (1+(gamma-1)/2 *M**2)
+    Tt_ratio = 1 / (1+(gamma-1)/2 *mach**2)
     return Tt_ratio
 
 
@@ -288,7 +290,7 @@ def stagnation_temperature_ratio(M: float, gas=air) -> float:
 #stagnation_density_ratio
 #added fluid class
 #==================================================
-def stagnation_density_ratio(M: float, gas=air) -> float:
+def stagnation_density_ratio(mach: float, gas=air) -> float:
     """Returns the density ratio rho / rho_t
     
     Notes
@@ -298,7 +300,7 @@ def stagnation_density_ratio(M: float, gas=air) -> float:
     
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The Mach # \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -311,14 +313,14 @@ def stagnation_density_ratio(M: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> rho_rho_t = gd.stagnation_density_ratio(M=1.5) 
+    >>> rho_rho_t = gd.stagnation_density_ratio(mach=1.5) 
     >>> rho_rho_t
     0.39498444639115327
     >>>
     """
 
     gamma = gas.gamma
-    rho_t_ratio = (1 / (1 + (gamma-1)/2 * M**2 )) ** (1 / (gamma-1))
+    rho_t_ratio = (1 / (1 + (gamma-1)/2 * mach**2 )) ** (1 / (gamma-1))
     return rho_t_ratio
 
 
@@ -328,7 +330,7 @@ def stagnation_density_ratio(M: float, gas=air) -> float:
 #TODO: make me
 #added fluid object
 #==================================================
-def stagnation_ratio(M: float, gas=air) -> list:
+def stagnation_ratio(mach: float, gas=air) -> list:
     """Return stagnation pressure, temperature, density, and choked area ratio for a mach number
         
     Notes
@@ -338,7 +340,7 @@ def stagnation_ratio(M: float, gas=air) -> list:
 
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The mach number
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -410,10 +412,10 @@ def stagnation_ratio_table(range=[0,5], step=.1, gas=air) -> str:
     Mach_max = range[1]
 
     mach_nums = [i for i in np.arange(Mach_min,Mach_max+step,step)]
-    t_list = [stagnation_temperature_ratio(M=i, gas=gas)for i in mach_nums]
-    p_list = [stagnation_pressure_ratio(M=i, gas=gas) for i in mach_nums]
-    a_list = [mach_area_star_ratio(M=i, gas=gas) for i in mach_nums]
-    rho_list = [stagnation_density_ratio(M=i, gas=gas) for i in mach_nums]
+    t_list = [stagnation_temperature_ratio(mach=i, gas=gas)for i in mach_nums]
+    p_list = [stagnation_pressure_ratio(mach=i, gas=gas) for i in mach_nums]
+    a_list = [mach_area_star_ratio(mach=i, gas=gas) for i in mach_nums]
+    rho_list = [stagnation_density_ratio(mach=i, gas=gas) for i in mach_nums]
 
     labl = '\u03B3 = ' + str(gamma)
     print("Isentropic Flow Parameters for " + gas.name + ", "+ labl)
@@ -427,7 +429,7 @@ def stagnation_ratio_table(range=[0,5], step=.1, gas=air) -> str:
 #mach_from_presure_ratio
 #added fluid object
 #==================================================    
-def mach_from_pressure_ratio(p1: float, p2: float, M1: float, ds=0, gas=air) -> float:
+def mach_from_pressure_ratio(pressure_initial: float, pressure_final: float, mach_initial: float, entropy=0, gas=air) -> float:
     """Return the Mach number given a Mach number and the local pressures
     
     Notes
@@ -438,13 +440,13 @@ def mach_from_pressure_ratio(p1: float, p2: float, M1: float, ds=0, gas=air) -> 
 
     Parameters
     ----------
-    p1 : `float`
+    pressure_initial : `float`
         Pressure in region 1 \n
-    p2 : `float`
+    pressure_final : `float`
         Pressure in region 2 \n
-    M1 : `float`
+    mach_initial : `float`
         Mach number in region 1 \n
-    ds : `float`
+    entropy : `float`
         Change in entropy, if any \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -457,15 +459,15 @@ def mach_from_pressure_ratio(p1: float, p2: float, M1: float, ds=0, gas=air) -> 
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M2 = gd.mach_from_pressure_ratio(p1=10, p2=2, M1=1) 
+    >>> M2 = gd.mach_from_pressure_ratio(pressure_initial=10, pressure_final=2, mach_initial=1) 
     >>> M2
     2.1220079294384067
     >>>
     """
 
     gamma, R = gas.gamma, gas.R
-    M2 = (((p1/p2 * np.exp(ds/R))**((gamma-1)/gamma) * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
-    return M2
+    mach_final = (((pressure_initial/pressure_final * np.exp(entropy/R))**((gamma-1)/gamma) * (1 + (gamma-1)/2 * mach_initial**2) - 1) * 2/(gamma-1))**0.5
+    return mach_final
 
 
 
@@ -473,7 +475,7 @@ def mach_from_pressure_ratio(p1: float, p2: float, M1: float, ds=0, gas=air) -> 
 #mach_from_temperature_ratio
 #added fluid class
 #==================================================
-def mach_from_temperature_ratio(T1: float, T2: float, M1: float, gas=air) -> float:
+def mach_from_temperature_ratio(temperature_initial: float, temperature_final: float, mach_initial: float, gas=air) -> float:
     """Return the Mach number given a Mach number and two local temperatures
     
     Notes
@@ -483,11 +485,11 @@ def mach_from_temperature_ratio(T1: float, T2: float, M1: float, gas=air) -> flo
 
     Parameters
     ----------
-    T1 : `float`
+    temperature_initial : `float`
         Temperature in region 1 \n
-    T2 : `float`
+    temperature_final : `float`
         Temperature in region 2 \n
-    M1 : `float`
+    mach_final : `float`
         Mach number in region 1 \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -500,15 +502,15 @@ def mach_from_temperature_ratio(T1: float, T2: float, M1: float, gas=air) -> flo
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> M2 = gd.mach_from_temperature_ratio(T1=300, T2=150, M1=1)
-    >>> M2
+    >>> mach_final = gd.mach_from_temperature_ratio(temperature_initial=300, temperature_final=150, mach_final=1)
+    >>> mach_final
     2.6457513110645907
     >>>
     """
 
     gamma = gas.gamma
-    M2 = (( T1/T2 * (1 + (gamma-1)/2 * M1**2) - 1) * 2/(gamma-1))**0.5
-    return M2
+    mach_final = (( temperature_initial/temperature_final * (1 + (gamma-1)/2 * mach_initial**2) - 1) * 2/(gamma-1))**0.5
+    return mach_final
 
 
 
@@ -516,7 +518,7 @@ def mach_from_temperature_ratio(T1: float, T2: float, M1: float, gas=air) -> flo
 #pressure_from_mach_ratio
 #added fluid class
 #==================================================
-def pressure_from_mach_ratio(M1: float, M2: float, p1: float, ds=0, gas=air) -> float:
+def pressure_from_mach_ratio(mach_initial: float, mach_final: float, pressure_initial: float, entropy=0, gas=air) -> float:
     """Return the pressure given a pressure in one region and the two Mach numbers
     
     Notes
@@ -527,13 +529,13 @@ def pressure_from_mach_ratio(M1: float, M2: float, p1: float, ds=0, gas=air) -> 
     
     Parameters
     ----------
-    M1 : `float`
+    mach_initial : `float`
         Mach number in region 1 \n
-    M2 : `float`
+    mach_final : `float`
         Mach number in region 2 \n
-    p1 : `float`
+    pressure_initial : `float`
         Pressure in region 1 \n
-    ds : `float`
+    entropy : `float`
         Change in entropy, if any \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -546,15 +548,15 @@ def pressure_from_mach_ratio(M1: float, M2: float, p1: float, ds=0, gas=air) -> 
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> p2 = gd.pressure_from_mach_ratio(M1=1, M2=2, p1=10)  
-    >>> p2
+    >>> p_final = gd.pressure_from_mach_ratio(mach_initial=1, mach_final=2, pressure_initial=10)  
+    >>> p_final
     2.4192491286747444
     >>>
     """
 
     gamma, R = gas.gamma, gas.R
-    p2 = p1 * ((1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2))**(gamma/(gamma-1)) * np.exp(-ds/R)
-    return p2
+    p_final = pressure_initial*((1+((gamma-1)/2)*mach_initial**2)/(1+((gamma-1)/2)*mach_final**2))**(gamma/(gamma-1))*np.exp(-entropy/R)
+    return p_final
 
 
 
@@ -562,7 +564,7 @@ def pressure_from_mach_ratio(M1: float, M2: float, p1: float, ds=0, gas=air) -> 
 #temperature_from_mach_ratio
 #added fluid class
 #==================================================
-def temperature_from_mach_ratio(M1: float, M2: float, T1: float, gas=air) -> float:
+def temperature_from_mach_ratio(mach_initial: float, mach_final: float, temperature_initial: float, gas=air) -> float:
     """Return the temperature given a temperature in one region and the two Mach numbers
     
     Notes
@@ -573,11 +575,11 @@ def temperature_from_mach_ratio(M1: float, M2: float, T1: float, gas=air) -> flo
 
     Parameters
     ----------
-    M1 : `float`
+    mach_initial : `float`
         Mach number in region 1 \n
-    M2 : `float`
+    mach_final : `float`
         Mach number in region 2 \n
-    T1 : `float`
+    temperature_initial : `float`
         Temperature in region 1 \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -590,15 +592,15 @@ def temperature_from_mach_ratio(M1: float, M2: float, T1: float, gas=air) -> flo
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> T2 = gd.temperature_from_mach_ratio(M1=1, M2=2, T1=297.15) 
-    >>> T2
+    >>> T_final = gd.temperature_from_mach_ratio(mach_initial=1, mach_final=2, temperature_final=297.15) 
+    >>> T_final
     198.10000000000002
     >>>
     """
 
     gamma = gas.gamma
-    T2 = T1 * (1 + ((gamma-1)/2) *M1**2)/(1 + ((gamma-1)/2) *M2**2)
-    return T2
+    temperature_final = temperature_initial*(1+((gamma-1)/2)*mach_initial**2)/(1+((gamma-1)/2)*mach_final**2)
+    return temperature_final
 
 
 
@@ -607,7 +609,7 @@ def temperature_from_mach_ratio(M1: float, M2: float, T1: float, gas=air) -> flo
 #added fluid class
 #add examples
 #==================================================
-def entropy_produced(pt1: float, pt2: float, gas=air) -> float:
+def entropy_produced(stagnation_pressure_initial: float, stagnation_pressure_final: float, gas=air) -> float:
     """Return the change in specific entropy from the stagnation pressure ratio
     
     Notes
@@ -617,9 +619,9 @@ def entropy_produced(pt1: float, pt2: float, gas=air) -> float:
 
     Parameters
     ----------
-    pt1 : `float`
+    stagnation_pressure_initial : `float`
         Stagnation pressure in region 1 \n
-    pt2 : `float`
+    stagnation_pressure_final : `float`
         Stagnation pressure in region 2 \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -632,13 +634,13 @@ def entropy_produced(pt1: float, pt2: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> gd.entropy_produced(pt1=10, pt2=9, gas='air')
+    >>> gd.entropy_produced(pt_initial=10, pt_final=9, gas='air')
     30.238467993796142 #J / kg K
     >>> 
     """
     
     R = gas.R   
-    ds = -R*np.log(pt2/pt1)
+    ds = -R*np.log(stagnation_pressure_final/stagnation_pressure_initial)
     return ds
 
 
@@ -647,7 +649,7 @@ def entropy_produced(pt1: float, pt2: float, gas=air) -> float:
 #mach_area_ratio_choked
 #added fluid class 
 #==================================================
-def mach_area_star_ratio(M: float, gas=air) -> float:
+def mach_area_star_ratio(mach: float, gas=air) -> float:
     """Returns the ratio of A / A* given the Mach number.
     
     Notes
@@ -658,7 +660,7 @@ def mach_area_star_ratio(M: float, gas=air) -> float:
     
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         Mach Number \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -671,16 +673,16 @@ def mach_area_star_ratio(M: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> A_Astar =gd.mach_area_ratio_choked(M=3)
+    >>> A_Astar =gd.mach_area_ratio_choked(mach=3)
     >>> A_Astar
     4.23456790123457
     >>>
     """
-    if M == 0:
+    if mach == 0:
         return float('inf')
 
     gamma = gas.gamma
-    a_star_ratio = 1/M * ((1 + (gamma-1)/2 * M**2) / ((gamma+1)/2)) ** ((gamma+1)/(2*(gamma-1)))
+    a_star_ratio = 1/mach*((1+(gamma-1)/2*mach**2)/((gamma+1)/2))**((gamma+1)/(2*(gamma-1)))
     return a_star_ratio
 
 
@@ -689,7 +691,7 @@ def mach_area_star_ratio(M: float, gas=air) -> float:
 #mach_area_ratio
 #added fluid class
 #==================================================
-def mach_area_ratio(M1: float, M2: float, gas=air, ds=0) -> float:
+def mach_area_ratio(mach_initial: float, mach_final: float, gas=air, entropy=0) -> float:
     """Return the area ratio given the two Mach numbers
 
     Notes
@@ -699,9 +701,9 @@ def mach_area_ratio(M1: float, M2: float, gas=air, ds=0) -> float:
 
     Parameters
     ----------
-    M1 : `float` 
+    mach_initial : `float` 
         Mach number in region 1 \n
-    M2 : `float`
+    mach_final : `float`
         Mach number in region 2 \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -716,14 +718,14 @@ def mach_area_ratio(M1: float, M2: float, gas=air, ds=0) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> A2_A1 = gd.mach_area_ratio(M1=1.5, M2=2.5)
+    >>> A2_A1 = gd.mach_area_ratio(mach_initial=1.5, mach_final=2.5)
     >>> A2_A1
     2.241789331255894   #area ratio
     >>>
     """
 
     gamma, R = gas.gamma, gas.R
-    A2_A1 = M1/M2 * ((1 + (gamma-1)/2 * M2**2 )/(1 + (gamma-1)/2 * M1**2 ))**((gamma+1)/(2*(gamma-1))) * np.exp(ds/R)
+    A2_A1 = mach_initial/mach_final * ((1 + (gamma-1)/2 * mach_final**2 )/(1 + (gamma-1)/2 * mach_initial**2 ))**((gamma+1)/(2*(gamma-1))) * np.exp(entropy/R)
     return A2_A1
 
 
@@ -732,7 +734,7 @@ def mach_area_ratio(M1: float, M2: float, gas=air, ds=0) -> float:
 #mach_from_area_ratio
 
 #==================================================    
-def  mach_from_area_ratio(a_ratio: float, gas=air) ->list:
+def  mach_from_area_ratio(area_ratio: float, gas=air) ->list:
     """Return the possible mach numbers given a choked area ratio A / A*
     
     Notes
@@ -742,7 +744,7 @@ def  mach_from_area_ratio(a_ratio: float, gas=air) ->list:
 
     Parameters
     ----------
-    a_ratio : `float`
+    area_ratio : `float`
         The ratio of area over choked area \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -760,8 +762,8 @@ def  mach_from_area_ratio(a_ratio: float, gas=air) ->list:
     >>>
     """
 
-    def zero(M, gas):
-        return mach_area_star_ratio(M=M, gas=gas) - a_ratio
+    def zero(mach, gas):
+        return mach_area_star_ratio(mach=mach, gas=gas) - area_ratio
 
     subsonic = fsolve(zero, args=(gas), x0=0.5)
     supersonic = fsolve(zero, args=(gas), x0=5)
@@ -774,7 +776,7 @@ def  mach_from_area_ratio(a_ratio: float, gas=air) ->list:
 # mass_flux_max
 # added fluid class
 #==================================================
-def mass_flux_max(pt: float, Tt: float, gas=air, metric=True) -> float:
+def mass_flux_max(stagnation_pressure: float, stagnation_temperature: float, gas=air) -> float:
     """Returns the maximum flow rate per unit choked area
     
     Notes
@@ -790,9 +792,9 @@ def mass_flux_max(pt: float, Tt: float, gas=air, metric=True) -> float:
         
     Parameters
     ----------
-    pt : `float`
+    stagnation_pressure : `float`
         The stagnation pressure.\n
-    Tt : `float`
+    stagnation_temperature : `float`
         The stagnation temperature.\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -819,19 +821,15 @@ def mass_flux_max(pt: float, Tt: float, gas=air, metric=True) -> float:
     >>> from gas_dynamics.extra import air_us  
     >>> air_us.units
     'Btu / lbm-R'
-    >>> flux = gd.mass_flux_max( pt=500, Tt=500, gas=air_us)  
+    >>> flux = gd.mass_flux_max( stagnation_pressure=500, stagnation_temperature=500, gas=air_us)  
     >>> flux
     2.097208828890205
     >>>
     """
 
-    gamma, R = gas.gamma, gas.R
-    if metric == False:
-        gc = 32.174 #lbm -ft / lbf -s^2
-    else:
-        gc = 1
+    gamma, R, gc = gas.gamma, gas.R, gas.gc
     
-    mdot_a_star = (((gc*gamma/(R))*(2/(gamma+1))**((gamma+1)/(gamma-1)))**.5 * pt/(Tt**.5))
+    mdot_a_star = (((gc*gamma/(R))*(2/(gamma+1))**((gamma+1)/(gamma-1)))**.5 * stagnation_pressure/(stagnation_temperature**.5))
     return mdot_a_star
 
 
@@ -840,7 +838,7 @@ def mass_flux_max(pt: float, Tt: float, gas=air, metric=True) -> float:
 #mass_flux
 #added fluid class
 #==================================================
-def mass_flux(M: float, pt: float, Tt: float, gas = air, metric = True) -> float:
+def mass_flux(mach: float, stagnation_pressure: float, stagnation_temperature: float, gas = air) -> float:
     """Determine mass flow rate for a mach number up to 1
 
     Notes
@@ -857,11 +855,11 @@ def mass_flux(M: float, pt: float, Tt: float, gas = air, metric = True) -> float
     
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The mach number. Should not exceed 1 \n
-    pt : `float`
+    stagnation_pressure : `float`
         The stagnation pressure \n
-    Tt : `float`
+    stagnation_temperature : `float`
         The stagnation temperature \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -874,27 +872,23 @@ def mass_flux(M: float, pt: float, Tt: float, gas = air, metric = True) -> float
     Examples
     --------
     >>> #metric, input units are Pa, K, output is kg/s/m^2
-    >>> flux = gd.mass_flux(M=.8, pt=1e6, Tt=500) 
+    >>> flux = gd.mass_flux(mach=.8, stagnation_pressure=1e6, stagnation_temperature=500) 
     >>> flux
     1741.3113452036841
     >>> #us standard, input units are psi and Rankine, output units are lbm/s/in^2
     >>> from gas_dynamics.extra import air_us  
     >>> air_us.units
     'Btu / lbm-R'
-    >>> flux = gd.mass_flux(M=.8, pt=500, Tt=500, gas=air_us) 
+    >>> flux = gd.mass_flux(mach=.8, stagnation_pressure=500, stagnation_temperature=500, gas=air_us) 
     >>> flux
     2.01998480961849
     >>>
     """
 
-    gamma, R = gas.gamma, gas.R
-    if metric == False:
-        gc = 32.174 #lbm-ft / lbf s^2
-    else:
-        gc = 1
+    gamma, R, gc = gas.gamma, gas.R, gas.gc
     
-    term1 = M * (1 + M**2 * (gamma-1)/2 )**(-(gamma+1)/(2*(gamma-1)))
-    mass_flux = term1 * (gamma*gc/R)**.5 * pt/(Tt**.5)
+    term1 = mach * (1 + mach**2 * (gamma-1)/2 )**(-(gamma+1)/(2*(gamma-1)))
+    mass_flux = term1 * (gamma*gc/R)**.5 * stagnation_pressure/(stagnation_temperature**.5)
     return mass_flux
 
 
@@ -949,10 +943,10 @@ def plot_stagnation_ratios(range=[.1,5], step=.01, gasses=[air, methane, argon],
 
     for n, f in enumerate(gasses):
         mach_nums = [i for i in np.arange(Mach_min,Mach_max+step,step)]
-        t_list = [stagnation_temperature_ratio(M=i, gas=f) for i in mach_nums]
-        p_list = [stagnation_pressure_ratio(M=i, gas=f) for i in mach_nums]
-        a_list = [mach_area_star_ratio(M=i, gas=f) for i in mach_nums]
-        rho_list = [stagnation_density_ratio(M=i, gas=f) for i in mach_nums]
+        t_list = [stagnation_temperature_ratio(mach=i, gas=f) for i in mach_nums]
+        p_list = [stagnation_pressure_ratio(mach=i, gas=f) for i in mach_nums]
+        a_list = [mach_area_star_ratio(mach=i, gas=f) for i in mach_nums]
+        rho_list = [stagnation_density_ratio(mach=i, gas=f) for i in mach_nums]
         labl = '\u03B3 ' + f.name 
 
     #T/Tt

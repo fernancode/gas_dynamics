@@ -38,7 +38,7 @@ from gas_dynamics.fluids import fluid, air
 #shock_mach
 #fix runtime double scalars warning
 #==================================================
-def shock_mach(M: float, gas=air) -> float:
+def shock_mach(mach: float, gas=air) -> float:
     """Returns the Mach number after a standing normal shock
 
     Notes
@@ -49,7 +49,7 @@ def shock_mach(M: float, gas=air) -> float:
 
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The Mach number before the shock\n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -61,7 +61,7 @@ def shock_mach(M: float, gas=air) -> float:
 
     Examples
     --------
-    >>> M2 = gd.shock_mach(M1=1.5) 
+    >>> M2 = gd.shock_mach(mach=1.5) 
     >>> M2
     0.7010887416930995
     >>> 
@@ -70,15 +70,16 @@ def shock_mach(M: float, gas=air) -> float:
     gamma = gas.gamma
 
     #TODO: still getting runtime double scalars, filter out for this better
-    M2 = ((M**2 + 2/(gamma-1)) / ((2*gamma / (gamma-1)) * M**2 - 1))**.5
-    return M2
+    with np.errstate(all='ignore'):
+        M2 = ((mach**2 + 2/(gamma-1)) / ((2*gamma / (gamma-1)) * mach**2 - 1))**.5
+        return M2
 
 
 
 #==================================================
 #shock_mach_before
 #==================================================
-def shock_mach_before(M: float, gas=air) -> float:
+def shock_mach_before(mach: float, gas=air) -> float:
     """Returns the Mach number before a standing normal shock
     
     Notes
@@ -103,14 +104,14 @@ def shock_mach_before(M: float, gas=air) -> float:
     --------
     >>> import gas_dynamics as gd 
     >>> M2 = 0.7010887416930995
-    >>> M1 = gd.shock_mach(M2)
+    >>> M1 = gd.shock_mach_before(mach = M2)
     >>> M1
     1.4999999999999998
     >>>
     """
 
     gamma = gas.gamma
-    M1 = ((-2/(gamma-1) -M**2 ) / (1- ((2*gamma)/(gamma-1))*M**2))**.5
+    M1 = ((-2/(gamma-1) -mach**2 ) / (1- ((2*gamma)/(gamma-1))*mach**2))**.5
     return M1
 
 
@@ -119,7 +120,7 @@ def shock_mach_before(M: float, gas=air) -> float:
 #prandtl_meyer_mach
 #added fluid class, split into two funcs
 #==================================================
-def shock_pressure_ratio(M: float, gas=air) -> float:
+def shock_pressure_ratio(mach: float, gas=air) -> float:
     """Returns the pressure ratio after a standing normal shock for a given Mach number
     
     Notes
@@ -130,7 +131,7 @@ def shock_pressure_ratio(M: float, gas=air) -> float:
 
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The starting Mach number \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -143,14 +144,14 @@ def shock_pressure_ratio(M: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> p2_p1 = gd.shock_pressure_ratio(M=1.5) 
+    >>> p2_p1 = gd.shock_pressure_ratio(mach=1.5) 
     >>> p2_p1   
     2.4583333333333335
     >>>
     """
 
     gamma = gas.gamma
-    p2_p1 = 2*gamma / (gamma+1) * M**2 - (gamma-1)/(gamma+1)
+    p2_p1 = 2*gamma / (gamma+1) * mach**2 - (gamma-1)/(gamma+1)
     return p2_p1
 
 
@@ -158,7 +159,7 @@ def shock_pressure_ratio(M: float, gas=air) -> float:
 #==================================================
 #shock mach from pressure ratio
 #==================================================
-def shock_mach_from_pressure_ratio(p2_p1: float, gas=air) -> float:
+def shock_mach_from_pressure_ratio(pressure_ratio: float, gas=air) -> float:
     """Returns the mach number across a standing normal shock given a pressure ratio
     
     Notes
@@ -169,8 +170,8 @@ def shock_mach_from_pressure_ratio(p2_p1: float, gas=air) -> float:
     
     Parameters
     ----------
-    p2_p1 : `float`
-        The pressure ratio\n
+    pressure_ratio : `float`
+        The pressure ratio p2 / p1 \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
     
@@ -183,14 +184,14 @@ def shock_mach_from_pressure_ratio(p2_p1: float, gas=air) -> float:
     --------
     >>> import gas_dynamics as gd 
     >>> p2_p1 = 6
-    >>> M1 = gd.shock_mach_from_pressure_ratio(p2_p1)
+    >>> M1 = gd.shock_mach_from_pressure_ratio(pressure_ratio = p2_p1)
     >>> M1
     2.29906813420444
     >>> 
     """
 
     gamma = gas.gamma
-    M = ((gamma+1)/(2*gamma) * (p2_p1 + (gamma-1)/(gamma+1)) )**.5
+    M = ((gamma+1)/(2*gamma) * (pressure_ratio + (gamma-1)/(gamma+1)) )**.5
     return M
 
 
@@ -198,7 +199,7 @@ def shock_mach_from_pressure_ratio(p2_p1: float, gas=air) -> float:
 #==================================================
 #shock_temperature_ratio
 #==================================================
-def shock_temperature_ratio(M: float, gas=air) -> float:
+def shock_temperature_ratio(mach: float, gas=air) -> float:
     """Returns the temperature ratio after a standing normal shock for a given Mach number
     
     Notes
@@ -209,7 +210,7 @@ def shock_temperature_ratio(M: float, gas=air) -> float:
     
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The starting Mach number \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -222,16 +223,16 @@ def shock_temperature_ratio(M: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> T2_T1 = gd.shock_temperature_ratio(M=1.5)
+    >>> T2_T1 = gd.shock_temperature_ratio(mach=1.5)
     >>> T2_T1
     1.320216049382716
     >>>
     """
 
     gamma = gas.gamma
-    term1 = (1 + (gamma-1)/2 * M**2)
-    term2 = (2*gamma)/(gamma-1) * M**2 -1
-    term3 = (gamma+1)**2 / (2*(gamma-1)) * M**2
+    term1 = (1 + (gamma-1)/2 * mach**2)
+    term2 = (2*gamma)/(gamma-1) * mach**2 -1
+    term3 = (gamma+1)**2 / (2*(gamma-1)) * mach**2
     t2_t1 = (term1 * term2) / term3
     return t2_t1
 
@@ -242,7 +243,7 @@ def shock_temperature_ratio(M: float, gas=air) -> float:
 #need to add examples, maybe change name?
 #TODO: ADD EXAMPLES
 #==================================================
-def shock_dv_a(M: float, gas=air) -> float:
+def shock_dv_a(mach: float, gas=air) -> float:
     """Returns change in velocity over the local speed of sound after a normal shock.
     
     Notes
@@ -253,7 +254,7 @@ def shock_dv_a(M: float, gas=air) -> float:
     
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The starting Mach number \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -269,7 +270,7 @@ def shock_dv_a(M: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    dv_a = 2/(gamma+1) * (M**2 -1)/ M
+    dv_a = 2/(gamma+1) * (mach**2 -1)/ mach
     return dv_a
 
 
@@ -277,7 +278,7 @@ def shock_dv_a(M: float, gas=air) -> float:
 #==================================================
 #shock_stagnation ratio
 #==================================================
-def shock_stagnation_ratio(M: float, gas=air) -> float:
+def shock_stagnation_ratio(mach: float, gas=air) -> float:
     """Returns stagnation pressure ratio after a normal shock.
     
     Notes
@@ -288,7 +289,7 @@ def shock_stagnation_ratio(M: float, gas=air) -> float:
     
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The starting Mach number \n
     gas : `fluid`
         A user defined fluid object. Default is air \n    
@@ -300,17 +301,17 @@ def shock_stagnation_ratio(M: float, gas=air) -> float:
 
     Examples
     --------
-    >>> pt2_pt1 = gd.shock_stagnation_ratio(M=2)
+    >>> pt2_pt1 = gd.shock_stagnation_ratio(mach=2)
     >>> pt2_pt1
     0.7208738614847454
     >>>
     """
 
     gamma = gas.gamma
-    term1 = (gamma+1)/2*M**2
-    term2 = 1 + (gamma-1)/2 * M**2
+    term1 = (gamma+1)/2*mach**2
+    term2 = 1 + (gamma-1)/2 * mach**2
     term3 = (term1/term2) ** (gamma/(gamma-1))
-    term4 = (2*gamma / (gamma+1) * M**2 - ((gamma-1)/(gamma+1)))**(1/(1-gamma))
+    term4 = (2*gamma / (gamma+1) * mach**2 - ((gamma-1)/(gamma+1)))**(1/(1-gamma))
     return term3 * term4
 
 
@@ -366,14 +367,14 @@ def shock_tables(range=[1,5], step=.01, gas=air) -> str:
     if Mach_min < 1:
         Mach_min = 1
 
-    Mach_max = range[1]
+    mach_max = range[1]
 
-    mach_nums = [i for i in np.arange(Mach_min,Mach_max+step,step)]
-    M2 = [shock_mach(M=i, gas=gas)for i in mach_nums]
-    p2_p1 = [shock_pressure_ratio(M=i, gas=gas)for i in mach_nums]
-    T2_T1 = [shock_temperature_ratio(M=i, gas=gas) for i in mach_nums]
-    dv_a = [shock_dv_a(M=i, gas=gas) for i in mach_nums]
-    pt2_pt1 = [shock_stagnation_ratio(M=i, gas=gas) for i in mach_nums]
+    mach_nums = [i for i in np.arange(Mach_min,mach_max+step,step)]
+    M2 = [shock_mach(mach=i, gas=gas)for i in mach_nums]
+    p2_p1 = [shock_pressure_ratio(mach=i, gas=gas)for i in mach_nums]
+    T2_T1 = [shock_temperature_ratio(mach=i, gas=gas) for i in mach_nums]
+    dv_a = [shock_dv_a(mach=i, gas=gas) for i in mach_nums]
+    pt2_pt1 = [shock_stagnation_ratio(mach=i, gas=gas) for i in mach_nums]
     gamma = gas.gamma
 
     labl = '\u03B3 = ' + str(gamma)
@@ -388,7 +389,7 @@ def shock_tables(range=[1,5], step=.01, gas=air) -> str:
 #shock_flow_deflection
 # good! added fluid class
 #==================================================
-def shock_flow_deflection(M: float, theta: float, gas=air) -> float:
+def shock_flow_deflection(mach: float, shock_angle: float, gas=air) -> float:
     """Returns flow deflection angle from Mach number and oblique shock angle
     
     Notes
@@ -399,9 +400,9 @@ def shock_flow_deflection(M: float, theta: float, gas=air) -> float:
     
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The Mach number before the shock \n
-    theta : `float`
+    shock_angle : `float`
         The shock angle in degrees \n
     gas : `fluid`
         A user defined fluid object. Default is air \n
@@ -414,15 +415,17 @@ def shock_flow_deflection(M: float, theta: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> deflect = gd.shock_flow_deflection(M=2, theta = 22.5)
+    >>> deflect = gd.shock_flow_deflection(mach=2, shock_angle = 22.5)
     >>> deflect
-    -10.856560004139958
+    10.856560004139958
     >>>        
     """
 
-    gamma = gas.gamma
-    delta = arctand( 2 * 1/tand(theta) * (M**2 * sind(theta)**2 - 1 ) / (M**2 * (gamma + cosd(2*theta)) + 2 ))    
-    return delta
+    with np.errstate(divide='ignore'):
+        gamma = gas.gamma
+
+        delta = arctand( 2 * 1/tand(shock_angle) * (mach**2 * sind(shock_angle)**2 - 1 ) / (mach**2 * (gamma + cosd(2*shock_angle)) + 2 ))    
+        return delta
 
 
 
@@ -430,7 +433,7 @@ def shock_flow_deflection(M: float, theta: float, gas=air) -> float:
 #shock_angle
 # good! added fluid class
 #==================================================
-def shock_angle(M: float, delta: float, gas=air) -> float:
+def shock_angle(mach: float, flow_deflection: float, gas=air) -> float:
     """Return the shock angle given the Mach number prior to the shock and the deflection angle
     
     Notes
@@ -442,9 +445,9 @@ def shock_angle(M: float, delta: float, gas=air) -> float:
     
     Parameters
     ----------
-    M : `float`
+    mach : `float`
         The Mach number before the shock \n
-    delta : `float`
+    flow_deflection : `float`
         The flow deflection angle in degrees\n
     gas : `fluid`
         A user defined fluid object. Default is air \n    
@@ -457,19 +460,19 @@ def shock_angle(M: float, delta: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> shocks = gd.shock_angle(M=2, delta = -10) 
+    >>> shocks = gd.shock_angle(mach=2, flow_deflection = 10) 
     >>> shocks
     [23.014012220565785, 96.29991962425305]
     >>> 
     """
 
     gamma = gas.gamma
-    def func(theta, M=M, delta=delta, gamma=gamma):
-        zero = 2 * 1/tand(theta) * (M**2 * sind(theta)**2 - 1 ) / (M**2 * (gamma + cosd(2*theta)) + 2 ) - tand(delta)
+    def func(shock_angle, mach=mach, flow_deflection=flow_deflection, gamma=gamma):
+        zero = 2 * 1/tand(shock_angle) * (mach**2 * sind(shock_angle)**2 - 1 ) / (mach**2 * (gamma + cosd(2*shock_angle)) + 2 ) - tand(flow_deflection)
         return zero
 
-    weak = fsolve(func, x0=0.001, args=(M, delta, gamma))
-    strong = fsolve(func, x0=90, args=(M, delta, gamma))
+    weak = fsolve(func, x0=0.001, args=(mach, flow_deflection, gamma))
+    strong = fsolve(func, x0=90, args=(mach, flow_deflection, gamma))
     shock_angles = [weak[0], strong[0]]
     return shock_angles
 
@@ -478,7 +481,7 @@ def shock_angle(M: float, delta: float, gas=air) -> float:
 #==================================================
 #shock_mach_given angles
 #==================================================
-def shock_mach_given_angles(theta: float, delta: float, gas=air) -> float:
+def shock_mach_given_angles(shock_angle: float, flow_deflection: float, gas=air) -> float:
     """Return the Mach number before a shock given shock angle and flow deflection
     
     Notes
@@ -510,14 +513,14 @@ def shock_mach_given_angles(theta: float, delta: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    def func(M, theta=theta, delta=delta, gamma=gamma):
+    def func(M, shock_angle=shock_angle, flow_deflection=flow_deflection, gamma=gamma):
         '''
         Zero function for solving for the mach number
         '''
-        zero = 2 * 1/tand(theta) * (M**2 * sind(theta)**2 - 1 ) / (M**2 * (gamma + cosd(2*theta)) + 2 ) - tand(delta)
+        zero = 2 * 1/tand(shock_angle) * (M**2 * sind(shock_angle)**2 - 1 ) / (M**2 * (gamma + cosd(2*shock_angle)) + 2 ) - tand(flow_deflection)
         return zero
 
-    sol = fsolve(func, x0=0.001, args=(theta, delta, gamma))
+    sol = fsolve(func, x0=0.001, args=(shock_angle, flow_deflection, gamma))
     return sol[0]
 
 
@@ -526,7 +529,7 @@ def shock_mach_given_angles(theta: float, delta: float, gas=air) -> float:
 #shock_oblique_charts
 #need to add examples, parameters, descriptions
 #==================================================
-def shock_oblique_charts(Mach_max=6, gas=air, points=40000, dark=True):
+def shock_oblique_charts(mach_max=6, gas=air, points=40000, dark=True):
     """Generate 2-D Oblique Shock Charts
     
     Notes
@@ -539,7 +542,7 @@ def shock_oblique_charts(Mach_max=6, gas=air, points=40000, dark=True):
     
     Parameters
     ----------
-    Mach_max : `float`
+    mach_max : `float`
         The upper limit Mach number for the chart \n
     gas : `fluid`
         A user defined fluid object. Default is air \n    
@@ -566,51 +569,53 @@ def shock_oblique_charts(Mach_max=6, gas=air, points=40000, dark=True):
 
 
     theta = np.linspace(.001,90, n)
-    mach = np.linspace(1,Mach_max,n)
+    mach = np.linspace(1,mach_max,n)
     MACH,THETA = np.meshgrid(mach,theta)
-    delta = shock_flow_deflection(M=MACH, theta=THETA, gas=gas)
+    delta = shock_flow_deflection(mach=MACH, shock_angle=THETA, gas=gas)
     fig, (ax1,ax2) = plt.subplots(1,2)
     levels=[0, 5,10,15,20,25,30,35,40]
     h = ax1.contour(mach,theta,delta,levels=levels,cmap='tab10')
     ax1.clabel(h, inline =1, fontsize=10)
-    minor_ticks_mach = np.arange(1,Mach_max+.1,.1)
+    minor_ticks_mach = np.arange(1,mach_max+.1,.1)
     minor_ticks_theta = np.arange(0,91,1)
     ax1.set_yticks(minor_ticks_theta, minor=True)
     ax1.set_xticks(minor_ticks_mach, minor=True)
     ax1.grid(which='major', color=grid_color, linestyle = '--', alpha=.5,)
     ax1.grid(which='minor', color=grid_color, linestyle = '--', alpha=.1)
-    ax1.set(xlabel = 'Mach #')
+    ax1.set(xlabel = 'Mach')
     ax1.set(ylabel = 'Oblique Shock Wave Angle')
-
+    ax1.annotate('Flow deflection angle',(1.5,15))
     n = round(points**.5)
-    n = 750
 
     total, counter = n**2, 0 
-    mach_before = np.linspace(1,Mach_max, n)
-    mach_after = np.linspace(.001,Mach_max, n)
+    mach_before = np.linspace(1,mach_max, n)
+    mach_after = np.linspace(.001,mach_max, n)
     delta = np.zeros((n,n))
     for row, m1 in enumerate(mach_before):
-        percent =counter / total * 100
-        print(' %0.1f%% complete' %percent)
+        percent = counter/total*100
+        print('%0.1f%% complete' %percent, end = "\r")
         for col, m2 in enumerate(mach_after):
-            delta[col][row] = dirac_from_machs(M1=m1, M2=m2, gas=gas)
+            delta[col][row] = dirac_from_machs(mach_initial=m1, mach_final=m2, gas=gas)
             counter += 1
 
     h = ax2.contour(mach_before, mach_after, delta , levels=levels, cmap='tab10')
     ax2.clabel(h, inline = 1, fontsize=10)
-    minor_ticks_mach_before = np.arange(0,Mach_max+.1,.1)
-    minor_ticks_mach_after = np.arange(0,Mach_max,.1)
+    minor_ticks_mach_before = np.arange(0,mach_max+.1,.1)
+    minor_ticks_mach_after = np.arange(0,mach_max,.1)
     ax2.set_yticks(minor_ticks_mach_before, minor=True)
     ax2.set_xticks(minor_ticks_mach_after, minor=True)
     ax2.grid(which='major',color=grid_color,linestyle = '--', alpha=.5,)
     ax2.grid(which='minor',color=grid_color,linestyle = '--', alpha=.1)
-    ax2.set(xlabel = 'Mach # Before')
-    ax2.set(ylabel = 'Mach # After')
+    ax2.set(xlabel = 'Mach Before')
+    ax2.set(ylabel = 'Mach After')
 
     #plot title stuff
     string = 'Oblique Shock and Flow Deflection Angles for ' + gas.name
     fig.suptitle(string)
     fig.tight_layout(pad=2.0)
+
+    ax2.annotate('Flow deflection angle',(.5,mach_max-1.5))
+    print('100% complete \n', end = "\r")
     plt.show()
 
 
@@ -620,7 +625,7 @@ def shock_oblique_charts(Mach_max=6, gas=air, points=40000, dark=True):
 ##TODO: better numerical method for this
 ##TODO: examples
 #==================================================
-def dirac_from_machs(M1: float, M2: float, gas=air) -> float:
+def dirac_from_machs(mach_initial: float, mach_final: float, gas=air) -> float:
     """Return the flow deflection angle given the mach number before
     and after the oblique shock
     
@@ -631,9 +636,9 @@ def dirac_from_machs(M1: float, M2: float, gas=air) -> float:
 
     Parameters
     ----------
-    M1 : `float`
+    mach_initial : `float`
         The initial mach number \n
-    M2 : `float`
+    mach_final : `float`
         The mach number after the event \n
     gas : `fluid`
         A user defined fluid object. Default is air \n 
@@ -652,28 +657,28 @@ def dirac_from_machs(M1: float, M2: float, gas=air) -> float:
     >>>
     """   
     
-    if M2 >= M1:
+    if mach_final >= mach_initial:
         return 0
-    if shock_mach(M1) > M2:
+    if shock_mach(mach_initial) > mach_final:
         return 0
 
-    def zero(theta: float, M1:float, M2:float, gas=gas) -> float:
+    def zero(theta: float, mach_initial:float, mach_final:float, gas=gas) -> float:
         """Local function for testing different shock angles to see if they work.
         
         """
 
-        M1n = M1 * sind(theta)
+        M1n = mach_initial * sind(theta)
         M2n = shock_mach(M1n)
-        delta = shock_flow_deflection(M=M1, theta=theta, gas=gas)
+        delta = shock_flow_deflection(mach=mach_initial, shock_angle=theta, gas=gas)
         M2_prime = M2n / sind(theta-delta)
-        zero = M2_prime - M2
+        zero = M2_prime - mach_final
         return zero
 
     thetas = np.linspace(0, 90, 100)
     for num, theta in enumerate(thetas[:-1]):
-        zero1 = zero(thetas[num], M1=M1, M2=M2, gas=gas)
+        zero1 = zero(thetas[num], mach_initial=mach_initial, mach_final=mach_final, gas=gas)
         #zerolist.append(zero1)
         if zero1 < 0:
-            zero2 = zero(thetas[num-1], M1=M1, M2=M2, gas=gas)
+            zero2 = zero(thetas[num-1], mach_initial=mach_initial, mach_final=mach_final, gas=gas)
             theta = lin_interpolate(0, zero1, zero2, thetas[num], thetas[num-1])
-            return shock_flow_deflection(M=M1, theta=theta, gas=gas)
+            return shock_flow_deflection(mach=mach_initial, shock_angle=theta, gas=gas)

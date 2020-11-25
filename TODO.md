@@ -1,16 +1,11 @@
 # TODO
 
+Add page to docs with latex formatted equations that represent each function
+
+Change function arguments from single letters and greek characters to more descriptive args
+
 Setup continuous integration and add unittests
-
-Add Fanno flow functions
-    Check equations, create examples, and expand docstrings
-
-Add Rayleigh flow functions
-    Check equations, create examples, and expand docstrings
-
-Build out fluid class and methods
-    Add fluid properties (cp, cv, others)
+    standard tests done
+    to do :shocks, pm, fanno, rayleigh
 
 Research and begin foray into hypersonic
-
-Add page to docs with latex formatted equations that represent each function

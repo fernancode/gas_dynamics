@@ -18,14 +18,14 @@ All functions contain an argument to specify the fluid so as to obtain the appro
 >>> import gas_dynamics as gd
  
 Mach number after a normal shock for air
->>> M2 = gd.shock_mach(M1=1.25)
+>>> M2 = gd.shock_mach(mach=1.25)
 >>> M2
 0.8126360553720011
 >>>
 
 Mach number after a normal shock for argon
 >>> from gas_dynamics.fluids import argon
->>> M2 = gd.shock_mach(M1=1.25, gas=argon)
+>>> M2 = gd.shock_mach(mach=1.25, gas=argon)
 >>> M2
 0.8184295177443512
 >>>
@@ -34,7 +34,7 @@ Mach number for a user-defined fluid
 >>> methane = gd.fluid(name='methane', gamma=1.33, R=96.4, units='ft-lbf/lbm-R') 
 >>> methane.name, methane.gamma, methane.R, methane.units
 ('methane', 1.33, 96.4, 'ft-lbf/lbm-R')
->>> M2 = gd.shock_mach(M=1.25, gas=methane)
+>>> M2 = gd.shock_mach(mach=1.25, gas=methane)
 >>> M2
 0.810574008582977
 >>>
@@ -99,13 +99,13 @@ Return the area ratio required to accelerate a flow to M = 3 and the correspondi
 
 ```
 >>> import gas_dynamics as gd
->>> A_Astar =gd.mach_area_ratio_choked(M=3)
+>>> A_Astar =gd.mach_area_ratio_choked(mach=3)
 >>> A_Astar
 4.23456790123457
->>> p_pt = gd.stagnation_pressure_ratio(M=3)
+>>> p_pt = gd.stagnation_pressure_ratio(mach=3)
 >>> p_pt
 0.027223683703862817
->>> Tt = gd.stagnation_temperature_ratio(M=3)
+>>> Tt = gd.stagnation_temperature_ratio(mach=3)
 >>> Tt
 0.35714285714285715
 >>>
@@ -115,17 +115,17 @@ Return the area ratio required to accelerate a flow to M = 3 and the correspondi
 For the stagnation pressure and stagnation temperature relations, if two of the three necessary arguments are provided, the function will return the missing argument.
 
 ```
->>> pt = gd.stagnation_pressure(p=10, M=1)
+>>> pt = gd.stagnation_pressure(pressure=10, mach=1)
 >>> pt
 18.92929158737854
->>> M = gd.stagnation_pressure(p=10, pt=pt)
+>>> M = gd.stagnation_pressure(pressure=10, stagnation_pressure=pt)
 >>> M
 1.0
 >>>
->>> Tt = gd.stagnation_temperature(T=300, M=1)
+>>> Tt = gd.stagnation_temperature(temperature=300, mach=1)
 >>> Tt
 360.0
->>> M = gd.stagnation_temperature(T=300, Tt=Tt)
+>>> M = gd.stagnation_temperature(temperature=300, stagnation_temperature=Tt)
 >>> M 
 1.0
 ```
@@ -148,7 +148,7 @@ Some miscellaneous valuable functions are also included to calculate flow rates 
 Determine the Mach number before and after a normal shock
 
 ```
->>> M2 = gd.shock_mach(M1=1.5) 
+>>> M2 = gd.shock_mach(mach=1.5) 
 >>> M2
 0.7010887416930995
 >>> M1 = gd.shock_mach_before(M2)
@@ -186,7 +186,7 @@ gd.shock_oblique_charts()
 
 
 ```
->>> deflect = gd.shock_flow_deflection(M=2, theta = 22.5)
+>>> deflect = gd.shock_flow_deflection(mach=2, shock_angle = 22.5)
 >>> deflect
 -10.856560004139958
 ```
@@ -194,7 +194,7 @@ gd.shock_oblique_charts()
 Get the strong and weak shock solution for a flow deflection
 
 ```
->>> shocks = gd.shock_angle(M=2, dirac = -10) 
+>>> shocks = gd.shock_angle(mach=2, flow_deflection = 10) 
 >>> shocks
 [23.014012220565785, 96.29991962425305]
 >>> 
