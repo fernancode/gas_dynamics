@@ -327,8 +327,6 @@ def stagnation_density_ratio(mach: float, gas=air) -> float:
 
 #==================================================
 #stagnation ratio 
-#TODO: make me
-#added fluid object
 #==================================================
 def stagnation_ratio(mach: float, gas=air) -> list:
     """Return stagnation pressure, temperature, density, and choked area ratio for a mach number
@@ -357,6 +355,11 @@ def stagnation_ratio(mach: float, gas=air) -> list:
 
     """
 
+    p_pt = stagnation_pressure_ratio(mach=mach, gas=gas)
+    T_Tt = stagnation_temperature_ratio(mach=mach, gas=gas)
+    rho_rhot = stagnation_density_ratio(mach=mach, gas=gas)
+    A_Astar = mach_area_star_ratio(mach=mach, gas=gas)
+    return p_pt, T_Tt, rho_rhot, A_Astar
 
 
 
@@ -818,7 +821,7 @@ def mass_flux_max(stagnation_pressure: float, stagnation_temperature: float, gas
     >>>
     #alternatively, we can use the english system; psi, rankine and
     get lbm/s/in^2
-    >>> from gas_dynamics.extra import air_us  
+    >>> from gas_dynamics.fluids import air_us  
     >>> air_us.units
     'Btu / lbm-R'
     >>> flux = gd.mass_flux_max( stagnation_pressure=500, stagnation_temperature=500, gas=air_us)  
@@ -876,7 +879,7 @@ def mass_flux(mach: float, stagnation_pressure: float, stagnation_temperature: f
     >>> flux
     1741.3113452036841
     >>> #us standard, input units are psi and Rankine, output units are lbm/s/in^2
-    >>> from gas_dynamics.extra import air_us  
+    >>> from gas_dynamics.fluids import air_us  
     >>> air_us.units
     'Btu / lbm-R'
     >>> flux = gd.mass_flux(mach=.8, stagnation_pressure=500, stagnation_temperature=500, gas=air_us) 

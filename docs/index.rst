@@ -33,8 +33,8 @@ Package containing functions for working with compressible flow.
    :caption: Functions
    :hidden:
 
-   gas_dynamics.standard
-   gas_dynamics.shocks
+   standard/gas_dynamics.standard   
+   shocks/gas_dynamics.shocks
    gas_dynamics.prandtl_meyer
    gas_dynamics.fanno
    gas_dynamics.rayleigh
