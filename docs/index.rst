@@ -16,7 +16,7 @@ Package containing functions for working with compressible flow.
 
 .. figure:: README_images/shockwave.png
    :width: 800
-   :alt: Shock waves forming across a T-38 Talon 
+   :alt: Shock waves forming across a T-38 Talon
 
    Credits: NASA Images
 
@@ -24,12 +24,14 @@ Package containing functions for working with compressible flow.
 .. toctree::
    :maxdepth: 2
    :caption: gas_dynamics
+   :hidden:
 
    gettingstarted
 
 .. toctree::
    :maxdepth: 2
    :caption: Functions
+   :hidden:
 
    standard/gas_dynamics.standard   
    shocks/gas_dynamics.shocks

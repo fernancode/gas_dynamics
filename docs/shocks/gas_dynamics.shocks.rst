@@ -1,6 +1,6 @@
-#####
-Shock
-#####
+######
+Shocks
+######
 
 .. toctree::
    :maxdepth: 2
