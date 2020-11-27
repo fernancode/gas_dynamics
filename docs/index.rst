@@ -35,9 +35,9 @@ Package containing functions for working with compressible flow.
 
    standard/gas_dynamics.standard   
    shocks/gas_dynamics.shocks
-   gas_dynamics.prandtl_meyer
-   gas_dynamics.fanno
-   gas_dynamics.rayleigh
+   prandtl_meyer/gas_dynamics.prandtl_meyer
+   fanno/gas_dynamics.fanno
+   rayleigh/gas_dynamics.rayleigh
    gas_dynamics.fluid
    gas_dynamics.extra
 
@@ -45,8 +45,6 @@ Package containing functions for working with compressible flow.
    :maxdepth: 2
    :caption: Misc
    :hidden:
+   :glob:
 
-   indices
-   License
-   credits
-   Aboutme
+   Misc/*

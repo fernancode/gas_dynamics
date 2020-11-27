@@ -423,7 +423,7 @@ def stagnation_ratio_table(range=[0,5], step=.1, gas=air) -> str:
     labl = '\u03B3 = ' + str(gamma)
     print("Isentropic Flow Parameters for " + gas.name + ", "+ labl)
     for index, num in enumerate(mach_nums):
-        print('M: %0.3f' % num, '  |   P/Pt: %0.3f' % p_list[index], '   |    T/Tt: %0.3f' % t_list[index],  '   |    A/A*: %0.3f' % a_list[index],  '   |   rho/rho_t: %0.3f ' % rho_list[index])
+        print('M: %0.3f' % num, '  |   P/Pt: %0.5f' % p_list[index], '   |    T/Tt: %0.4f' % t_list[index],  '   |    A/A*: %0.3f' % a_list[index],  '   |   rho/rho_t: %0.3f ' % rho_list[index])
     print("\n \n \n")
 
 
