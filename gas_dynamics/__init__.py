@@ -30,13 +30,13 @@ from gas_dynamics.shocks.shocks import (
   shock_mach_from_pressure_ratio,
   shock_temperature_ratio,
   shock_dv_a, 
-  shock_stagnation_ratio, 
+  shock_stagnation_pressure_ratio, 
   shock_flow_deflection, 
   shock_angle, 
   shock_mach_given_angles, 
   shock_oblique_charts,
   shock_tables, 
-  dirac_from_machs)
+  shock_flow_deflection_from_machs)
 
 from gas_dynamics.prandtl_meyer.prandtl_meyer import (
   prandtl_meyer_turn, 

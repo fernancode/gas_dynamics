@@ -2,4 +2,10 @@
 Worked Examples
 ###############
 
-In Development
+.. figure:: raptorvacuum.png
+   :width: 800
+   :alt:  
+
+   Credits: SpaceX 
+
+In development

@@ -278,7 +278,7 @@ def shock_dv_a(mach: float, gas=air) -> float:
 #==================================================
 #shock_stagnation ratio
 #==================================================
-def shock_stagnation_ratio(mach: float, gas=air) -> float:
+def shock_stagnation_pressure_ratio(mach: float, gas=air) -> float:
     """Returns stagnation pressure ratio after a normal shock.
     
     Notes
@@ -374,7 +374,7 @@ def shock_tables(range=[1,5], step=.01, gas=air) -> str:
     p2_p1 = [shock_pressure_ratio(mach=i, gas=gas)for i in mach_nums]
     T2_T1 = [shock_temperature_ratio(mach=i, gas=gas) for i in mach_nums]
     dv_a = [shock_dv_a(mach=i, gas=gas) for i in mach_nums]
-    pt2_pt1 = [shock_stagnation_ratio(mach=i, gas=gas) for i in mach_nums]
+    pt2_pt1 = [shock_stagnation_pressure_ratio(mach=i, gas=gas) for i in mach_nums]
     gamma = gas.gamma
 
     labl = '\u03B3 = ' + str(gamma)
@@ -415,7 +415,7 @@ def shock_flow_deflection(mach: float, shock_angle: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> deflect = gd.shock_flow_deflection(mach=2, shock_angle = 22.5)
+    >>> deflect = gd.shock_flow_deflection(mach=2, shock_angle = 157.5)
     >>> deflect
     10.856560004139958
     >>>        
@@ -595,7 +595,7 @@ def shock_oblique_charts(mach_max=6, gas=air, points=40000, dark=True):
         percent = counter/total*100
         print('%0.1f%% complete' %percent, end = "\r")
         for col, m2 in enumerate(mach_after):
-            delta[col][row] = dirac_from_machs(mach_initial=m1, mach_final=m2, gas=gas)
+            delta[col][row] = shock_flow_deflection_from_machs(mach_initial=m1, mach_final=m2, gas=gas)
             counter += 1
 
     h = ax2.contour(mach_before, mach_after, delta , levels=levels, cmap='tab10')
@@ -625,7 +625,7 @@ def shock_oblique_charts(mach_max=6, gas=air, points=40000, dark=True):
 ##TODO: better numerical method for this
 ##TODO: examples
 #==================================================
-def dirac_from_machs(mach_initial: float, mach_final: float, gas=air) -> float:
+def shock_flow_deflection_from_machs(mach_initial: float, mach_final: float, gas=air) -> float:
     """Return the flow deflection angle given the mach number before
     and after the oblique shock
     
@@ -651,7 +651,7 @@ def dirac_from_machs(mach_initial: float, mach_final: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> flow_deflect = gd.dirac_from_machs(M1=3, M2=1.5)
+    >>> flow_deflect = gd.shock_flow_deflection_from_machs(M1=3, M2=1.5)
     >>> flow_deflect
     28.589471710648365 
     >>>
