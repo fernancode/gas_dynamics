@@ -4,8 +4,7 @@ Standard
 
 
 .. toctree::
-   :maxdepth: 2
-   :hidden:
+   :maxdepth: 1
 
    gas_dynamics.standard.equations
    gas_dynamics.standard.examples

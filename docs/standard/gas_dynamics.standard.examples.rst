@@ -16,9 +16,8 @@ The year is 1970. You are an eager and young bright eyed engineer working at Aer
  - A plot of position in the nozzle versus temperature and pressure to deliver to the thermal and structural engineers.
 
 
-========
-Solution
-========
+**Solution**
+
 Let us assume the fluid velocity inside the chamber is non-moving and therefore is at stagnation temperature and pressure, :math:`T_{t}=6000\,^{\circ}F`, and :math:`p_{t}=3000\,psi`. Assuming that our nozzle is functioning ideally, we also know what the ratio of stagnation pressures from the chamber to the throat and from the throat to the nozzle exit is unity. We come to the following conclusion.
 
 .. math::

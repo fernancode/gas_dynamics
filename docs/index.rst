@@ -24,14 +24,12 @@ Package containing functions for working with compressible flow.
 .. toctree::
    :maxdepth: 2
    :caption: gas_dynamics
-   :hidden:
 
    gettingstarted
 
 .. toctree::
    :maxdepth: 2
    :caption: Functions
-   :hidden:
 
    standard/gas_dynamics.standard   
    shocks/gas_dynamics.shocks
