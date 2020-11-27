@@ -25,12 +25,11 @@ Let us assume the fluid velocity inside the chamber is non-moving and therefore 
     
     \frac{p_{air}}{p_{t}} = \frac{1.3}{3000} = .000433
 
-There are a couple of ways to go about this. We generate a coarse view of the tables for hydrogen (because we are feeling nostalgic and old school) and seek the stagnation pressure ratio.
+There are a couple of ways to go about this. We generate a coarse view of the tables (because we are feeling nostalgic and old school) and seek the Mach number that corresponds to the stagnation pressure ratio.
 
 .. code-block:: python
 
     >>> import gas_dynamics as gd
-    >>> from gas_dynamics.fluids import hydrogen_us
     >>> gd.stagnation_ratio_table([1,8], step=.2)
     Isentropic Flow Parameters for Air, γ = 1.4
     M: 1.000   |   P/Pt: 0.52828    |    T/Tt: 0.8333    |    A/A*: 1.000    |   rho/rho_t: 0.634
