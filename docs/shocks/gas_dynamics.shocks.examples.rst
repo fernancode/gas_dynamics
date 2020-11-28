@@ -2,7 +2,7 @@
 Worked Examples
 ###############
 
-.. figure:: raptor.png
+.. figure:: raptor.jpeg
    :width: 800
    :alt: A vacuum optimized nozzle for the raptor engine
 
