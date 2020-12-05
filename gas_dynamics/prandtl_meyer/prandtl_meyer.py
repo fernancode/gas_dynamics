@@ -83,3 +83,27 @@ def prandtl_meyer_mach(nu: float, gas=air) -> float:
     
     sol = fsolve(get_mach, x0=1.5, args=(nu, gas))
     return sol[0]
+
+def mach_wave_angle(mach: float):
+    """Return the angle of the Mach wave given the Mach number after a turn
+
+    Notes
+    -----
+
+    Parameters
+    ----------
+    mach : float
+        The mach number after a turn
+    
+    Returns
+    -------
+    float
+        The angle of the mach wave in degrees
+
+    Examples
+    --------
+
+    """
+
+    mu = arctand(1 / (mach**2 -1)**.5)
+    return mu

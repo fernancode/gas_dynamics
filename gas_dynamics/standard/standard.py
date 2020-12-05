@@ -208,6 +208,67 @@ def stagnation_temperature(temperature=None, stagnation_temperature=None , mach=
 
 
 #==================================================
+#stagnation_density
+#implemented output string, fluid class, 
+#TODO: FIX ME
+#==================================================    
+def stagnation_density(density=None, stagnation_density=None , mach=None, gas=air, output=False) -> float :
+    """Returns the stagnation density given density and Mach number.
+    
+    Notes
+    -----
+    Given a density, Mach number, and a ratio of specific heats 
+    this function returns the stagnation density. Alternatively,
+    provided two arguments the function will return the missing one.
+    Default fluid is air.
+
+    Parameters
+    ----------
+    stagnation_density : `float`
+        The stagnation density\n
+    density : `float`
+        The density\n
+    mach : `float`
+        The Mach number\n
+    gas : `fluid`
+        A user defined fluid object. Default is air \n
+    output : `bool`
+        Print out a string to verify the output is the parameter desired \n
+    
+    Returns
+    -------
+    float
+        The stagnation temperature, temperature, or mach number\n
+
+    Examples
+    --------
+
+    """
+
+    rho_t = stagnation_density
+    rho = density
+    gamma = gas.gamma
+    if rho_t == None:
+        rho_t = density *  ( 1 + (gamma-1)/2 * mach**2) ** (1/(gamma-1))
+        if output == True:
+            print('Returned stagnation density')
+        return Tt
+
+    if mach == None:
+        
+        if output == True:
+            print('Returned Mach')
+        return mach
+        
+    if rho == None:
+        
+        if output == True:
+            print('Returned temperature')
+        return T
+
+
+
+#==================================================
 #stagnation_pressure_ratio
 #added fluid class, removed unnnecessary metric argument
 #==================================================
@@ -768,7 +829,7 @@ def  mach_from_area_ratio(area_ratio: float, gas=air) ->list:
     def zero(mach, gas):
         return mach_area_star_ratio(mach=mach, gas=gas) - area_ratio
 
-    subsonic = fsolve(zero, args=(gas), x0=0.5)
+    subsonic = fsolve(zero, args=(gas), x0=0.1)
     supersonic = fsolve(zero, args=(gas), x0=5)
     sols = [subsonic[0], supersonic[0]]
     return sols
