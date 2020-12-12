@@ -1,6 +1,6 @@
-###############
-Worked Examples
-###############
+##############
+Worked Example
+##############
 
 .. figure:: raptor.png
    :width: 800
