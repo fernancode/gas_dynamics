@@ -798,7 +798,7 @@ def mach_area_ratio(mach_initial: float, mach_final: float, gas=air, entropy=0) 
 #mach_from_area_ratio
 
 #==================================================    
-def  mach_from_area_ratio(area_ratio: float, gas=air) ->list:
+def mach_from_area_ratio(area_ratio: float, gas=air) ->list:
     """Return the possible mach numbers given a choked area ratio A / A*
     
     Notes
