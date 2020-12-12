@@ -1,3 +1,7 @@
+{% extends "!layout.html" %}
+
+{% block footer %}
+{{ super() }}
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7QLCKHT56K"></script>
 <script>
@@ -7,3 +11,4 @@
 
   gtag('config', 'G-7QLCKHT56K');
 </script>
+{% endblock %}
