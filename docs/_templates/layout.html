@@ -1,14 +1,9 @@
-{% extends "!layout.html" %}
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7QLCKHT56K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-{% block footer %}
-{{ super() }}
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  gtag('config', 'G-7QLCKHT56K');
 </script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("G-7QLCKHT56K");
-pageTracker._trackPageview();
-} catch(err) {}</script>
-{% endblock %}
