@@ -13,7 +13,7 @@
 #commit only source files for readthedocs
 /docs/_build
 /docs/_static
-/docs/_templates
+#/docs/_templates
 
 # random notes
 notes.txt
