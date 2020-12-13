@@ -8,7 +8,7 @@ Worked Example
 
    Credits: NASA Images
 
-The year is 1970. You are an eager and young bright eyed engineer working at Aerojet Rocketdyne tasked with designing the nozzle for the Space Shuttle main engine, the RS-25. The design team is not sure when or where maximum dynamic pressure will occur, so to play it safe they decide that all engines (and consequently, their nozzles) should be operating ideally at around 55,000 ft above sea level where the air pressure is approximately 1.3 psi. Additionally you know that the combustion chamber temperature and pressure are 6000 Fahrenheit and 3000 psi. You are asked to deliver several items:
+The year is 1970. You are an eager, young, bright eyed engineer working at Aerojet Rocketdyne tasked with designing the nozzle for the Space Shuttle main engine, the RS-25. The design team is not sure when or where maximum dynamic pressure will occur, so to play it safe they decide that all engines (and consequently, their nozzles) should be operating ideally at around 55,000 ft above sea level where the air pressure is approximately 1.3 psi. Additionally you know that the combustion chamber temperature and pressure are 6000 Fahrenheit and 3000 psi. You are asked to deliver several items:
 
  - The exit Mach number.
  - The area ratio.

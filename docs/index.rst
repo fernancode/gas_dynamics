@@ -23,7 +23,7 @@ Package containing functions for working with compressible flow.
 
 .. toctree::
    :maxdepth: 2
-   :caption: gas_dynamics
+   :caption: Introduction
    :hidden:
 
    gettingstarted

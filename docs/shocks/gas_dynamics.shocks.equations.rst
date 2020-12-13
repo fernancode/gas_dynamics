@@ -58,4 +58,4 @@ Equation Map
    \delta = \arctan \left[ 2 \cot(\theta) \left( \frac{ M_{1}^2 \sin^2 (\theta) - 1}{ M_{1}^2 (\gamma + \cos 2\theta) + 2 } \right) \right]
 
 
-:py:func:`shock_angle <gas_dynamics.shocks.shocks.shock_angle>` , :py:func:`shock_mach_gven_angles <gas_dynamics.shocks.shocks.shock_mach_given_angles>` , and :py:func:`shock_flow_deflection_given_mach <gas_dynamics.shocks.shocks.shock_flow_deflection_from_machs>` all employ equation solvers to return the desired values.
+:py:func:`shock_angle <gas_dynamics.shocks.shocks.shock_angle>` , :py:func:`shock_mach_given_angles <gas_dynamics.shocks.shocks.shock_mach_given_angles>` , and :py:func:`shock_flow_deflection_from_machs <gas_dynamics.shocks.shocks.shock_flow_deflection_from_machs>` all employ equation solvers with combinations of the above functions to return the desired values.

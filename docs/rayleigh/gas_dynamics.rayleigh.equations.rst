@@ -44,7 +44,7 @@ Equation Map
    M_{2} = \left[ \left( \frac{p_{2}}{p_{1}} \left( 1+\gamma M_{1}^2 \right) - 1 \right) \frac{1}{\gamma} \right]^{1/2}
 
 
-:py:func:`rayleigh_mach_temperature_ratio <gas_dynamics.rayleigh.rayleigh.rayleigh_mach_from_stagnation_temperature_ratio>` , :py:func:`rayleigh_mach__ratio <gas_dynamics.rayleigh.rayleigh.rayleigh_mach_from_stagnation_temperature_ratio>` , :py:func:`rayleigh_mach_from_stagnation_pressure_ratio <gas_dynamics.rayleigh.rayleigh.rayleigh_mach_from_stagnation_pressure_ratio>` all use equation solvers to get the desired result.
+:py:func:`rayleigh_mach_from_temperature_ratio <gas_dynamics.rayleigh.rayleigh.rayleigh_mach_from_temperature_ratio>` , :py:func:`rayleigh_mach_from_stagnation_temperature_ratio <gas_dynamics.rayleigh.rayleigh.rayleigh_mach_from_stagnation_temperature_ratio>` , :py:func:`rayleigh_mach_from_stagnation_pressure_ratio <gas_dynamics.rayleigh.rayleigh.rayleigh_mach_from_stagnation_pressure_ratio>` all use equation solvers to get the desired result.
 
 
 :py:func:`rayleigh_pressure_star_ratio <gas_dynamics.rayleigh.rayleigh.rayleigh_pressure_star_ratio>`
@@ -68,14 +68,14 @@ Equation Map
    \frac{\rho}{\rho^*} = \frac{1+\gamma M^2}{ (1+\gamma) M^2}
 
 
-:py:func:`rayleigh_temperature_pressure_star_ratio <gas_dynamics.rayleigh.rayleigh.stagnation_temperature_star_ratio>`
+:py:func:`rayleigh_stagnation_temperature_star_ratio <gas_dynamics.rayleigh.rayleigh.rayleigh_stagnation_temperature_star_ratio>`
 
 .. math::
 
    \frac{T_{t}}{T_{t}^*} = \frac{2 (1+\gamma)^2 M^2}{ (1+\gamma M^2)^2 } \left( 1+ \frac{\gamma-1}{2}M^2\right)
 
 
-:py:func:`rayleigh_stagnation_pressure_star_ratio <gas_dynamics.rayleigh.rayleigh.stagnation_pressure_star_ratio>`
+:py:func:`rayleigh_stagnation_pressure_star_ratio <gas_dynamics.rayleigh.rayleigh.rayleigh_stagnation_pressure_star_ratio>`
 
 .. math::
 
