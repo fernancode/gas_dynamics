@@ -34,9 +34,9 @@ Knowns:
    >>> pressure_ratio_actual
    0.0033333333333333335
 
-Let's talk about some of these findings. We use the function `mach_from_area_ratio` to determine the possible exit mach numbers given the area ratio and choose the solution for the supersonic case. Using this mach number, we can determine the stagnation pressure ratio required between the combustion chamber and a flow that has been accelerated to mach = 6.93, this ratio being extraordinarily low at 0.00025. Next we determine the pressure ratio that actually exists between the chamber and the atmosphere, 0.0033. Since the pressure ratio that exists is greater than the one required, it seems a compression process will take place, that compression process being a shock. 
+Let's talk about some of these findings. We use the function `mach_from_area_ratio` to determine the possible exit mach numbers and choose the solution for the supersonic case. Using this mach number, we can determine the stagnation pressure ratio required between the combustion chamber and a flow that has been accelerated to mach = 6.93, this ratio being extraordinarily low at 0.00025. Next we determine the pressure ratio that actually exists between the chamber and the atmosphere, 0.0033. Since the pressure ratio that exists is greater than the one required, it seems a compression process will take place, that compression process being a shock. 
 
-Now that we know there will be a shock, let's determine the pressure ratio required to form a shock at the nozzle exit plane (the second critical) and the pressure ratio for our current operating conditions. Comparing these two pressure ratios will tell us whether the shock occurs inside or outside the nozzle.
+Now that we know there will be a shock, let's determine the pressure ratio that would form across a shock at the nozzle exit plane (the second critical) and the pressure ratio for our current operating conditions. Comparing these two pressure ratios will tell us whether the shock occurs inside or outside the nozzle.
 
 .. code-block:: python
 
