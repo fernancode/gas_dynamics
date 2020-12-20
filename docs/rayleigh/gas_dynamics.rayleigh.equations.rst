@@ -1,6 +1,6 @@
-############
-Equation Map
-############
+#######################
+Equation Map - Rayleigh
+#######################
 
 :py:func:`rayleigh_pressure_ratio <gas_dynamics.rayleigh.rayleigh.rayleigh_pressure_ratio>`
 

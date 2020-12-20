@@ -1,6 +1,6 @@
-############
-Equation Map
-############
+#####################
+Equation Map - Shocks
+#####################
 
 :py:func:`shock_mach <gas_dynamics.shocks.shocks.shock_mach>`
 

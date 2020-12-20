@@ -1,6 +1,6 @@
-############
-Equation Map
-############
+####################
+Equation Map - Fanno
+####################
 
 :py:func:`stagnation_enthalpy <gas_dynamics.fanno.fanno.stagnation_enthalpy>`
 

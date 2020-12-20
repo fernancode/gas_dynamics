@@ -1,6 +1,6 @@
-############
-Equation Map
-############
+############################
+Equation Map - Prandtl-Meyer
+############################
 
 :py:func:`prandtl_meyer_turn <gas_dynamics.prandtl_meyer.prandtl_meyer.prandtl_meyer_turn>`
 

@@ -1,7 +1,7 @@
 .. gas_dynamics documentation master file, created by
    sphinx-quickstart on Sat Nov  7 14:41:31 2020.
 
-gas_dynamics python package
+Home
 ========================================
 
 .. image:: https://badge.fury.io/py/gas-dynamics.svg
