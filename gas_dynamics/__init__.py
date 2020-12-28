@@ -76,5 +76,3 @@ from gas_dynamics.rayleigh.rayleigh import(
 
 from gas_dynamics.fluids import fluid
 
-#from .fanno import func1,
-#from .rayleigh func 1

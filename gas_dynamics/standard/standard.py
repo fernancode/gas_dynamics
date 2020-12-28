@@ -24,10 +24,6 @@
 #Copyright 2020 by Fernando A de la Fuente
 #All rights reserved
 
-#TODO: everything needs a 
-#returns
-#   `type`
-
 
 import numpy as np
 from scipy.optimize import fsolve
