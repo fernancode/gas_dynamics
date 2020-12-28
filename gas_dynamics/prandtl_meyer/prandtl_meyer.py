@@ -8,7 +8,7 @@ from gas_dynamics.fluids import fluid, air
 #prandtl_meyer_turn
 #need to add examples
 #==================================================
-def prandtl_meyer_turn(mach: float, gas=air) -> float:
+def prandtl_meyer_angle_from_mach(mach: float, gas=air) -> float:
     """Returns the angle through which a flow has turned to reach a Mach number
     
     Notes
@@ -48,7 +48,7 @@ def prandtl_meyer_turn(mach: float, gas=air) -> float:
 #prandtl_meyer_mach
 #need to add examples
 #==================================================
-def prandtl_meyer_mach(nu: float, gas=air) -> float:
+def prandtl_meyer_mach_from_angle(nu: float, gas=air) -> float:
     """Returns the Mach number given an angle through which the flow has turned from a starting Mach of one
     
     Notes
@@ -79,7 +79,7 @@ def prandtl_meyer_mach(nu: float, gas=air) -> float:
     """
     
     def get_mach(mach: float, nu=nu, gas=gas) -> float:
-        return prandtl_meyer_turn(mach, gas=gas) - nu
+        return prandtl_meyer_angle_from_mach(mach, gas=gas) - nu
     
     sol = fsolve(get_mach, x0=1.5, args=(nu, gas))
     return sol[0]

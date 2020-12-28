@@ -39,8 +39,8 @@ from gas_dynamics.shocks.shocks import (
   shock_flow_deflection_from_machs)
 
 from gas_dynamics.prandtl_meyer.prandtl_meyer import (
-  prandtl_meyer_turn, 
-  prandtl_meyer_mach,
+  prandtl_meyer_angle_from_mach, 
+  prandtl_meyer_mach_from_angle,
   mach_wave_angle )
 
 from gas_dynamics.fanno.fanno import (
