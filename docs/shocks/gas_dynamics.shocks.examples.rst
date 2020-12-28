@@ -36,7 +36,7 @@ Knowns:
 
 Let's talk about some of these findings. We use the function `mach_from_area_ratio` to determine the possible exit mach numbers and choose the solution for the supersonic case. Using this mach number, we can determine the stagnation pressure ratio required between the combustion chamber and a flow that has been accelerated to mach = 6.93, this ratio being extraordinarily low at 0.00025. Next we determine the pressure ratio that actually exists between the chamber and the atmosphere, 0.0033. Since the pressure ratio that exists is greater than the one required, it seems a compression process will take place, that compression process being a shock. 
 
-Now that we know there will be a shock, let's determine the pressure ratio that would form across a shock at the nozzle exit plane (the second critical) and the pressure ratio for our current operating conditions. Comparing these two pressure ratios will tell us whether the shock occurs inside or outside the nozzle.
+Now that we know there will be a shock, let's determine the pressure ratio that would form across a shock at the nozzle exit plane (the second critical) and the pressure ratio for our current operating conditions.
 
 .. code-block:: python
 
@@ -48,7 +48,7 @@ Now that we know there will be a shock, let's determine the pressure ratio that 
    >>> p2_p1_shock
    13.021517060503747
 
-A normal shock at the exit is way too strong of a compresion process, so we conclude an oblique shock forms outside of the nozzle. We finish by determining the angle and the deflection of the streamline across the shock as well as the mach number of the turned flow.
+A normal shock at the exit is way too strong of a compresion process, as the product of `pressure_ratio_normal_shock` and the stagnation pressure ratio (0.014) is greater than our operating pressure ratio (0.003). We conclude an oblique shock forms outside of the nozzle and finish by determining the angle and the deflection of the streamline across the shock as well as the mach number of the turned flow.
 
 .. code-block:: python
 
