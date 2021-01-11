@@ -470,7 +470,7 @@ def fanno_parameter_max(mach: float, gas=air) -> float:
     """
 
     gamma = gas.gamma
-    fanno_ratio_max = (gamma + 1)/(2*gamma) * log(((gamma+1)/2 * mach*2) / (1 + (gamma-1)/2 * mach**2)) + 1/gamma * (1/(mach**2)-1)
+    fanno_ratio_max = (gamma + 1)/(2*gamma) * log(( (gamma+1)/2 * mach**2) / (1 + (gamma-1)/2 * mach**2)) + 1/gamma * (1/(mach**2)-1)
     return fanno_ratio_max
 
 

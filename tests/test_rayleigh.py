@@ -14,12 +14,20 @@ class Test_rayleigh_pressure_ratio:
         b = random.uniform(1.01,10)
         assert float(gd.rayleigh_pressure_ratio(a,b))
 
+    def test_two(self):
+        a = random.uniform(1.01,10)
+        assert gd.rayleigh_pressure_ratio(a,a) == 1
+
 
 class Test_rayleigh_temperature_ratio:
     def test_one(self):
         a = random.uniform(1.01,10)
         b = random.uniform(1.01,10)
         assert float(gd.rayleigh_temperature_ratio(a,b))
+
+    def test_two(self):
+        a = random.uniform(1.01,10)
+        assert gd.rayleigh_temperature_ratio(a,a) == 1
 
 
 class Test_rayleigh_density_ratio:
@@ -28,6 +36,10 @@ class Test_rayleigh_density_ratio:
         b = random.uniform(1.01,10)
         assert float(gd.rayleigh_density_ratio(a,b))
 
+    def test_two(self):
+        a = random.uniform(1.01,10)
+        assert gd.rayleigh_density_ratio(a,a) == 1
+
 
 class Test_rayleigh_stagnation_temperature_ratio:
     def test_one(self):
@@ -35,12 +47,20 @@ class Test_rayleigh_stagnation_temperature_ratio:
         b = random.uniform(1.01,10)
         assert float(gd.rayleigh_stagnation_temperature_ratio(a,b))
 
+    def test_two(self):
+        a = random.uniform(1.01,10)
+        assert gd.rayleigh_stagnation_temperature_ratio(a,a) == 1
+
 
 class Test_rayleigh_stagnation_pressure_ratio:
     def test_one(self):
         a = random.uniform(1.01,10)
         b = random.uniform(1.01,10)
         assert float(gd.rayleigh_stagnation_pressure_ratio(a,b))
+
+    def test_two(self):
+        a = random.uniform(1.01,10)
+        assert gd.rayleigh_stagnation_pressure_ratio(a,a) == 1
 
 
 class Test_rayleigh_mach_from_pressure_ratio:
