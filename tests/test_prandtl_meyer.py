@@ -49,7 +49,7 @@ class Test_prandtl_meyer_mach_from_angle:
 
 class Test_mach_wave_angle:
     def test_one(self):
-        a = random.uniform(0,10)
+        a = random.uniform(1,10)
         assert float(gd.mach_wave_angle(a))
 
     def test_two(self):
