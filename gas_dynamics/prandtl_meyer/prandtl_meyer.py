@@ -37,7 +37,7 @@ def prandtl_meyer_angle_from_mach(mach: float, gas=air) -> float:
     26.379760813416475
     >>>
     """
-
+    
     gamma = gas.gamma
     nu = ((gamma+1)/(gamma-1))**.5 * arctand(((mach**2-1)*(gamma-1)/(gamma+1))**.5) - arctand((mach**2-1)**.5)
     return nu
@@ -48,7 +48,7 @@ def prandtl_meyer_angle_from_mach(mach: float, gas=air) -> float:
 #prandtl_meyer_mach
 #need to add examples
 #==================================================
-def prandtl_meyer_mach_from_angle(nu: float, gas=air) -> float:
+def prandtl_meyer_mach_from_angle(angle: float, gas=air) -> float:
     """Returns the Mach number given an angle through which the flow has turned from a starting Mach of one
     
     Notes
@@ -58,7 +58,7 @@ def prandtl_meyer_mach_from_angle(nu: float, gas=air) -> float:
 
     Parameters
     ----------
-    nu : `float`
+    angle : `float`
         The turn angle in degrees \n    
     gas : `fluid`
         A user defined fluid object. Default is air \n    
@@ -71,18 +71,22 @@ def prandtl_meyer_mach_from_angle(nu: float, gas=air) -> float:
     Examples
     --------
     >>> import gas_dynamics as gd
-    >>> nu = 26.37
-    >>> M = gd.prandtl_meyer_mach(nu=nu) 
+    >>> angle = 26.37
+    >>> M = gd.prandtl_meyer_mach(angle=angle) 
     >>> M
     1.9996459342662083
     >>>
     """
     
-    def get_mach(mach: float, nu=nu, gas=gas) -> float:
-        return prandtl_meyer_angle_from_mach(mach, gas=gas) - nu
+    def get_mach(mach: float, angle=angle, gas=gas) -> float:
+        return prandtl_meyer_angle_from_mach(mach, gas=gas) - angle
     
-    sol = fsolve(get_mach, x0=1.5, args=(nu, gas))
+    sol = fsolve(get_mach, x0=1.5, args=(angle, gas))
     return sol[0]
+
+
+
+
 
 def mach_wave_angle(mach: float):
     """Return the angle of the Mach wave given the Mach number after a turn
