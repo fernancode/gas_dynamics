@@ -6,7 +6,7 @@ from gas_dynamics.fluids import air, methane
 import random
 
 #TODO: these tests only test for float, not for actual correct values.
-#could use more robust-ness
+#could use more robust-ness and check versus tabulated values
 
 class Test_fanno_temperature_ratio:
     def test_one(self):
