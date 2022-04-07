@@ -1,4 +1,4 @@
-from gas_dynamics.prandtl_meyer.prandtl_meyer import prandtl_meyer_mach, prandtl_meyer_turn, mach_wave_angle
+from gas_dynamics.prandtl_meyer.prandtl_meyer import prandtl_meyer_mach_from_angle, prandtl_meyer_angle_from_mach, mach_wave_angle
 from gas_dynamics.fluids import fluid, air
 from gas_dynamics.extra import tand
 import numpy as np
@@ -67,15 +67,15 @@ nozzle = Nozzle(100)
 
 #determine a mach number
 #TODO: Variable me
-exit_mach = 2
+exit_mach = 3.19
 
 #get the number of lines
 num_lines = len(nozzle.lines)
-theta_max = prandtl_meyer_turn(mach=exit_mach) / 2
+theta_max = prandtl_meyer_angle_from_mach(mach=exit_mach) / 2
 
 #determine all the turn angles for the lines
 #TODO: Variable me
-initial_turn = .01
+initial_turn = .1
 theta_to_go = theta_max - initial_turn
 theta_steps = theta_to_go / (num_lines - 1)
 fig, ax = plt.subplots()
@@ -85,7 +85,7 @@ fig, ax = plt.subplots()
 [nozzle.lines[0].k_plus.append(0) for n in range(num_lines)] 
 [nozzle.lines[0].k_minus.append(2*(initial_turn + (n)*theta_steps)) for n in range(num_lines)]
 [nozzle.lines[0].nu.append(nu) for nu in nozzle.lines[0].theta]
-[nozzle.lines[0].mach.append(prandtl_meyer_mach(nu)) for nu in nozzle.lines[0].nu]
+[nozzle.lines[0].mach.append(prandtl_meyer_mach_from_angle(nu)) for nu in nozzle.lines[0].nu]
 [nozzle.lines[0].mach_wave_angle.append(mach_wave_angle(mach)) for mach in nozzle.lines[0].mach]
 
 #create values on the first line
@@ -103,7 +103,7 @@ for n, line in enumerate(nozzle.lines):
             line.theta.append(theta)
         nu = .5 * (k_minus - k_plus)
         line.nu.append(nu)
-        mach = prandtl_meyer_mach(nu)
+        mach = prandtl_meyer_mach_from_angle(nu)
         line.mach.append(mach)
         wave_angle = mach_wave_angle(mach)
         line.mach_wave_angle.append(wave_angle)
@@ -203,8 +203,7 @@ ax.grid(which='both', axis='both')
 ax.axis('equal')
 ax.set_xlabel(r'$Z$')
 ax.set_ylabel(r'$X$', rotation=0)
-ax.set_ylim(-.5, 2)
-ax.set_xlim(-.5, 4)
+
 
 plt.title(r'$Method \ of \ Characteristics \ Nozzle$')
 plt.legend(title=r'$Characteristic \ Lines$')

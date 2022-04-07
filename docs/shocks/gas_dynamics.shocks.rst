@@ -7,7 +7,6 @@ Shocks
    :hidden:
 
    gas_dynamics.shocks.equations
-   gas_dynamics.shocks.examples
 
 
 .. automodule:: gas_dynamics.shocks.shocks
