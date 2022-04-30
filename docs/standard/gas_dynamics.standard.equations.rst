@@ -1,6 +1,6 @@
-#######################
-Equation Map - Standard
-#######################
+#################################
+Equation Map - Standard Equations
+#################################
 
 :py:func:`sonic_velocity <gas_dynamics.standard.standard.sonic_velocity>`
 

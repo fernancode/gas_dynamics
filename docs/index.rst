@@ -20,18 +20,21 @@ Package containing functions for working with compressible flow.
 
    Credits: NASA Images
 
+Last update: 4/30/2022
 
 .. toctree::
-   :maxdepth: 2
    :caption: Introduction
-   :hidden:
 
    gettingstarted
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Functions
-   :hidden:
+   :caption: Review
+
+   review/gas_dynamics.tfsreview
+   review/gas_dynamics.compressible_flow
+
+.. toctree::
+   :caption: Gas Dynamics
 
    standard/gas_dynamics.standard   
    shocks/gas_dynamics.shocks
@@ -42,9 +45,7 @@ Package containing functions for working with compressible flow.
    gas_dynamics.extra
 
 .. toctree::
-   :maxdepth: 2
    :caption: Misc
-   :hidden:
    :glob:
 
    Misc/*

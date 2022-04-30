@@ -1,6 +1,6 @@
-########
-Standard
-########
+##################
+Standard Equations
+##################
 
 .. toctree::
    :maxdepth: 2
