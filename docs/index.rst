@@ -24,17 +24,20 @@ Last update: 4/30/2022
 
 .. toctree::
    :caption: Introduction
+   :hidden:
 
    gettingstarted
 
 .. toctree::
    :caption: Review
+   :hidden:
 
    review/gas_dynamics.tfsreview
    review/gas_dynamics.compressible_flow
 
 .. toctree::
    :caption: Gas Dynamics
+   :hidden:
 
    standard/gas_dynamics.standard   
    shocks/gas_dynamics.shocks
@@ -46,6 +49,7 @@ Last update: 4/30/2022
 
 .. toctree::
    :caption: Misc
+   :hidden:
    :glob:
 
    Misc/*
