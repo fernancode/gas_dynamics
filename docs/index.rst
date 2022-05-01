@@ -20,7 +20,7 @@ Package containing functions for working with compressible flow.
 
    Credits: NASA Images
 
-Last update: |today|
+Last edited: |today|
 
 .. toctree::
    :caption: Introduction
