@@ -66,18 +66,107 @@ This defines a change in entropy in terms of a reversible addition of heat :math
 or
 
 .. math::
-   ds = \frac{\delta q}{T} + ds
+   ds = \frac{\delta q}{T}
 
 Where the first expression shows we understand that we are always trending towards greater entropy, and the second stating that the change in entropy is the heat we add in addition to irreversible contributions from friction, viscosity, thermal conductivity, and so on.
 
 
 Property Relations, Entropy, and Perfect Gases
 ##############################################
+Enthalpy is defined as the specific internal energy of a system and the product of pressure and volume, or the sum of thermal energy and "flow work".
+
+.. math::
+   h = u + pv
+
+Recalling our definition of work and our definition entropy on a unit mass basis for a reversible system.
+
+.. math::
+   \delta q = T ds
+
+.. math::
+   \delta w = p dv
+
+we can come to the result 
+
+.. math::
+   T ds = du + pdv
+
+We can further manipulate this result by differentiating the definition of enthalpy and replacing the :math:`du` term.
+
+.. math::
+   dh = du + pdv + vdp
+
+.. math::
+   T ds = dh - vdp
+
+When it comes to perfect gases (substances that follow the perfect gas equation of state), specific heat at constant volume and specific heat at constant pressure are defined as follows:
+
+.. math::
+   c_v \equiv \left( \frac{\partial u}{\partial T} \right)_v
+
+.. math::
+   c_p \equiv \left( \frac{\partial h}{\partial T} \right)_p
+
+Since both of these are functions of temperature only, we can lose the partial derivative.
+
+.. math::
+   \Delta u = c_v \Delta T
+
+.. math::
+   \Delta h = c_p \Delta T
+
+An very common term used in gas dynamics is the ratio of specific heats :math:`\gamma`
+
+.. math::
+   \gamma \equiv \frac{c_p}{c_v}
+
+:math:`\gamma` can be thought of the ratio of the fluids specific internal energy and pressure volume ability's to take or remove heat away from a system to just the internal energy's ability to do so.
+
+The Liquid Vapor Dome
+#####################
+
+
+
 
 
 
 Example Derivations
 ###################
 
+
+
+
+
 Pumps
 *****
+The energy equation is a great way to understand pumps and their operation.
+
+.. math::
+   w_1 + q_1 + h_1 + \frac{{v_1}^2}{2} + gz_1 = w_2 + q_2 + h_2 + \frac{{v_2}^2}{2} + gz_2
+
+We can then multiply through by :math:`\dot{m}`, and remove the terms for heat in, heat out, and work out. The work is being imparted to our fluid and heat in and out are negligent compared to the other forms of energy in this process.
+
+.. math::
+   W = \dot{m} \left[ \left( h_1 + \frac{{v_1}^2} {2} + gz_1 \right) - \left( h_2 + \frac{{v_2}^2} {2} + gz_2 \right) \right]
+
+We know that enthalpy is defined as :math:`h = u + pv`, and we rearrange to solve for the common "pump head" equation.
+
+.. math::
+   \frac{W}{\dot{m}} = g \Delta H + \Delta u
+
+where :math:`W` is the shaft power, :math:`u` is specific internal energy, and :math:`H` is known as the pump head, defined as
+
+.. math::
+   H = \frac{p}{\rho g} + \frac{V^2}{2g} + Z
+
+Of course there will probably be losses in our system, such as the marginal increase of heat imparted to the fluid to slippage from our pump, so our equation should actually read something like
+
+.. math::
+   g\Delta H < \frac{W}{\dot{m}}
+
+The pump efficiency can then be defined as 
+
+.. math::
+   \eta = \frac{g \Delta H \dot{m}}{W}
+
+The efficiency term can further be broken down to capture efficiency of various aspects of the pump, such as mechanical efficiency (capturing external drag from bearings and seals), hydraulic efficiency (ratio of output head to input head), and volumetric efficiency (leakage of the fluid).
